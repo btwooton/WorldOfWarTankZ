@@ -3,7 +3,7 @@ public class BulletTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int width = 230;
+		int width = 720;
 		int height = (width / 12) * 9;
 		EZ.initialize(width, height);
 
