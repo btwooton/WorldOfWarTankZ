@@ -32,18 +32,26 @@ public class Tank {
 	}
 	
 	public void moveAround(int worldHeight, int worldWidth) {
-		if (EZInteraction.isKeyDown(directionUp) && y > 0) {
+		int topEdge = (int)y - (h/2);
+		int bottomEdge = (int)y + (h/2);
+		int leftEdge = (int)x - (w/2);
+		int rightEdge = (int)x + (w/2);
+		
+		if (EZInteraction.isKeyDown(directionUp) && topEdge > 0) {
 			tankSprite.translateTo(x, y -= speed);
 		}
-		else if (EZInteraction.isKeyDown(directionLeft) && x > 0) {
+		else if (EZInteraction.isKeyDown(directionLeft) && leftEdge > 0) {
 			tankSprite.translateTo(x -= speed, y);
 		}
-		else if (EZInteraction.isKeyDown(directionDown) && y < worldHeight) {
+		else if (EZInteraction.isKeyDown(directionDown) && bottomEdge < worldHeight) {
 			tankSprite.translateTo(x, y += speed);
 		}
-		else if (EZInteraction.isKeyDown(directionRight) && x < worldWidth) {
+		else if (EZInteraction.isKeyDown(directionRight) && rightEdge < worldWidth) {
 			tankSprite.translateTo(x += speed, y);
 		}
+	}
+	
+	public void projectileCollide(Projectiles projectile) {
 	}
 
 }
