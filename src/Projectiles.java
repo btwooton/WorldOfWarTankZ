@@ -26,7 +26,7 @@ public class Projectiles {
 
 		frames = new EZCircle[maxFrames];
 		for (int i = 0; i < maxFrames; i++) {
-			frames[i] = EZ.addCircle(posx, posy, rg.nextInt(15) + 5, rg.nextInt(15) + 5,
+			frames[i] = EZ.addCircle(posx, posy, rg.nextInt(100) + 50, rg.nextInt(100) + 50,
 					new Color(rg.nextInt(250), rg.nextInt(250), rg.nextInt(250)), true);
 			frames[i].hide();
 			bullet.addElement(frames[i]);
