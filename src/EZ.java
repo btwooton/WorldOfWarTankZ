@@ -1,6 +1,6 @@
 /*
 Copyright (c) 6/23/2014, Dylan Kobayashi
-Version: 1/20/2016
+Version: 4/11/2016
 Laboratory for Advanced Visualization and Applications, University of Hawaii at Manoa.
 All rights reserved.
 
@@ -51,6 +51,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 //import java.security.acl.LastOwnerException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -81,6 +84,9 @@ public class EZ extends JPanel {
 
   /** Used for external referencing. */
   public static EZ app;
+  private static ArrayList<JFrame> 	openWindows = new ArrayList<>();
+  private static ArrayList<Boolean> openWindowsStatus = new ArrayList<>();
+  private static ArrayList<EZ> 		openWindowEz = new ArrayList<>();
 
   /** Width. This needs to match the values given in the applet properties or there may be visual chopping. */
   private static int WWIDTH;
@@ -238,8 +244,21 @@ public class EZ extends JPanel {
         errorMsg += "EZ.refreshScreen() error with sleep:" + e.getMessage() + "\n";
       }
     }
+    closeWindowWithIndex(-9999);
   }// end refresh screen.
-
+  
+  /**
+   * 
+   */
+  public static void refreshScreenOfAllActiveWindows(){
+	  refreshScreen();
+	  for(int i = 0; i < openWindows.size(); i++) {
+		  if( openWindowsStatus.get(i) ) {
+			  openWindowEz.get(i).repaint();
+		  }
+	  }
+  }
+  
   /**
    * Sets the frame rate, which controls how fast the program will attempt to update itself. Note: it is very rarely
    * possible to get an exact match of frames per second due to the time statements take to execute in addition to the
@@ -927,7 +946,16 @@ public class EZ extends JPanel {
    * @param width for the content area of the window.
    * @param height for the content area of the window.
    */
-  public static void initialize(int width, int height) {
+  public static int initialize(int width, int height) {
+	// First runtime check for Mac to see if has char interference
+	String osName = System.getProperty("os.name").toLowerCase();
+	if(osName.indexOf("mac") >= 0){
+	  try { Runtime.getRuntime().exec("defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false");
+	  } catch (IOException e) {
+		System.out.println("Unable to perform Mac keyboard change");
+	  }
+	}
+		  
     String windowName = "ICS111";
     JFrame frame = new JFrame(windowName);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -943,6 +971,14 @@ public class EZ extends JPanel {
     frame.setVisible(true);
     timeDelta = 0;
     lastUpdate = System.currentTimeMillis();
+    
+    //account for number of windows
+    openWindows.add(frame);
+    openWindowsStatus.add(true);
+    openWindowEz.add(newContentPane);
+    int wIndex = openWindows.size() - 1;
+    openWindows.get( wIndex ).setTitle("ICS 111 - Window index:" + wIndex);
+    return wIndex;
   }
 
   /**
@@ -950,9 +986,55 @@ public class EZ extends JPanel {
    * Window will default to use the full dimensions of the screen. Do not call this method more than once in a program
    * run.
    */
-  public static void initialize() {
-    initialize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit()
+  public static int initialize() {
+    return initialize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit()
         .getScreenSize().getHeight());
+  }
+  
+  /**
+   * 
+   */
+  public static void setCurrentWindow(int windowIndex) {
+    if( windowIndex > -1 && windowIndex < openWindows.size() && openWindowsStatus.get(windowIndex) ) {
+    	app = openWindowEz.get(windowIndex);
+    }
+  }
+  
+  /**
+   * Will close the specified window. Numbers may change when windows close. This will depend on their order of creation.
+   */
+  public static void closeWindowWithIndex(int windowIndex) {
+    if ( (windowIndex >= 0) && (windowIndex < openWindows.size()) && openWindowsStatus.get(windowIndex) ) {
+      //get the window to close, remove from open windows, then dispose of it
+      //JFrame windowToClose = openWindows.get(windowIndex);
+      //openWindows.remove(windowToClose);
+      //windowToClose.dispose();
+      openWindows.get(windowIndex).dispose();
+      openWindowsStatus.set(windowIndex, false);
+    }
+    else if( windowIndex != -9999) {
+    	System.out.println("Invalid window index given:" + windowIndex + ". Not closing a window.");
+    }
+//    //window checks: close if no windows. 1 window gets the close app on close. Renumber windows.
+//    if(openWindows.size() == 0) { System.exit(0); System.out.println("Closing program, no open windows."); }
+//    else if(openWindows.size() == 1) { openWindows.get(0).setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); }
+//    else {
+//      for(int i = 0; i < openWindows.size(); i++) {
+//        openWindows.get(i).setTitle("ICS 111 - Window index:" + i);
+//        openWindows.get(i).setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//      }
+//    }
+  } //end closeWindowWithoutClosingApplication
+  
+  /**
+   * Will return the number of open windows.
+   */
+  public static int getNumberOfOpenWindows() {
+	  int count = 0;
+	  for(int i = 0; i < openWindows.size(); i++) {
+		  if(openWindowsStatus.get(i)) { count++; }
+	  }
+	  return count;
   }
   
   public static void trackedErrorPrint() {
@@ -2046,9 +2128,8 @@ class EZText extends EZElement {
         }
       }
       if(match){
-        fontName = name;
-        EZ.app.setFont(new Font(fontName, Font.PLAIN, fontSize));
-        dFont = EZ.app.getFont();
+    	fontName = name;
+        dFont = new Font(fontName, Font.PLAIN, fontSize);
       }
       else {
         System.out.println("ERROR: EZText is unable to use the specified font because it not on this system:" + name);
@@ -2820,12 +2901,19 @@ class EZInteraction implements KeyListener, MouseInputListener {
   /** Used as for external referencing. */
   public static EZInteraction app;
 
+//  /** Used for tracking keys down. */
+//  protected ArrayList<Character> keysDown = new ArrayList<Character>();
+//  /** Used for tracking key releases. */
+//  protected ArrayList<Character> keysReleased = new ArrayList<Character>();
+//  /** Used for tracking key presses. */
+//  protected ArrayList<Character> keysPressed = new ArrayList<Character>();
+
   /** Used for tracking keys down. */
-  protected ArrayList<Character> keysDown = new ArrayList<Character>();
+  protected Map<String, Integer> keysDown = new HashMap<>();
   /** Used for tracking key releases. */
-  protected ArrayList<Character> keysReleased = new ArrayList<Character>();
+  protected Map<String, Integer> keysReleased = new HashMap<>();
   /** Used for tracking key presses. */
-  protected ArrayList<Character> keysPressed = new ArrayList<Character>();
+  protected Map<String, Integer> keysPressed = new HashMap<>();
 
   /** Used for indexing. */
   protected int keysDownIndex = 0;
@@ -2862,12 +2950,21 @@ class EZInteraction implements KeyListener, MouseInputListener {
 
   
   @Override public void keyPressed(KeyEvent e) {
-    // System.out.println("key press");
-    Character c = new Character(e.getKeyChar());
     keypCheckInitiated = false;
+    String keyToUse;
+    int valueToUse;
     try {
-      keysDown.add(c);
-      keysPressed.add(c);
+      if ( e.getKeyCode() == KeyEvent.VK_UP ) { keyToUse = "VK_UP"; valueToUse = e.getKeyCode(); }
+      else if ( e.getKeyCode() == KeyEvent.VK_DOWN ) { keyToUse = "VK_DOWN"; valueToUse = e.getKeyCode(); }
+      else if ( e.getKeyCode() == KeyEvent.VK_LEFT ) { keyToUse = "VK_LEFT"; valueToUse = e.getKeyCode(); }
+      else if ( e.getKeyCode() == KeyEvent.VK_RIGHT ) { keyToUse = "VK_RIGHT"; valueToUse = e.getKeyCode(); }
+      else if ( ! Character.isLetterOrDigit( e.getKeyChar() ) ) { keyToUse = "kc" + e.getKeyCode(); valueToUse = e.getKeyCode(); }
+      else {
+        keyToUse = "" + e.getKeyChar();
+        valueToUse = e.getKeyCode();
+      }
+      keysDown.put(keyToUse, valueToUse);
+      keysPressed.put(keyToUse, valueToUse);
     }
     catch (Exception ex) {
       System.out
@@ -2878,18 +2975,21 @@ class EZInteraction implements KeyListener, MouseInputListener {
 
   
   @Override public void keyReleased(KeyEvent e) {
-    // System.out.println("key release");
-    Character n = new Character(e.getKeyChar());
-
+    keyrCheckInitiated = false;
+    String keyToUse;
+    int valueToUse;
+    
     try {
-      for (int i = 0; i < keysDown.size(); i++) {
-        if (keysDown.get(i).equals(n)) {
-          keysReleased.add(keysDown.get(i));
-          keysDown.remove(i);
-          keyrCheckInitiated = false;
-          i--;
-        }
-      }
+      if ( e.getKeyCode() == KeyEvent.VK_UP ) { keyToUse = "VK_UP"; valueToUse = e.getKeyCode(); }
+      else if ( e.getKeyCode() == KeyEvent.VK_DOWN ) { keyToUse = "VK_DOWN"; valueToUse = e.getKeyCode(); }
+      else if ( e.getKeyCode() == KeyEvent.VK_LEFT ) { keyToUse = "VK_LEFT"; valueToUse = e.getKeyCode(); }
+      else if ( e.getKeyCode() == KeyEvent.VK_RIGHT ) { keyToUse = "VK_RIGHT"; valueToUse = e.getKeyCode(); }
+      else if ( ! Character.isLetterOrDigit( e.getKeyChar() ) ) { keyToUse = "kc" + e.getKeyCode(); valueToUse = e.getKeyCode(); }
+      else { keyToUse = "" + e.getKeyChar(); valueToUse = e.getKeyCode(); }
+      
+      keysReleased.put(keyToUse, valueToUse);
+      keysDown.remove(keyToUse);
+      
     }// end try
     catch (Exception ex) {
       System.out
@@ -2902,23 +3002,18 @@ class EZInteraction implements KeyListener, MouseInputListener {
   /**
    * Used for actively checking if a key is down(being pressed).
    * 
-   * @param c character to check for.
+   * @param key to check for.
    * @return true if the key is down. Otherwise false.
    */
-  public static boolean isKeyDown(char c) {
-    Character n = new Character(c);
+  public static boolean isKeyDown(String key) {
     try {
-      for (int i = 0; i < app.keysDown.size(); i++) {
-        if (app.keysDown.get(i).equals(n)) {
-          return true;
-        }
-      }
+      return app.keysDown.containsKey(key);
     }
     catch (Exception e) {
       /*
        * this try catch is for the rare case where the key might start off "down" but then becomes "up" while in the
-       * process of going through the arraylist. The error is result of the size starting off "larger" but because a key
-       * get's released, the arraylist decreases in size resulting in an error that may crash the thread that calls this
+       * process of going through the map. The error is result of the size starting off "larger" but because a key
+       * get's released, the map decreases in size resulting in an error that may crash the thread that calls this
        * method, because thread timing is concurrent.
        * 
        * Anyone reading this, yes the code actually utilizes multiple threads.
@@ -2926,11 +3021,16 @@ class EZInteraction implements KeyListener, MouseInputListener {
     }
     return false;
   } // end is key down
+  
+  /** Overload command to backwards compatible char call. */
+  public static boolean isKeyDown(char c) { return isKeyDown("" + c); }
+  /** Overload command to allow keycode checks. */
+  public static boolean isKeyDown(int code) { return app.keysDown.containsValue(code); }
 
   /**
-   * Checks if a char was just released. See description for getXMouseClick(), uses the same timing ideology.
+   * Checks if a key was just released. See description for getXMouseClick(), uses the same timing ideology.
    * */
-  public static boolean wasKeyReleased(char c) {
+  public static boolean wasKeyReleased(String key) {
     if (!keyrCheckInitiated) {
       keyrCheckInitiated = true;
       keyrLastUpdate = System.currentTimeMillis();
@@ -2938,24 +3038,23 @@ class EZInteraction implements KeyListener, MouseInputListener {
     if (keyrLastUpdate + TIMEOUT < System.currentTimeMillis()) {
       app.keysReleased.clear();
     }
-    Character n = new Character(c);
     try {
-      for (int i = 0; i < app.keysReleased.size(); i++) {
-        if (app.keysReleased.get(i).equals(n)) {
-          //app.keysReleased.remove(i);
-          return true;
-        }
-      }
+      return app.keysReleased.containsKey(key);
     }// end try
     catch (Exception e) {
     }
     return false;
   } // end waskey released
 
+  /** Overload command to backwards compatible char call. */
+  public static boolean wasKeyReleased(char c) { return wasKeyReleased("" + c); }
+  /** Overload command to allow keycode checks. */
+  public static boolean wasKeyReleased(int code) { wasKeyReleased(""); return app.keysReleased.containsValue(code); }
+
   /**
-   * Checks if a char was just pressed. See description for getXMouseClick(), uses the same timing ideology.
+   * Checks if a key was just pressed. See description for getXMouseClick(), uses the same timing ideology.
    * */
-  public static boolean wasKeyPressed(char c) {
+  public static boolean wasKeyPressed(String key) {
     try {
       if (!keypCheckInitiated) {
         keypCheckInitiated = true;
@@ -2964,19 +3063,17 @@ class EZInteraction implements KeyListener, MouseInputListener {
       if (keypLastUpdate + TIMEOUT < System.currentTimeMillis()) {
         app.keysPressed.clear();
       }
-      Character n = new Character(c);
-      for (int i = 0; i < app.keysPressed.size(); i++) {
-        if (app.keysPressed.get(i).equals(n)) {
-          //app.keysPressed.remove(i);
-          return true;
-        }
-      }
+      return app.keysPressed.containsKey(key);
     }// end try
     catch (Exception e) {
     }
     return false;
   } // end waskey released
-  
+
+  /** Overload command to backwards compatible char call. */
+  public static boolean wasKeyPressed(char c) { return wasKeyPressed("" + c); }
+  /** Overload command to allow keycode checks. */
+  public static boolean wasKeyPressed(int code) { wasKeyPressed(""); return app.keysPressed.containsValue(code); }
 
   
   @Override public void mousePressed(MouseEvent me) {
