@@ -14,7 +14,7 @@ public class Tank {
 	public Tank(String imageName, int _x, int _y, char[] directions) {
 		tankSprite = EZ.addImage(imageName, _x, _y);
 		hp = 100;
-		speed = 1;
+		speed = 2;
 		x = _x;
 		y = _y;
 		w = tankSprite.getWidth();
@@ -38,20 +38,22 @@ public class Tank {
 		int rightEdge = (int)x + (w/2);
 		
 		if (EZInteraction.isKeyDown(directionUp) && topEdge > 0) {
-			tankSprite.translateTo(x, y -= speed);
+			tankSprite.moveForward(speed);
 		}
 		else if (EZInteraction.isKeyDown(directionLeft) && leftEdge > 0) {
-			tankSprite.translateTo(x -= speed, y);
+			tankSprite.turnLeft(1);
 		}
 		else if (EZInteraction.isKeyDown(directionDown) && bottomEdge < worldHeight) {
-			tankSprite.translateTo(x, y += speed);
+			tankSprite.moveForward(-speed);
 		}
 		else if (EZInteraction.isKeyDown(directionRight) && rightEdge < worldWidth) {
-			tankSprite.translateTo(x += speed, y);
+			tankSprite.turnRight(1);
 		}
 	}
 	
-	public void projectileCollide(Projectiles projectile) {
-	}
+	//public void projectileCollide(Projectiles projectile) {
+	//}
+	
+	//public void fireProjectile()
 
 }
