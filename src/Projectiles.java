@@ -10,6 +10,7 @@ public class Projectiles {
 	int bounces;
 	float speed;
 	private int numFrames;
+	private int maxFrames = 50;
 	private long duration;
 	private long starttime;
 	private boolean loopIt;
@@ -22,12 +23,17 @@ public class Projectiles {
 		x = posx;
 		y = posy;
 		bullet = EZ.addGroup();
-		
-		frames = new EZCircle[6];
-		for (int i = 0; i < 6; i++) {
+
+		frames = new EZCircle[maxFrames];
+		for (int i = 0; i < maxFrames; i++) {
 			frames[i] = EZ.addCircle(posx, posy, rg.nextInt(15) + 5, rg.nextInt(15) + 5,
 					new Color(rg.nextInt(250), rg.nextInt(250), rg.nextInt(250)), true);
 			frames[i].hide();
+			bullet.addElement(frames[i]);
+			if (i >= maxFrames - 1) {
+				i = 0;
+			}
+
 		}
 		numFrames = frames.length;
 		setLoop(true);
@@ -35,8 +41,67 @@ public class Projectiles {
 		stopped = false;
 		visibility = true;
 	}
-	void translateTo(int posx, int posy){
-		
+
+	void translateBy(int posx, int posy) {
+		bullet.translateBy(posx, posy);
+
+	}
+
+	void setLoop(boolean loop) {
+		loopIt = loop;
+	}
+
+	void restart() {
+		starting = true;
+	}
+
+	void stop() {
+		stopped = true;
+	}
+
+	void hide() {
+		visibility = false;
+		for (int i = 0; i < numFrames; i++)
+			frames[i].hide();
+	}
+
+	void show() {
+		visibility = true;
+	}
+
+	boolean go() {
+		if (stopped)
+			return false;
+		if (starting) {
+			starttime = System.currentTimeMillis();
+			starting = false;
+		}
+		if ((System.currentTimeMillis() - starttime) > duration) {
+			if (loopIt) {
+				restart();
+				return true;
+			}
+
+			return false;
+		}
+
+		float normTime = (float) (System.currentTimeMillis() - starttime) / (float) duration;
+
+		int currentFrame = (int) (((float) numFrames) * normTime);
+		if (currentFrame > numFrames - 1)
+			currentFrame = numFrames - 1;
+
+		for (int i = 0; i < numFrames; i++) {
+			if (i != currentFrame)
+				frames[i].hide();
+		}
+
+		if (visibility)
+			frames[currentFrame].show();
+		else
+			frames[currentFrame].hide();
+		return true;
+
 	}
 
 }
