@@ -1,6 +1,8 @@
+import java.util.Random;
 
 public class PowerUp {
-	private int x, y;
+	Random rg = new Random();
+	private float x, y;
 	private Name name;
 	private static enum Name {
 		weaponUpgrade,
@@ -8,7 +10,12 @@ public class PowerUp {
 		speedUp,
 		sheild,
 	}
-	
+	public PowerUp(Name n, float posx, float posy){
+		name = Name.values()[rg.nextInt(Name.values().length)];
+		x = posx;
+		y = posy;
+
+	}
 }
 	
 
