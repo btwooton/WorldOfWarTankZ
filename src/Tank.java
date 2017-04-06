@@ -75,8 +75,11 @@ public class Tank {
 	//public void projectileCollide(Projectiles projectile) {
 	//}
 	
-	public void fireProjectile() {
+	public void fireProjectile(DummyProjectiles projectile) {
 		
+		projectile.translateTo(x, y);
+		projectile.setAngle(tankSprite.getRotation());
+		projectile.setOnScreen();
 	}
 
 }
