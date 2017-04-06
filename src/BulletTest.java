@@ -11,7 +11,7 @@ public class BulletTest {
 
 		while (true) {
 			bulletTest.go();
-			
+
 			EZ.refreshScreen();
 		}
 
