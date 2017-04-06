@@ -4,6 +4,7 @@ import java.util.Random;
 public class Projectiles {
 	EZGroup bullet;
 	private EZCircle[] frames;
+	private EZCircle[] wepUp;
 	int x, y;
 	float directionX;
 	float directionY;
@@ -17,6 +18,7 @@ public class Projectiles {
 	private boolean starting;
 	private boolean stopped;
 	private boolean visibility;
+	private boolean upGrade;
 
 	public Projectiles(int posx, int posy) {
 		Random rg = new Random();
@@ -41,10 +43,17 @@ public class Projectiles {
 		stopped = false;
 		visibility = true;
 	}
-
 	void translateBy(int posx, int posy) {
 		bullet.translateBy(posx, posy);
 
+	}
+
+	void getX() {
+		bullet.getXCenter();
+	}
+
+	void getY() {
+		bullet.getYCenter();
 	}
 
 	void setLoop(boolean loop) {
