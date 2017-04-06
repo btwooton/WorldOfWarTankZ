@@ -8,6 +8,7 @@ public class Prototype3 {
 	
 	static int screenWidth = 1300;
 	static int screenHeight = 700;
+	static Projectiles[] projectiles = new Projectiles[100];
 
 	public static void main(String[] args) {
 		EZ.initialize(screenWidth, screenHeight); // initialize the window

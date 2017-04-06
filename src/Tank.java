@@ -37,23 +37,46 @@ public class Tank {
 		int leftEdge = (int)x - (w/2);
 		int rightEdge = (int)x + (w/2);
 		
-		if (EZInteraction.isKeyDown(directionUp) && topEdge > 0) {
+		if (EZInteraction.isKeyDown(directionUp)) {
 			tankSprite.moveForward(speed);
+			x = tankSprite.getXCenter();
+			y = tankSprite.getYCenter();
 		}
-		else if (EZInteraction.isKeyDown(directionLeft) && leftEdge > 0) {
+		if (EZInteraction.isKeyDown(directionLeft)) {
 			tankSprite.turnLeft(1);
+			x = tankSprite.getXCenter();
+			y = tankSprite.getYCenter();
 		}
-		else if (EZInteraction.isKeyDown(directionDown) && bottomEdge < worldHeight) {
+		if (EZInteraction.isKeyDown(directionDown)) {
 			tankSprite.moveForward(-speed);
+			x = tankSprite.getXCenter();
+			y = tankSprite.getYCenter();
 		}
-		else if (EZInteraction.isKeyDown(directionRight) && rightEdge < worldWidth) {
+		if (EZInteraction.isKeyDown(directionRight)) {
 			tankSprite.turnRight(1);
+			x = tankSprite.getXCenter();
+			y = tankSprite.getYCenter();
+		}
+		
+		if (bottomEdge > worldHeight) {
+			tankSprite.translateTo(x, worldHeight - (h/2));
+		}
+		if (topEdge < 0) {
+			tankSprite.translateTo(x, h/2);
+		}
+		if (leftEdge < 0) {
+			tankSprite.translateTo(w/2, y);
+		}
+		if (rightEdge > worldWidth) {
+			tankSprite.translateTo(worldWidth - (w/2), y);
 		}
 	}
 	
 	//public void projectileCollide(Projectiles projectile) {
 	//}
 	
-	//public void fireProjectile()
+	public void fireProjectile() {
+		
+	}
 
 }
