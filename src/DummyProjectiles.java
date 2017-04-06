@@ -8,6 +8,7 @@ public class DummyProjectiles {
 
 	private float speed;
 	private boolean onScreen;
+	private int spawnedBy;
 
 
 	public DummyProjectiles(int posx, int posy) {
@@ -16,6 +17,7 @@ public class DummyProjectiles {
 		y = posy;
 		speed = 3.0f;
 		onScreen = false;
+		spawnedBy = 0;
 		bullet = EZ.addCircle(x, y, 20, 20, Color.RED, true);
 		
 	}
@@ -65,6 +67,14 @@ public class DummyProjectiles {
 	
 	void setOnScreen() {
 		onScreen = true;
+	}
+	
+	void setSpawnedBy(int playerID) {
+		spawnedBy = playerID;
+	}
+	
+	int getSpawnedBy() {
+		return spawnedBy;
 	}
 
 

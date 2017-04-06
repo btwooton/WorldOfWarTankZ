@@ -9,9 +9,10 @@ public class Tank {
 	private int weaponPower;
 	private char directionUp, directionLeft, directionDown, directionRight;
 	private boolean shielded;
+	private int playerID;
 
 	
-	public Tank(String imageName, int _x, int _y, char[] directions) {
+	public Tank(String imageName, int _x, int _y, int _playerID, char[] directions) {
 		tankSprite = EZ.addImage(imageName, _x, _y);
 		hp = 100;
 		speed = 2;
@@ -21,6 +22,7 @@ public class Tank {
 		h = tankSprite.getHeight();
 		weaponPower = 10;
 		shielded = false;
+		playerID = _playerID;
 		directionUp = directions[0];
 		directionLeft = directions[1];
 		directionDown = directions[2];
@@ -72,14 +74,18 @@ public class Tank {
 		}
 	}
 	
-	//public void projectileCollide(Projectiles projectile) {
-	//}
+	public boolean collideWithProjectiles(DummyProjectiles projectile) {
+		return tankSprite.isPointInElement(projectile.getX(), projectile.getY()) &&
+				playerID != projectile.getSpawnedBy();	
+	}
+	
 	
 	public void fireProjectile(DummyProjectiles projectile) {
 		
 		projectile.translateTo(x, y);
 		projectile.setAngle(tankSprite.getRotation());
 		projectile.setOnScreen();
+		projectile.setSpawnedBy(playerID);
 	}
 
 }

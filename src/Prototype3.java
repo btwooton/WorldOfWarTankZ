@@ -22,9 +22,9 @@ public class Prototype3 {
 
 		// draw my character
 		Tank Player1 = new Tank("Tank.png", screenWidth / 2 , screenHeight / 2,
-				new char[] {'w','a','s','d'});
+				1, new char[] {'w','a','s','d'});
 		Tank Player2 = new Tank("Tank.png", screenWidth/4, screenHeight/4,
-				new char[] {'i','j','k','l'});
+				2, new char[] {'i','j','k','l'});
 		
 		for (int i = 0; i < projectiles.length; i++) {
 			projectiles[i] = new DummyProjectiles(-100, -100);
@@ -62,8 +62,17 @@ public class Prototype3 {
 					  if (projectiles[i].getLeftEdge() > screenWidth + 20) {
 						  projectiles[i].setOffScreen();
 					  }
+					  if (Player1.collideWithProjectiles(projectiles[i])) {
+						  projectiles[i].setOffScreen();
+						  projectiles[i].translateTo(-100, -100);
+					  }
+					  if (Player2.collideWithProjectiles(projectiles[i])) {
+						  projectiles[i].setOffScreen();
+						  projectiles[i].translateTo(-100, -100);
+					  }
 				  }    
 			  }
+
 			  
 
 	
