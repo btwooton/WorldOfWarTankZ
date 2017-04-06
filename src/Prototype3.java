@@ -36,20 +36,36 @@ public class Prototype3 {
 			  Player1.moveAround(screenHeight, screenWidth);
 			  Player2.moveAround(screenHeight, screenWidth);
 			  
-			  if (EZInteraction.wasKeyPressed(KeyEvent.VK_SPACE)) {
+			  if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
 				 Player1.fireProjectile(projectiles[nextProjectile]);
-				 nextProjectile = (nextProjectile + 1) % 100;
+				 nextProjectile = (nextProjectile + 1) % projectiles.length;
 			  }
 			  
-			  if (EZInteraction.wasKeyPressed(KeyEvent.VK_ENTER)) {
+			  if (EZInteraction.wasKeyReleased(KeyEvent.VK_ENTER)) {
 				  Player2.fireProjectile(projectiles[nextProjectile]);
-				  nextProjectile = (nextProjectile + 1) % 100;
+				  nextProjectile = (nextProjectile + 1) % projectiles.length;
 			  }
 			  
-			  for (int i = 0; i < nextProjectile; i++) {
-				  projectiles[i].moveForward();
+			  for (int i = 0; i < projectiles.length; i++) {
 				  
+				  if (projectiles[i].isOnScreen()) {
+					  projectiles[i].moveForward();
+					  if (projectiles[i].getBottomEdge() < -20) {
+						  projectiles[i].setOffScreen();
+					  }
+					  if (projectiles[i].getTopEdge() > screenHeight + 20) {
+						  projectiles[i].setOffScreen();
+					  }
+					  if (projectiles[i].getRightEdge() < -20) {
+						  projectiles[i].setOffScreen();
+					  }
+					  if (projectiles[i].getLeftEdge() > screenWidth + 20) {
+						  projectiles[i].setOffScreen();
+					  }
+				  }    
 			  }
+			  
+
 	
 		  
 		  EZ.refreshScreen();

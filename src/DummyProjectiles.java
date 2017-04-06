@@ -2,26 +2,13 @@ import java.awt.Color;
 import java.util.Random;
 
 public class DummyProjectiles {
-	/*EZGroup bullet;
-	private EZCircle[] frames;
-	private EZCircle[] wepUp;*/
 	
 	private EZCircle bullet;
-	int x, y;
-	/*float directionX;
-	float directionY;
-	int bounces;*/
-	float speed;
-	boolean onScreen;
-	/*private int numFrames;
-	private int maxFrames = 50;
-	private long duration;
-	private long starttime;
-	private boolean loopIt;
-	private boolean starting;
-	private boolean stopped;
-	private boolean visibility;
-	private boolean upGrade;*/
+	private int x, y;
+
+	private float speed;
+	private boolean onScreen;
+
 
 	public DummyProjectiles(int posx, int posy) {
 		Random rg = new Random();
@@ -38,10 +25,6 @@ public class DummyProjectiles {
 	
 	void translateTo(double x, double y) {
 		bullet.translateTo(x, y);
-	}
-	
-	void stopProjectile() {
-		bullet.moveForward(0);
 	}
 
 	int getX() {
@@ -74,6 +57,10 @@ public class DummyProjectiles {
 	
 	void setOffScreen() {
 		onScreen = false;
+	}
+	
+	boolean isOnScreen() {
+		return onScreen;
 	}
 	
 	void setOnScreen() {
