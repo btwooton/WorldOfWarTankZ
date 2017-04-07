@@ -2,115 +2,86 @@ import java.awt.Color;
 import java.util.Random;
 
 public class Projectiles {
-	EZGroup bullet;
 	private EZCircle[] frames;
-	private EZCircle[] wepUp;
+	private EZGroup bullet;
 	int x, y;
-	float directionX;
-	float directionY;
 	int bounces;
 	float speed;
-	private int numFrames;
+	private boolean onScreen;
+	private long time;
 	private int maxFrames = 50;
-	private long duration;
-	private long starttime;
-	private boolean loopIt;
-	private boolean starting;
-	private boolean stopped;
-	private boolean visibility;
-	private boolean upGrade;
-
+	private int frameIndex;
+	
 	public Projectiles(int posx, int posy) {
 		Random rg = new Random();
 		x = posx;
 		y = posy;
+		frameIndex = 0;
 		bullet = EZ.addGroup();
-
 		frames = new EZCircle[maxFrames];
 		for (int i = 0; i < maxFrames; i++) {
 			frames[i] = EZ.addCircle(posx, posy, rg.nextInt(100) + 50, rg.nextInt(100) + 50,
 					new Color(rg.nextInt(250), rg.nextInt(250), rg.nextInt(250)), true);
-			frames[i].hide();
+			System.out.println(frames[i]);
 			bullet.addElement(frames[i]);
-			if (i >= maxFrames - 1) {
-				i = 0;
-			}
-
 		}
-		numFrames = frames.length;
-		setLoop(true);
-		starting = true;
-		stopped = false;
-		visibility = true;
-	}
-	void translateBy(int posx, int posy) {
-		bullet.translateBy(posx, posy);
-
-	}
-
-	void getX() {
-		bullet.getXCenter();
-	}
-
-	void getY() {
-		bullet.getYCenter();
-	}
-
-	void setLoop(boolean loop) {
-		loopIt = loop;
-	}
-
-	void restart() {
-		starting = true;
-	}
-
-	void stop() {
-		stopped = true;
 	}
 
 	void hide() {
-		visibility = false;
-		for (int i = 0; i < numFrames; i++)
-			frames[i].hide();
+		bullet.hide();
 	}
 
-	void show() {
-		visibility = true;
+	void translateTo(double x, double y) {
+		bullet.translateTo(x, y);
+	}
+	int getX() {
+		return bullet.getXCenter();
 	}
 
-	boolean go() {
-		if (stopped)
-			return false;
-		if (starting) {
-			starttime = System.currentTimeMillis();
-			starting = false;
-		}
-		if ((System.currentTimeMillis() - starttime) > duration) {
-			if (loopIt) {
-				restart();
-				return true;
-			}
-
-			return false;
-		}
-
-		float normTime = (float) (System.currentTimeMillis() - starttime) / (float) duration;
-
-		int currentFrame = (int) (((float) numFrames) * normTime);
-		if (currentFrame > numFrames - 1)
-			currentFrame = numFrames - 1;
-
-		for (int i = 0; i < numFrames; i++) {
-			if (i != currentFrame)
-				frames[i].hide();
-		}
-
-		if (visibility)
-			frames[currentFrame].show();
-		else
-			frames[currentFrame].hide();
-		return true;
-
+	int getY() {
+		return bullet.getYCenter();
+	}
+	
+	void setAngle(double rotationValue) {
+		bullet.rotateTo(rotationValue);
+	}
+	
+	int getTopEdge() {
+		return bullet.getYCenter() - bullet.getHeight()/2;
+	}
+	
+	int getBottomEdge() {
+		return bullet.getYCenter() + bullet.getHeight()/2;
+	}
+	
+	int getRightEdge() {
+		return bullet.getXCenter() + bullet.getWidth()/2;
+	}
+	
+	int getLeftEdge() {
+		return bullet.getXCenter() - bullet.getWidth()/2;
+	}
+	
+	void setOffScreen() {
+		onScreen = false;
+	}
+	
+	boolean isOnScreen() {
+		return onScreen;
+	}
+	
+	void setOnScreen() {
+		onScreen = true;
 	}
 
+	void fire() {
+		if (frameIndex < maxFrames) {
+			hide();
+			frames[frameIndex].show();
+			frameIndex++;
+		} else {
+			frameIndex = 0;
+
+		}
+	}
 }
