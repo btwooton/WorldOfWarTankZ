@@ -31,10 +31,13 @@ public class Prototype3 {
 		}
 
 
-		while(true) {
+		while(!(Player1.isDead() || Player2.isDead())) {
 			
 			  Player1.moveAround(screenHeight, screenWidth);
 			  Player2.moveAround(screenHeight, screenWidth);
+			  
+			  System.out.println(Player1.getRotation());
+			  System.out.println(Player2.getRotation());
 			  
 			  if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
 				 Player1.fireProjectile(projectiles[nextProjectile]);
@@ -50,8 +53,25 @@ public class Prototype3 {
 				  
 				  if (projectiles[i].isOnScreen()) {
 					  projectiles[i].moveForward();
+					  System.out.println(projectiles[i].getAngle());
+					  if (projectiles[i].getBottomEdge() >= screenHeight &&
+							  projectiles[i].getRicochetCount() > 0) {
+						  projectiles[i].ricochet(screenHeight, screenWidth);
+					  }
+					  if (projectiles[i].getTopEdge() <= 0 &&
+							  projectiles[i].getRicochetCount() > 0) {
+						  projectiles[i].ricochet(screenHeight, screenWidth);
+					  }
+					  if (projectiles[i].getLeftEdge() <= 0 &&
+							  projectiles[i].getRicochetCount() > 0) {
+						  projectiles[i].ricochet(screenHeight, screenWidth);
+					  }
+					  if (projectiles[i].getRightEdge() >= screenWidth &&
+							  projectiles[i].getRicochetCount() > 0) {
+						  projectiles[i].ricochet(screenHeight, screenWidth);
+					  }
 					  if (projectiles[i].getBottomEdge() < -20) {
-						  projectiles[i].setOffScreen();
+						 projectiles[i].setOffScreen();
 					  }
 					  if (projectiles[i].getTopEdge() > screenHeight + 20) {
 						  projectiles[i].setOffScreen();
@@ -65,20 +85,21 @@ public class Prototype3 {
 					  if (Player1.collideWithProjectiles(projectiles[i])) {
 						  projectiles[i].setOffScreen();
 						  projectiles[i].translateTo(-100, -100);
+						  Player1.takeDamage(projectiles[i].getFirePower());
 					  }
 					  if (Player2.collideWithProjectiles(projectiles[i])) {
 						  projectiles[i].setOffScreen();
 						  projectiles[i].translateTo(-100, -100);
+						  Player2.takeDamage(projectiles[i].getFirePower());
 					  }
 				  }    
 			  }
-
 			  
-
-	
 		  
 		  EZ.refreshScreen();
 	  }
+	EZ.removeAllEZElements();
+	EZ.closeWindowWithIndex(0);
 
 	}
 

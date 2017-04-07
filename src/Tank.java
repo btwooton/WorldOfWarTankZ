@@ -10,6 +10,7 @@ public class Tank {
 	private char directionUp, directionLeft, directionDown, directionRight;
 	private boolean shielded;
 	private int playerID;
+	private boolean dead;
 
 	
 	public Tank(String imageName, int _x, int _y, int _playerID, char[] directions) {
@@ -23,14 +24,18 @@ public class Tank {
 		weaponPower = 10;
 		shielded = false;
 		playerID = _playerID;
+		dead = false;
 		directionUp = directions[0];
 		directionLeft = directions[1];
 		directionDown = directions[2];
 		directionRight = directions[3];
 	}
 	
-	public void takeDamage(float amount) {
+	public void takeDamage(int amount) {
 		hp -= amount;
+		if (hp <= 0) {
+			dead = true;	
+		}
 	}
 	
 	public void moveAround(int worldHeight, int worldWidth) {
@@ -83,9 +88,22 @@ public class Tank {
 	public void fireProjectile(DummyProjectiles projectile) {
 		
 		projectile.translateTo(x, y);
-		projectile.setAngle(tankSprite.getRotation());
+		
+		projectile.setAngle(Math.floorMod((int)tankSprite.getRotation(), 360));
+	
 		projectile.setOnScreen();
 		projectile.setSpawnedBy(playerID);
+		projectile.setFirePower(weaponPower);
+		projectile.resetSpeed();
+		projectile.resetRicochetCount(1);
+	}
+	
+	public boolean isDead() {
+		return dead;
+	}
+	
+	public double getRotation() {
+		return tankSprite.getRotation();
 	}
 
 }
