@@ -10,9 +10,9 @@ public class BulletTest {
 		int spd = 2;
 		int dX=2;
 		int posX = 0;
-		int posY = height/2;
+		int posY = 0;
 		EZ.initialize(width, height);
-		Projectiles bulletTest = new Projectiles(posX, posY);
+		Projectiles bulletTest = new Projectiles(0, height/2);
 		while(true){
 			bulletTest.fire();
 			if( posX < width){

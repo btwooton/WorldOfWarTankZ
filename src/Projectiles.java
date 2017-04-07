@@ -9,9 +9,13 @@ public class Projectiles {
 	float speed;
 	private boolean onScreen;
 	private long time;
-	private int maxFrames = 50;
+	private int maxFrames = 20;
 	private int frameIndex;
-	
+	private int spawnedBy;
+	private int redIndex;
+	private int greenIndex;
+	private int blueIndex;
+
 	public Projectiles(int posx, int posy) {
 		Random rg = new Random();
 		x = posx;
@@ -20,8 +24,8 @@ public class Projectiles {
 		bullet = EZ.addGroup();
 		frames = new EZCircle[maxFrames];
 		for (int i = 0; i < maxFrames; i++) {
-			frames[i] = EZ.addCircle(posx, posy, rg.nextInt(100) + 50, rg.nextInt(100) + 50,
-					new Color(rg.nextInt(250), rg.nextInt(250), rg.nextInt(250)), true);
+			frames[i] = EZ.addCircle(posx, posy, rg.nextInt(20) + 5, rg.nextInt(10) + 5,
+					new Color(rg.nextInt(200) + 50, rg.nextInt(200) + 50, rg.nextInt(200) + 50), true);
 			System.out.println(frames[i]);
 			bullet.addElement(frames[i]);
 		}
@@ -31,9 +35,14 @@ public class Projectiles {
 		bullet.hide();
 	}
 
+	void moveForward() {
+		bullet.moveForward(speed);
+	}
+
 	void translateTo(double x, double y) {
 		bullet.translateTo(x, y);
 	}
+
 	int getX() {
 		return bullet.getXCenter();
 	}
@@ -41,37 +50,45 @@ public class Projectiles {
 	int getY() {
 		return bullet.getYCenter();
 	}
-	
+
 	void setAngle(double rotationValue) {
 		bullet.rotateTo(rotationValue);
 	}
-	
+
 	int getTopEdge() {
-		return bullet.getYCenter() - bullet.getHeight()/2;
+		return bullet.getYCenter() - bullet.getHeight() / 2;
 	}
-	
+
 	int getBottomEdge() {
-		return bullet.getYCenter() + bullet.getHeight()/2;
+		return bullet.getYCenter() + bullet.getHeight() / 2;
 	}
-	
+
 	int getRightEdge() {
-		return bullet.getXCenter() + bullet.getWidth()/2;
+		return bullet.getXCenter() + bullet.getWidth() / 2;
 	}
-	
+
 	int getLeftEdge() {
-		return bullet.getXCenter() - bullet.getWidth()/2;
+		return bullet.getXCenter() - bullet.getWidth() / 2;
 	}
-	
+
 	void setOffScreen() {
 		onScreen = false;
 	}
-	
+
 	boolean isOnScreen() {
 		return onScreen;
 	}
-	
+
 	void setOnScreen() {
 		onScreen = true;
+	}
+
+	void setSpawnedBy(int playerID) {
+		spawnedBy = playerID;
+	}
+
+	int getSpawnedBy() {
+		return spawnedBy;
 	}
 
 	void fire() {
