@@ -21,10 +21,13 @@ public class Projectiles {
 		x = posx;
 		y = posy;
 		frameIndex = 0;
+		speed = 3.0f;
+		onScreen = false;
+		spawnedBy = 0;
 		bullet = EZ.addGroup();
 		frames = new EZCircle[maxFrames];
 		for (int i = 0; i < maxFrames; i++) {
-			frames[i] = EZ.addCircle(posx, posy, rg.nextInt(20) + 5, rg.nextInt(10) + 5,
+			frames[i] = EZ.addCircle(posx, posy, rg.nextInt(25) + 10, rg.nextInt(25) + 10,
 					new Color(rg.nextInt(200) + 50, rg.nextInt(200) + 50, rg.nextInt(200) + 50), true);
 			System.out.println(frames[i]);
 			bullet.addElement(frames[i]);

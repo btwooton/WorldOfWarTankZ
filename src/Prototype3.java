@@ -30,7 +30,7 @@ public class Prototype3 {
 			projectiles[i] = new DummyProjectiles(-100, -100);
 		}
 
-
+  
 		while(!(Player1.isDead() || Player2.isDead())) {
 			
 			  Player1.moveAround(screenHeight, screenWidth);
