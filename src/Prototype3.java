@@ -1,6 +1,4 @@
 import java.awt.Color;
-
-
 import java.awt.event.KeyEvent;
 import java.io.FileReader;
 import java.util.Scanner;
@@ -35,10 +33,7 @@ public class Prototype3 {
 			
 			  Player1.moveAround(screenHeight, screenWidth);
 			  Player2.moveAround(screenHeight, screenWidth);
-			  
-			  System.out.println(Player1.getRotation());
-			  System.out.println(Player2.getRotation());
-			  
+			  			  
 			  if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
 				 Player1.fireProjectile(projectiles[nextProjectile]);
 				 nextProjectile = (nextProjectile + 1) % projectiles.length;
@@ -52,43 +47,21 @@ public class Prototype3 {
 			  for (int i = 0; i < projectiles.length; i++) {
 				  
 				  if (projectiles[i].isOnScreen()) {
+					  
 					  projectiles[i].moveForward();
-					  System.out.println(projectiles[i].getAngle());
-					  if (projectiles[i].getBottomEdge() >= screenHeight &&
-							  projectiles[i].getRicochetCount() > 0) {
-						  projectiles[i].ricochet(screenHeight, screenWidth);
-					  }
-					  if (projectiles[i].getTopEdge() <= 0 &&
-							  projectiles[i].getRicochetCount() > 0) {
-						  projectiles[i].ricochet(screenHeight, screenWidth);
-					  }
-					  if (projectiles[i].getLeftEdge() <= 0 &&
-							  projectiles[i].getRicochetCount() > 0) {
-						  projectiles[i].ricochet(screenHeight, screenWidth);
-					  }
-					  if (projectiles[i].getRightEdge() >= screenWidth &&
-							  projectiles[i].getRicochetCount() > 0) {
-						  projectiles[i].ricochet(screenHeight, screenWidth);
-					  }
-					  if (projectiles[i].getBottomEdge() < -20) {
-						 projectiles[i].setOffScreen();
-					  }
-					  if (projectiles[i].getTopEdge() > screenHeight + 20) {
-						  projectiles[i].setOffScreen();
-					  }
-					  if (projectiles[i].getRightEdge() < -20) {
-						  projectiles[i].setOffScreen();
-					  }
-					  if (projectiles[i].getLeftEdge() > screenWidth + 20) {
-						  projectiles[i].setOffScreen();
-					  }
+					  
+					  projectiles[i].ricochet(screenHeight, screenWidth);
+					  
+					  projectiles[i].setOffScreen(screenHeight, screenWidth, false);
+					  
 					  if (Player1.collideWithProjectiles(projectiles[i])) {
-						  projectiles[i].setOffScreen();
+						  projectiles[i].setOffScreen(screenHeight, screenWidth, true);
 						  projectiles[i].translateTo(-100, -100);
 						  Player1.takeDamage(projectiles[i].getFirePower());
 					  }
+					  
 					  if (Player2.collideWithProjectiles(projectiles[i])) {
-						  projectiles[i].setOffScreen();
+						  projectiles[i].setOffScreen(screenHeight, screenWidth, true);
 						  projectiles[i].translateTo(-100, -100);
 						  Player2.takeDamage(projectiles[i].getFirePower());
 					  }

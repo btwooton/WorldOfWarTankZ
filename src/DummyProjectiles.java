@@ -64,8 +64,27 @@ public class DummyProjectiles {
 		return bullet.getXCenter() - bullet.getWidth()/2;
 	}
 	
-	void setOffScreen() {
-		onScreen = false;
+	void setOffScreen(int worldHeight, int worldWidth, boolean hasCollided) {
+		
+		if (this.getBottomEdge() < -20) {
+			onScreen = false;
+		  }
+		  
+		  if (this.getTopEdge() > worldHeight + 20) {
+			  onScreen = false;
+		  }
+		  
+		  if (this.getRightEdge() < -20) {
+			  onScreen = false;
+		  }
+		  
+		  if (this.getLeftEdge() > worldWidth + 20) {
+			  onScreen = false;
+		  }
+		  
+		  if (hasCollided) {
+			  onScreen = false;
+		  }
 	}
 	
 	boolean isOnScreen() {
@@ -101,25 +120,27 @@ public class DummyProjectiles {
 	}
 	
 	void ricochet(int worldHeight, int worldWidth) {
-		if (ricochetCount > 0) {
-			ricochetCount--;
-		}
-		if (this.getBottomEdge() >= worldHeight) {
+
+		if (this.getBottomEdge() >= worldHeight && ricochetCount > 0) {
 			bullet.rotateTo(180 - bullet.getRotation());
 			speed = -speed;
+			ricochetCount--;
 			
 		}
-		else if (this.getLeftEdge() <= 0) {
+		else if (this.getLeftEdge() <= 0 && ricochetCount > 0) {
 			bullet.rotateTo(360 - bullet.getRotation());
 			speed = -speed;
+			ricochetCount--;
 		}
-		else if (this.getRightEdge() >= worldWidth) {
+		else if (this.getRightEdge() >= worldWidth && ricochetCount > 0) {
 			bullet.rotateTo(360 - bullet.getRotation());
 			speed = -speed;
+			ricochetCount--;
 		}
-		else if (this.getTopEdge() <= 0) {
+		else if (this.getTopEdge() <= 0 && ricochetCount > 0) {
 			bullet.rotateTo(540 - bullet.getRotation());
 			speed = -speed;
+			ricochetCount--;
 		}
 	}
 	
