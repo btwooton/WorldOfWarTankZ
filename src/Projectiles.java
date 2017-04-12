@@ -14,10 +14,12 @@ public class Projectiles {
 	private int maxFrames = 6;
 	private int frameIndex;
 	private int spawnedBy;
+	private int firePower;
+	private int ricochetCount;
 	private int redIndex, greenIndex, blueIndex, widthIndex, heightIndex;
 	Scanner s;
 
-	public Projectiles(int posx, int posy, String text)throws java.io.IOException {
+	public Projectiles(int posx, int posy, String text) throws java.io.IOException {
 		Random rg = new Random();
 		textFile1 = text;
 		s = new Scanner(new FileReader(textFile1));
@@ -36,9 +38,12 @@ public class Projectiles {
 			redIndex = s.nextInt();
 			greenIndex = s.nextInt();
 			blueIndex = s.nextInt();
-			frames[i] = EZ.addCircle(posx, posy, widthIndex, heightIndex,new Color(redIndex, greenIndex, blueIndex), true);
+			frames[i] = EZ.addCircle(posx, posy, widthIndex, heightIndex, new Color(redIndex, greenIndex, blueIndex),
+					true);
 			bullet.addElement(frames[i]);
-			System.out.println(widthIndex + " " + heightIndex + " " + redIndex + " " + greenIndex + " " + blueIndex + "\n");
+			System.out.println(frames[i]);
+			System.out.println(
+					widthIndex + " " + heightIndex + " " + redIndex + " " + greenIndex + " " + blueIndex + "\n");
 		}
 	}
 
@@ -82,6 +87,29 @@ public class Projectiles {
 		return bullet.getXCenter() - bullet.getWidth() / 2;
 	}
 
+	void setOffScreen(int worldHeight, int worldWidth, boolean hasCollided) {
+
+		if (this.getBottomEdge() < -20) {
+			onScreen = false;
+		}
+
+		if (this.getTopEdge() > worldHeight + 20) {
+			onScreen = false;
+		}
+
+		if (this.getRightEdge() < -20) {
+			onScreen = false;
+		}
+
+		if (this.getLeftEdge() > worldWidth + 20) {
+			onScreen = false;
+		}
+
+		if (hasCollided) {
+			onScreen = false;
+		}
+	}
+
 	void setOffScreen() {
 		onScreen = false;
 	}
@@ -101,6 +129,48 @@ public class Projectiles {
 	int getSpawnedBy() {
 		return spawnedBy;
 	}
+	void setFirePower(int power) {
+		firePower = power;
+	}
+
+	int getFirePower() {
+		return firePower;
+	}
+
+	int getRicochetCount() {
+		return ricochetCount;
+	}
+
+	void resetRicochetCount(int value) {
+		ricochetCount = value;
+	}
+
+	void ricochet(int worldHeight, int worldWidth) {
+
+		if (this.getBottomEdge() >= worldHeight && ricochetCount > 0) {
+			bullet.rotateTo(180 - bullet.getRotation());
+			speed = -speed;
+			ricochetCount--;
+
+		} else if (this.getLeftEdge() <= 0 && ricochetCount > 0) {
+			bullet.rotateTo(360 - bullet.getRotation());
+			speed = -speed;
+			ricochetCount--;
+		} else if (this.getRightEdge() >= worldWidth && ricochetCount > 0) {
+			bullet.rotateTo(360 - bullet.getRotation());
+			speed = -speed;
+			ricochetCount--;
+		} else if (this.getTopEdge() <= 0 && ricochetCount > 0) {
+			bullet.rotateTo(540 - bullet.getRotation());
+			speed = -speed;
+			ricochetCount--;
+		}
+	}
+
+	void resetSpeed() {
+		speed = Math.abs(speed);
+	}
+
 
 	void fire() {
 		if (frameIndex < maxFrames) {

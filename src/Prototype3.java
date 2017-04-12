@@ -7,12 +7,12 @@ public class Prototype3 {
 	
 	static int screenWidth = 1300;
 	static int screenHeight = 700;
-	static DummyProjectiles[] projectiles = new DummyProjectiles[100];
+	static Projectiles[] projectiles = new Projectiles[100];
 	static int nextProjectile = 0;
 	
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws java.io.IOException {
 		EZ.initialize(screenWidth, screenHeight); // initialize the window
 
 		// set to white background
@@ -25,7 +25,7 @@ public class Prototype3 {
 				2, new char[] {'i','j','k','l'});
 		
 		for (int i = 0; i < projectiles.length; i++) {
-			projectiles[i] = new DummyProjectiles(-100, -100);
+			projectiles[i] = new Projectiles(-100, -100,"bulletColor");
 		}
 
   
