@@ -1,23 +1,26 @@
 import java.awt.Color;
+import java.io.FileReader;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Projectiles {
 	private EZCircle[] frames;
 	private EZGroup bullet;
+	private String textFile1;
 	int x, y;
 	int bounces;
 	float speed;
 	private boolean onScreen;
-	private long time;
-	private int maxFrames = 20;
+	private int maxFrames = 6;
 	private int frameIndex;
 	private int spawnedBy;
-	private int redIndex;
-	private int greenIndex;
-	private int blueIndex;
+	private int redIndex, greenIndex, blueIndex, widthIndex, heightIndex;
+	Scanner s;
 
-	public Projectiles(int posx, int posy) {
+	public Projectiles(int posx, int posy, String text)throws java.io.IOException {
 		Random rg = new Random();
+		textFile1 = text;
+		s = new Scanner(new FileReader(textFile1));
 		x = posx;
 		y = posy;
 		frameIndex = 0;
@@ -26,11 +29,16 @@ public class Projectiles {
 		spawnedBy = 0;
 		bullet = EZ.addGroup();
 		frames = new EZCircle[maxFrames];
+
 		for (int i = 0; i < maxFrames; i++) {
-			frames[i] = EZ.addCircle(posx, posy, rg.nextInt(25) + 10, rg.nextInt(25) + 10,
-					new Color(rg.nextInt(200) + 50, rg.nextInt(200) + 50, rg.nextInt(200) + 50), true);
-			System.out.println(frames[i]);
+			widthIndex = s.nextInt();
+			heightIndex = s.nextInt();
+			redIndex = s.nextInt();
+			greenIndex = s.nextInt();
+			blueIndex = s.nextInt();
+			frames[i] = EZ.addCircle(posx, posy, widthIndex, heightIndex,new Color(redIndex, greenIndex, blueIndex), true);
 			bullet.addElement(frames[i]);
+			System.out.println(widthIndex + " " + heightIndex + " " + redIndex + " " + greenIndex + " " + blueIndex + "\n");
 		}
 	}
 
