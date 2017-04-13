@@ -5,18 +5,47 @@ import java.util.Scanner;
 
 public class Prototype3 {
 	
-	static int screenWidth = 1300;
-	static int screenHeight = 700;
+	static int x, y, HealthP1, width, height, Swidth, Sheight;
+	static int screenWidth = Swidth * 32;
+	static int screenHeight = Sheight * 32;
 	static Projectiles[] projectiles = new Projectiles[100];
 	static int nextProjectile = 0;
-	
-
 
 	public static void main(String[] args) throws java.io.IOException {
-		EZ.initialize(screenWidth, screenHeight); // initialize the window
+		Scanner fileScanner = new Scanner(new FileReader("MapMaker.txt"));
+
+		Swidth = fileScanner.nextInt();
+		Sheight = fileScanner.nextInt();
+		String inputText = fileScanner.nextLine();
+
+		EZ.initialize(Swidth * 32, Sheight * 32); // initialize the window
 
 		// set to white background
 		EZ.setBackgroundColor(new Color(255, 255, 255));
+		
+		for (int line = 0; line < Sheight; line++) {
+
+			inputText = fileScanner.nextLine();
+			System.out.println(inputText);
+
+			for (int i = 0; i < inputText.length(); i++) {
+
+				char ch = inputText.charAt(i);
+
+				switch (ch) {
+				case 'D':
+					EZ.addImage("dirt.png", i * 32 + 16, line * 32 + 16);
+					break;
+				case 'G':
+					EZ.addImage("grass.png", i * 32 + 16, line * 32 + 16);
+					break;
+				default:
+					// Do nothing
+					break;
+
+				}
+			}
+		}
 
 		// draw my character
 		Tank Player1 = new Tank("Tank.png", screenWidth / 2 , screenHeight / 2,
