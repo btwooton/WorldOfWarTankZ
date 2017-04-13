@@ -5,16 +5,10 @@ import java.util.Scanner;
 
 public class Prototype3 {
 	
-<<<<<<< HEAD
 	static int x, y, HealthP1, width, height, Swidth, Sheight;
-	static int screenWidth = Swidth * 32;
-	static int screenHeight = Sheight * 32;
-	static Projectiles[] projectiles = new Projectiles[100];
-=======
-	static int screenWidth = 1300;
-	static int screenHeight = 700;
+	static int screenWidth = 0;
+	static int screenHeight = 0;
 	static DummyProjectiles[] projectiles = new DummyProjectiles[100];
->>>>>>> 5f8d5b3a4cb55fb6ca6747dc80acadf58918d7c9
 	static int nextProjectile = 0;
 
 	public static void main(String[] args) throws java.io.IOException {
@@ -23,6 +17,8 @@ public class Prototype3 {
 		Swidth = fileScanner.nextInt();
 		Sheight = fileScanner.nextInt();
 		String inputText = fileScanner.nextLine();
+		screenWidth = Swidth * 32;
+		screenHeight = Sheight * 32;
 
 		EZ.initialize(Swidth * 32, Sheight * 32); // initialize the window
 
