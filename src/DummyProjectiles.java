@@ -120,20 +120,20 @@ public class DummyProjectiles {
 
 	void ricochet(int worldHeight, int worldWidth) {
 
-		if (this.getBottomEdge() >= worldHeight && ricochetCount > 0) {
+		if (this.getBottomEdge() >= worldHeight-32 && ricochetCount > 0) {
 			bullet.rotateTo(180 - bullet.getRotation());
 			speed = -speed;
 			ricochetCount--;
 
-		} else if (this.getLeftEdge() <= 0 && ricochetCount > 0) {
+		} else if (this.getLeftEdge() <= 0+32 && ricochetCount > 0) {
 			bullet.rotateTo(360 - bullet.getRotation());
 			speed = -speed;
 			ricochetCount--;
-		} else if (this.getRightEdge() >= worldWidth && ricochetCount > 0) {
+		} else if (this.getRightEdge() >= worldWidth-32 && ricochetCount > 0) {
 			bullet.rotateTo(360 - bullet.getRotation());
 			speed = -speed;
 			ricochetCount--;
-		} else if (this.getTopEdge() <= 0 && ricochetCount > 0) {
+		} else if (this.getTopEdge() <= 0+32 && ricochetCount > 0) {
 			bullet.rotateTo(540 - bullet.getRotation());
 			speed = -speed;
 			ricochetCount--;
