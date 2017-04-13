@@ -5,10 +5,16 @@ import java.util.Scanner;
 
 public class Prototype3 {
 	
+<<<<<<< HEAD
 	static int x, y, HealthP1, width, height, Swidth, Sheight;
 	static int screenWidth = Swidth * 32;
 	static int screenHeight = Sheight * 32;
 	static Projectiles[] projectiles = new Projectiles[100];
+=======
+	static int screenWidth = 1300;
+	static int screenHeight = 700;
+	static DummyProjectiles[] projectiles = new DummyProjectiles[100];
+>>>>>>> 5f8d5b3a4cb55fb6ca6747dc80acadf58918d7c9
 	static int nextProjectile = 0;
 
 	public static void main(String[] args) throws java.io.IOException {
@@ -54,7 +60,7 @@ public class Prototype3 {
 				2, new char[] {'i','j','k','l'});
 		
 		for (int i = 0; i < projectiles.length; i++) {
-			projectiles[i] = new Projectiles(-100, -100,"bulletColor");
+			projectiles[i] = new DummyProjectiles(-100, -100);
 		}
 
   
