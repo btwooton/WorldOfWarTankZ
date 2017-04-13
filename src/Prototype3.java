@@ -7,7 +7,7 @@ public class Prototype3 {
 	
 	static int screenWidth = 1300;
 	static int screenHeight = 700;
-	static Projectiles[] projectiles = new Projectiles[100];
+	static DummyProjectiles[] projectiles = new DummyProjectiles[100];
 	static int nextProjectile = 0;
 	
 
@@ -25,7 +25,7 @@ public class Prototype3 {
 				2, new char[] {'i','j','k','l'});
 		
 		for (int i = 0; i < projectiles.length; i++) {
-			projectiles[i] = new Projectiles(-100, -100,"bulletColor");
+			projectiles[i] = new DummyProjectiles(-100, -100);
 		}
 
   

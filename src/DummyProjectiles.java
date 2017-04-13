@@ -13,7 +13,6 @@ public class DummyProjectiles {
 	private int ricochetCount;
 
 	public DummyProjectiles(int posx, int posy) {
-		Random rg = new Random();
 		x = posx;
 		y = posy;
 		speed = 3.0f;

@@ -91,13 +91,13 @@ public class Tank {
 		}
 	}
 	
-	public boolean collideWithProjectiles(Projectiles projectile) {
+	public boolean collideWithProjectiles(DummyProjectiles projectile) {
 		return tankSprite.isPointInElement(projectile.getX(), projectile.getY()) &&
 				playerID != projectile.getSpawnedBy();	
 	}
 	
 	
-	public void fireProjectile(Projectiles projectile) {
+	public void fireProjectile(DummyProjectiles projectile) {
 		
 		projectile.translateTo(x, y);
 		
@@ -108,7 +108,6 @@ public class Tank {
 		projectile.setFirePower(weaponPower);
 		projectile.resetSpeed();
 		projectile.resetRicochetCount(1);
-		projectile.fire();
 	}
 	
 	public boolean isDead() {
