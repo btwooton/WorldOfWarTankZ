@@ -1,10 +1,12 @@
 
-public class upGrades {
+public class GiffAnime {
+
 	private long time;
 	private int x, y, xLeft, xRight, yLeft, yRight, counter, fps, pixel, frames;
+	private int gif;
 	EZImage sheet;
 
-	public upGrades(String fileName, int posX, int posY, int pixelSize, int milliSecondsPerFrame, int numberOfFrames) {
+	public GiffAnime(String fileName, int posX, int posY, int pixelSize, int milliSecondsPerFrame, int numberOfFrames) {
 		time = System.currentTimeMillis();
 		x = posX;
 		y = posY;
@@ -17,11 +19,12 @@ public class upGrades {
 		frames = numberOfFrames;
 		fps = milliSecondsPerFrame;
 		sheet = EZ.addImage(fileName, posX, posY);
-		sheet.hide();
+		//sheet.hide();
+		System.out.println(sheet);
 	}
 
 	private void setImagePosition() {
-		sheet.translateTo(x, y);
+		//sheet.translateTo(x, y);
 		sheet.setFocus(xLeft, yLeft, xRight, yRight);
 	}
 
@@ -33,11 +36,48 @@ public class upGrades {
 		}
 		if (System.currentTimeMillis() - time >= fps) {
 			setImagePosition();
-			sheet.show();
+			//sheet.show();
 			xLeft += pixel;
 			xRight += pixel;
 			time = System.currentTimeMillis();
 			counter++;
 		}
 	}
+
+	void moveForward(float spd) {
+		sheet.moveForward(spd);
+
+	}
+
+	void translateTo(double x, double y) {
+		sheet.translateTo(x, y);
+
+	}
+
+	int getXCenter() {
+		return sheet.getXCenter();
+
+	}
+
+	int getYCenter() {
+		return sheet.getYCenter();
+
+	}
+
+	void rotateTo(double rotationalValue) {
+		sheet.rotateTo(rotationalValue);
+	}
+
+	double getRotation() {
+		return sheet.getRotation();
+	}
+
+	int getHeight() {
+		return sheet.getHeight();
+	}
+
+	int getWidth() {
+		return sheet.getWidth();
+	}
+
 }

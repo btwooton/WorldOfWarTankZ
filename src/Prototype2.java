@@ -17,8 +17,10 @@ public class Prototype2 {
 		EZ.initialize(screenWidth, screenHeight); // initialize the window
 
 		// set to white background
-		EZ.setBackgroundColor(new Color(255, 255, 255));
-		
+		EZ.setBackgroundColor(new Color(0, 255, 0));
+		EZImage tankTrap;
+		tankTrap = EZ.addImage("tankTrap_64.png", screenWidth/2, screenHeight/2);
+		tankTrap.pullToFront();
 		HealthP1 = 100;
 		String Health1 = "HP: " + HealthP1;
 		HealthDisplay1 = EZ.addText(50, 50, Health1, Color.BLACK, 25);

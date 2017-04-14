@@ -91,13 +91,13 @@ public class Tank {
 		}
 	}
 	
-	public boolean collideWithProjectiles(DummyProjectiles projectile) {
+	public boolean collideWithProjectiles(Projectiles projectile) {
 		return tankSprite.isPointInElement(projectile.getX(), projectile.getY()) &&
 				playerID != projectile.getSpawnedBy();	
 	}
 	
 	
-	public void fireProjectile(DummyProjectiles projectile) {
+	public void fireProjectile(Projectiles projectile) {
 		
 		projectile.translateTo(x, y);
 		

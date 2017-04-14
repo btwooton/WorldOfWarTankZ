@@ -4,55 +4,30 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Projectiles {
-	private EZCircle[] frames;
-	private EZGroup bullet;
-	private String textFile1;
-	int x, y;
-	int bounces;
-	float speed;
+	private long time;
+	private int x, y, xLeft, xRight, yLeft, yRight, counter, fps, pixel, frames;
+	private float speed;
 	private boolean onScreen;
-	private int maxFrames = 6;
-	private int frameIndex;
 	private int spawnedBy;
 	private int firePower;
 	private int ricochetCount;
-	private int redIndex, greenIndex, blueIndex, widthIndex, heightIndex;
-	Scanner s;
+	GiffAnime bullet;
 
-	public Projectiles(int posx, int posy, String text) throws java.io.IOException {
+	public Projectiles(int posx, int posy) {
 		Random rg = new Random();
-		textFile1 = text;
-		s = new Scanner(new FileReader(textFile1));
 		x = posx;
 		y = posy;
-		frameIndex = 0;
 		speed = 3.0f;
 		onScreen = false;
 		spawnedBy = 0;
-		bullet = EZ.addGroup();
-		frames = new EZCircle[maxFrames];
-
-		for (int i = 0; i < maxFrames; i++) {
-			widthIndex = s.nextInt();
-			heightIndex = s.nextInt();
-			redIndex = s.nextInt();
-			greenIndex = s.nextInt();
-			blueIndex = s.nextInt();
-			frames[i] = EZ.addCircle(posx, posy, widthIndex, heightIndex, new Color(redIndex, greenIndex, blueIndex),
-					true);
-			bullet.addElement(frames[i]);
-			System.out.println(frames[i]);
-			System.out.println(
-					widthIndex + " " + heightIndex + " " + redIndex + " " + greenIndex + " " + blueIndex + "\n");
-		}
-	}
-
-	void hide() {
-		bullet.hide();
+		ricochetCount = 1;
+		bullet = new GiffAnime("deathBall_96__3.png", posx,posy, 96, 100,3);
+		// bullet = EZ.addImage(fileName, posX, posY);
 	}
 
 	void moveForward() {
 		bullet.moveForward(speed);
+		bullet.spawn();
 	}
 
 	void translateTo(double x, double y) {
@@ -69,6 +44,10 @@ public class Projectiles {
 
 	void setAngle(double rotationValue) {
 		bullet.rotateTo(rotationValue);
+	}
+
+	double getAngle() {
+		return bullet.getRotation();
 	}
 
 	int getTopEdge() {
@@ -110,10 +89,6 @@ public class Projectiles {
 		}
 	}
 
-	void setOffScreen() {
-		onScreen = false;
-	}
-
 	boolean isOnScreen() {
 		return onScreen;
 	}
@@ -129,6 +104,7 @@ public class Projectiles {
 	int getSpawnedBy() {
 		return spawnedBy;
 	}
+
 	void setFirePower(int power) {
 		firePower = power;
 	}
@@ -171,15 +147,4 @@ public class Projectiles {
 		speed = Math.abs(speed);
 	}
 
-
-	void fire() {
-		if (frameIndex < maxFrames) {
-			hide();
-			frames[frameIndex].show();
-			frameIndex++;
-		} else {
-			frameIndex = 0;
-
-		}
-	}
 }

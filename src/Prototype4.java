@@ -24,6 +24,8 @@ public class Prototype4 {
 
 		EZ.initialize(Swidth * 32, Sheight * 32);
 		EZ.setBackgroundColor(new Color(255, 255, 255));
+		EZImage tankTrap;
+		
 
 		for (int line = 0; line < Sheight; line++) {
 
@@ -39,7 +41,7 @@ public class Prototype4 {
 					EZ.addImage("dirt.png", i * 32 + 16, line * 32 + 16);
 					break;
 				case 'G':
-					EZ.addImage("grass.png", i * 32 + 16, line * 32 + 16);
+					EZ.addImage("persianRug.png", i * 32 + 16, line * 32 + 16);
 					break;
 				default:
 					// Do nothing
@@ -55,7 +57,8 @@ public class Prototype4 {
 
 		// draw my character
 		Player1 = EZ.addImage("Tank.png", 500, 500);
-
+		tankTrap = EZ.addImage("tankTrap_64.png", 500, 500);
+		tankTrap.pullToFront();
 		width = Player1.getWidth(); // store character image width
 		height = Player1.getHeight(); // store character image height
 		while (true) {
