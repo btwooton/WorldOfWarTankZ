@@ -16,11 +16,11 @@ public class Projectiles {
 		Random rg = new Random();
 		x = posx;
 		y = posy;
-		speed = 3.0f;
+		speed = 5.0f;
 		onScreen = false;
 		spawnedBy = 0;
 		ricochetCount = 1;
-		bullet = new GiffAnime("deathBall_96__3.png", posx, posy, 96, 100, 3);
+		bullet = new GiffAnime("deathBall_64__3.png", posx, posy, 64, 80, 3);
 	}
 
 	void moveForward() {
