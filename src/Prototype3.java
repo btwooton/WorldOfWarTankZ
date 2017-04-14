@@ -62,8 +62,8 @@ public class Prototype3 {
   
 		while(!(Player1.isDead() || Player2.isDead())) {
 			
-			  Player1.moveAround(screenHeight, screenWidth);
-			  Player2.moveAround(screenHeight, screenWidth);
+			  Player1.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
+			  Player2.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
 			  			  
 			  if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
 				 Player1.fireProjectile(projectiles[nextProjectile]);

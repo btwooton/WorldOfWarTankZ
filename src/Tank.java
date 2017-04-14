@@ -42,7 +42,8 @@ public class Tank {
 		}
 	}
 	
-	public void moveAround(int worldHeight, int worldWidth) {
+	public void moveAround(int leftArenaEdge, int topArenaEdge,
+			int rightArenaEdge, int bottomArenaEdge) {
 		int topEdge = (int)y - (h/2);
 		int bottomEdge = (int)y + (h/2);
 		int leftEdge = (int)x - (w/2);
@@ -73,21 +74,21 @@ public class Tank {
 			y = tankSprite.getYCenter();
 		}
 		
-		if (bottomEdge > worldHeight) {
-			tankSprite.translateTo(x, worldHeight - (h/2));
-			shield.translateTo(x, worldHeight - (h/2));
+		if (bottomEdge > bottomArenaEdge) {
+			tankSprite.translateTo(x, bottomArenaEdge - (h/2));
+			shield.translateTo(x, bottomArenaEdge - (h/2));
 		}
-		if (topEdge < 0) {
-			tankSprite.translateTo(x, h/2);
-			shield.translateTo(x, h/2);
+		if (topEdge < topArenaEdge) {
+			tankSprite.translateTo(x,topArenaEdge + h/2);
+			shield.translateTo(x, topArenaEdge + h/2);
 		}
-		if (leftEdge < 0) {
-			tankSprite.translateTo(w/2, y);
-			shield.translateTo(w/2, y);
+		if (leftEdge < leftArenaEdge) {
+			tankSprite.translateTo(leftArenaEdge + w/2, y);
+			shield.translateTo(leftArenaEdge + w/2, y);
 		}
-		if (rightEdge > worldWidth) {
-			tankSprite.translateTo(worldWidth - (w/2), y);
-			shield.translateTo(worldWidth - (w/2), y);
+		if (rightEdge > rightArenaEdge) {
+			tankSprite.translateTo(rightArenaEdge - (w/2), y);
+			shield.translateTo(rightArenaEdge - (w/2), y);
 		}
 	}
 	
