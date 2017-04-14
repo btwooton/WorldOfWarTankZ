@@ -4,8 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Projectiles {
-	private long time;
-	private int x, y, xLeft, xRight, yLeft, yRight, counter, fps, pixel, frames;
+	private int x, y;
 	private float speed;
 	private boolean onScreen;
 	private int spawnedBy;
@@ -21,8 +20,7 @@ public class Projectiles {
 		onScreen = false;
 		spawnedBy = 0;
 		ricochetCount = 1;
-		bullet = new GiffAnime("deathBall_96__3.png", posx,posy, 96, 100,3);
-		// bullet = EZ.addImage(fileName, posX, posY);
+		bullet = new GiffAnime("deathBall_96__3.png", posx, posy, 96, 100, 3);
 	}
 
 	void moveForward() {

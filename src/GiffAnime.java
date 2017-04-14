@@ -3,7 +3,6 @@ public class GiffAnime {
 
 	private long time;
 	private int x, y, xLeft, xRight, yLeft, yRight, counter, fps, pixel, frames;
-	private int gif;
 	EZImage sheet;
 
 	public GiffAnime(String fileName, int posX, int posY, int pixelSize, int milliSecondsPerFrame, int numberOfFrames) {
@@ -19,12 +18,9 @@ public class GiffAnime {
 		frames = numberOfFrames;
 		fps = milliSecondsPerFrame;
 		sheet = EZ.addImage(fileName, posX, posY);
-		//sheet.hide();
-		System.out.println(sheet);
 	}
 
 	private void setImagePosition() {
-		//sheet.translateTo(x, y);
 		sheet.setFocus(xLeft, yLeft, xRight, yRight);
 	}
 
@@ -36,7 +32,6 @@ public class GiffAnime {
 		}
 		if (System.currentTimeMillis() - time >= fps) {
 			setImagePosition();
-			//sheet.show();
 			xLeft += pixel;
 			xRight += pixel;
 			time = System.currentTimeMillis();
