@@ -32,6 +32,9 @@ public class Prototype3 {
 			
 			  Player1.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
 			  Player2.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
+			  
+			  Player1.collideWithTanks(Player2);
+			  Player2.collideWithTanks(Player1);
 			  			  
 			  if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
 				 Player1.fireProjectile(projectiles[nextProjectile]);
