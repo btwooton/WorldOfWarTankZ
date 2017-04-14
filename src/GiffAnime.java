@@ -63,6 +63,14 @@ public class GiffAnime {
 		sheet.rotateTo(rotationalValue);
 	}
 
+	void hide() {
+		sheet.hide();
+	}
+
+	void show() {
+		sheet.show();
+	}
+
 	double getRotation() {
 		return sheet.getRotation();
 	}

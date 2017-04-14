@@ -20,7 +20,7 @@ public class Projectiles {
 		onScreen = false;
 		spawnedBy = 0;
 		ricochetCount = 1;
-		bullet = new GiffAnime("deathBall_64__3.png", posx, posy, 64, 80, 3);
+		bullet = new GiffAnime("deathBall_64__3.png", posx, posy, 64, 60, 3);
 	}
 
 	void moveForward() {

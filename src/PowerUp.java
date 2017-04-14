@@ -14,22 +14,47 @@ public class PowerUp {
 
 	public PowerUp(int posx, int posy) {
 		name = Name.values()[rg.nextInt(Name.values().length)];
+		time = System.currentTimeMillis();
 		x = posx;
 		y = posy;
 		switch (name) {
 		case REPAIR:
-			sprite = new GiffAnime("health_64_8.png", x, y, 68, 100, 8);
+			sprite = new GiffAnime("health_64_9.png", x, y, 64, 100, 9);
 			break;
 		case SHEILD:
 			sprite = new GiffAnime("generator_64_9.png", x, y, 64, 100, 9);
 			break;
 		case SPEED:
 			sprite = new GiffAnime("nos _96_7.png", x, y, 96, 100, 7);
+
 			break;
 		case POWER:
-			sprite = new GiffAnime("firstAid_64_10.png", x, y, 64, 100, 10);
+			sprite = new GiffAnime("plasmaCrystal_86_18.png", x, y, 86, 100, 18);
+
 			break;
 		}
+
+	}
+
+	void spawn() {
+		sprite.spawn();
+
+	}
+
+	int randomX() {
+		return rg.nextInt(1000);
+	}
+
+	int randomY() {
+		return rg.nextInt(700);
+	}
+
+	void hide() {
+		sprite.hide();
+	}
+
+	void show() {
+		sprite.show();
 	}
 
 	void getXcenter() {
@@ -51,6 +76,7 @@ public class PowerUp {
 	int getWidth() {
 		return sprite.getWidth();
 	}
+
 	int getTopEdge() {
 		return sprite.getYCenter() - sprite.getHeight() / 2;
 	}
@@ -66,6 +92,7 @@ public class PowerUp {
 	int getLeftEdge() {
 		return sprite.getXCenter() - sprite.getWidth() / 2;
 	}
+
 	void setOffScreen(int worldHeight, int worldWidth, boolean hasCollided) {
 
 		if (this.getBottomEdge() < -20) {

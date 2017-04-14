@@ -1,7 +1,7 @@
 import java.awt.Color;
 
 public class Tank {
-	
+
 	private EZImage tankSprite;
 	private EZCircle shield;
 	private int hp;
@@ -16,7 +16,6 @@ public class Tank {
 	private int playerID;
 	private boolean dead;
 
-	
 	public Tank(String imageName, int _x, int _y, int _playerID, char[] directions) {
 		tankSprite = EZ.addImage(imageName, _x, _y);
 		shield = EZ.addCircle(_x, _y, 100, 100, Color.BLUE, false);
@@ -38,21 +37,20 @@ public class Tank {
 		directionDown = directions[2];
 		directionRight = directions[3];
 	}
-	
+
 	public void takeDamage(int amount) {
 		hp -= amount;
 		if (hp <= 0) {
-			dead = true;	
+			dead = true;
 		}
 	}
-	
-	public void moveAround(int leftArenaEdge, int topArenaEdge,
-			int rightArenaEdge, int bottomArenaEdge) {
-		int topEdge = (int)y - (h/2);
-		int bottomEdge = (int)y + (h/2);
-		int leftEdge = (int)x - (w/2);
-		int rightEdge = (int)x + (w/2);
-		
+
+	public void moveAround(int leftArenaEdge, int topArenaEdge, int rightArenaEdge, int bottomArenaEdge) {
+		int topEdge = (int) y - (h / 2);
+		int bottomEdge = (int) y + (h / 2);
+		int leftEdge = (int) x - (w / 2);
+		int rightEdge = (int) x + (w / 2);
+
 		if (EZInteraction.isKeyDown(directionUp)) {
 			tankSprite.moveForward(speed);
 			shield.moveForward(speed);
@@ -77,41 +75,41 @@ public class Tank {
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
 		}
-		
+
 		if (bottomEdge > bottomArenaEdge) {
-			tankSprite.translateTo(x, bottomArenaEdge - (h/2));
-			shield.translateTo(x, bottomArenaEdge - (h/2));
+			tankSprite.translateTo(x, bottomArenaEdge - (h / 2));
+			shield.translateTo(x, bottomArenaEdge - (h / 2));
 		}
 		if (topEdge < topArenaEdge) {
-			tankSprite.translateTo(x,topArenaEdge + h/2);
-			shield.translateTo(x, topArenaEdge + h/2);
+			tankSprite.translateTo(x, topArenaEdge + h / 2);
+			shield.translateTo(x, topArenaEdge + h / 2);
 		}
 		if (leftEdge < leftArenaEdge) {
-			tankSprite.translateTo(leftArenaEdge + w/2, y);
-			shield.translateTo(leftArenaEdge + w/2, y);
+			tankSprite.translateTo(leftArenaEdge + w / 2, y);
+			shield.translateTo(leftArenaEdge + w / 2, y);
 		}
 		if (rightEdge > rightArenaEdge) {
-			tankSprite.translateTo(rightArenaEdge - (w/2), y);
-			shield.translateTo(rightArenaEdge - (w/2), y);
+			tankSprite.translateTo(rightArenaEdge - (w / 2), y);
+			shield.translateTo(rightArenaEdge - (w / 2), y);
 		}
 	}
-	
+
 	public boolean collideWithProjectiles(Projectiles projectile) {
-		return tankSprite.isPointInElement(projectile.getX(), projectile.getY()) &&
-				playerID != projectile.getSpawnedBy();	
+		return tankSprite.isPointInElement(projectile.getX(), projectile.getY())
+				&& playerID != projectile.getSpawnedBy();
 	}
-	
+
 	public void collideWithTanks(Tank other) {
-		
-		boolean isOverlapXFromLeft = this.getRightEdge() >= other.getLeftEdge() + 10 
+
+		boolean isOverlapXFromLeft = this.getRightEdge() >= other.getLeftEdge() + 10
 				&& this.getLeftEdge() <= other.getLeftEdge();
-		boolean isOverlapXFromRight = this.getLeftEdge() <= other.getRightEdge() - 10 
+		boolean isOverlapXFromRight = this.getLeftEdge() <= other.getRightEdge() - 10
 				&& this.getRightEdge() >= other.getRightEdge();
 		boolean isOverlapYFromTop = this.getBottomEdge() >= other.getTopEdge() - 10
 				&& this.getTopEdge() <= other.getTopEdge();
-		boolean isOverlapYFromBottom = this.getTopEdge() <= other.getBottomEdge() + 10 
+		boolean isOverlapYFromBottom = this.getTopEdge() <= other.getBottomEdge() + 10
 				&& this.getBottomEdge() >= other.getBottomEdge();
-				
+
 		if (isOverlapXFromLeft && isOverlapYFromBottom) {
 			tankSprite.translateTo(x - 2, y + 2);
 		}
@@ -124,17 +122,16 @@ public class Tank {
 		if (isOverlapXFromRight && isOverlapYFromTop) {
 			tankSprite.translateTo(x + 2, y - 2);
 		}
-		
+
 	}
-	
-	
+
 	public void fireProjectile(Projectiles projectile) {
-		
+
 		if (System.currentTimeMillis() - timeOfLastShot >= coolDownTime) {
 			projectile.translateTo(x, y);
-			
-			projectile.setAngle(Math.floorMod((int)tankSprite.getRotation(), 360));
-		
+
+			projectile.setAngle(Math.floorMod((int) tankSprite.getRotation(), 360));
+
 			projectile.setOnScreen();
 			projectile.setSpawnedBy(playerID);
 			projectile.setFirePower(weaponPower);
@@ -142,45 +139,44 @@ public class Tank {
 			projectile.resetRicochetCount(1);
 			timeOfLastShot = System.currentTimeMillis();
 		}
-			
+
 	}
-	
+
 	public boolean isDead() {
 		return dead;
 	}
-	
+
 	public double getRotation() {
 		return tankSprite.getRotation();
 	}
-	
+
 	public void activateShield() {
 		shielded = true;
 		shield.show();
 	}
-	
+
 	public void upgradeWeapon() {
 		weaponPower *= 5;
 	}
-	
+
 	public void downgradeWeapon() {
 		weaponPower /= 5;
 	}
-	
+
 	public int getLeftEdge() {
-		return (int)x - (w/2);
+		return (int) x - (w / 2);
 	}
-	
+
 	public int getRightEdge() {
-		return (int)x + (w/2);
+		return (int) x + (w / 2);
 	}
-	
+
 	public int getTopEdge() {
-		return (int)y - (h/2);
+		return (int) y - (h / 2);
 	}
-	
+
 	public int getBottomEdge() {
-		return (int)y + (h/2);
+		return (int) y + (h / 2);
 	}
-	
 
 }
