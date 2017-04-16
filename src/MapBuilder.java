@@ -9,7 +9,7 @@ public class MapBuilder {
 	static int x, y, HealthP1, width, height, Swidth, Sheight;
 	static int screenWidth = 0;
 	static int screenHeight = 0;
-	public ArrayList<Integer> xs, ys;
+	private ArrayList<Integer> xs, ys;
 	static int bx, by;
 
 	public MapBuilder(String TextMap) throws java.io.IOException {
@@ -52,17 +52,10 @@ public class MapBuilder {
 			}
 		}
 	}
-
-	/*public void obstacleRicochet() {
-		for(int i = 0; i< xs.size(); i++) {
-			int a = xs.get(i);
-			int b = 64;
-			int cx = 10;
-			int cy = 10;
-			if (((cx-64 <= a-32 && cx+64 >= a-32) || (cx-64 <= a+32 && cx+64 >= a+32)) && (((cY1 <= bY1 && cY2 >= bY1) || (cY1 <= bY2 && cY2 >= bY2)))) {
-				
-			}
-			
-		}
-	}*/
+	public ArrayList<Integer> getXList() {
+	       return xs;
+	}
+	public ArrayList<Integer> getYList() {
+	       return ys;
+	}
 }
