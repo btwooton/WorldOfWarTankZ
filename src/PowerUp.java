@@ -17,6 +17,7 @@ public class PowerUp {
 		time = System.currentTimeMillis();
 		x = posx;
 		y = posy;
+		onScreen = false;
 		switch (name) {
 		case REPAIR:
 			sprite = new GiffAnime("health_64_9.png", x, y, 64, 100, 9);
