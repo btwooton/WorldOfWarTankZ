@@ -42,6 +42,7 @@ public class Prototype3 {
 		while (!(Player1.isDead() || Player2.isDead())) {
 			Player1.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
 			Player2.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
+			Player1.TankObstacle(xpos, ypos);
 
 			Player1.collideWithTanks(Player2);
 			Player2.collideWithTanks(Player1);

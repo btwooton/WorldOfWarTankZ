@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.ArrayList;
 
 public class Tank {
 
@@ -91,6 +92,37 @@ public class Tank {
 		if (rightEdge > rightArenaEdge) {
 			tankSprite.translateTo(rightArenaEdge - (w / 2), y);
 			shield.translateTo(rightArenaEdge - (w / 2), y);
+		}
+	}
+	
+	public void TankObstacle(ArrayList<Integer> xS, ArrayList<Integer> yS) {
+		for (int i = 0; i < xS.size(); i++) {
+			int a = xS.get(i);
+			int d = yS.get(i);
+			int topEdge = (int) y - (h / 2);
+			int bottomEdge = (int) y + (h / 2);
+			int leftEdge = (int) x - (w / 2);
+			int rightEdge = (int) x + (w / 2);
+			if (bottomEdge >= d - 16 && topEdge <= d - 16 && tankSprite.getXCenter() >= a - 16
+					&& tankSprite.getXCenter() <= a + 16) {
+				tankSprite.translateTo(x, d-16 - (h / 2));
+				shield.translateTo(x, d-16 - (h / 2));
+			}
+			if (topEdge <= d + 16 && bottomEdge >= d + 16 && tankSprite.getXCenter() >= a - 16
+					&& tankSprite.getXCenter() <= a + 16) {
+				tankSprite.translateTo(x, d+16 + h / 2);
+				shield.translateTo(x, d+16 + h / 2);
+			}
+			if (leftEdge <= a + 16 && rightEdge >= a + 16 && tankSprite.getYCenter() >= d - 16
+					&& tankSprite.getYCenter() <= d + 16) {
+				tankSprite.translateTo(a + 16 + w / 2, y);
+				shield.translateTo(a + 16 + w / 2, y);
+			}
+			if (rightEdge >= a - 16 && leftEdge <= a - 16 && tankSprite.getYCenter() >= d - 16
+					&& tankSprite.getYCenter() <= d + 16) {
+				tankSprite.translateTo(a - 16 - (w / 2), y);
+				shield.translateTo(a - 16 - (w / 2), y);
+			}
 		}
 	}
 

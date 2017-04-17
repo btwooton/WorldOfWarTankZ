@@ -145,22 +145,49 @@ public class Projectiles {
 		for (int i = 0; i < xS.size(); i++) {
 			int a = xS.get(i);
 			int d = yS.get(i);
-			if (this.getLeftEdge() <= a-16 && this.getRightEdge() >= a - 16 && getY() >= d - 16 && getY() <= d + 16 && ricochetCount > 0) {
-				bullet.rotateTo(360 - bullet.getRotation());
-				speed = -speed;
-				ricochetCount--;
-			} else if (this.getLeftEdge() <= a+16 && this.getRightEdge() >= a + 16 && getY() >= d - 16 && getY() <= d + 16 && ricochetCount > 0) {
-				bullet.rotateTo(360 - bullet.getRotation());
-				speed = -speed;
-				ricochetCount--;
-			} else if (this.getBottomEdge() >= d-16 && this.getTopEdge() <= d-16 && getX() >= a-16 && getX() <= a+16 && ricochetCount > 0) {
-				bullet.rotateTo(180 - bullet.getRotation());
-				speed = -speed;
-				ricochetCount--;
-			} else if (this.getTopEdge() <= d+16 && this.getBottomEdge() >= d+16 && getX() >= a-16 && getX() <= a+16 && ricochetCount > 0) {
-				bullet.rotateTo(540 - bullet.getRotation());
-				speed = -speed;
-				ricochetCount--;
+			if (this.getLeftEdge() <= a - 16 && this.getRightEdge() >= a - 16 && getY() >= d - 16 && getY() <= d + 16) {
+				if (ricochetCount == 0) {
+					onScreen = false;
+					bullet.translateTo(-100, -100);
+				}
+				if (ricochetCount > 0) {
+					bullet.rotateTo(360 - bullet.getRotation());
+					speed = -speed;
+					ricochetCount--;
+				}
+			} else if (this.getLeftEdge() <= a + 16 && this.getRightEdge() >= a + 16 && getY() >= d - 16
+					&& getY() <= d + 16) {
+				if (ricochetCount == 0) {
+					onScreen = false;
+					bullet.translateTo(-100, -100);
+				}
+				if (ricochetCount > 0) {
+					bullet.rotateTo(360 - bullet.getRotation());
+					speed = -speed;
+					ricochetCount--;
+				}
+			} else if (this.getBottomEdge() >= d - 16 && this.getTopEdge() <= d - 16 && getX() >= a - 16
+					&& getX() <= a + 16) {
+				if (ricochetCount == 0) {
+					onScreen = false;
+					bullet.translateTo(-100, -100);
+				}
+				if (ricochetCount > 0) {
+					bullet.rotateTo(180 - bullet.getRotation());
+					speed = -speed;
+					ricochetCount--;
+				}
+			} else if (this.getTopEdge() <= d + 16 && this.getBottomEdge() >= d + 16 && getX() >= a - 16
+					&& getX() <= a + 16) {
+				if (ricochetCount == 0) {
+					onScreen = false;
+					bullet.translateTo(-100, -100);
+				}
+				if (ricochetCount > 0) {
+					bullet.rotateTo(540 - bullet.getRotation());
+					speed = -speed;
+					ricochetCount--;
+				}
 			}
 		}
 	}
