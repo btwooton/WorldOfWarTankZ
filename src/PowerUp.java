@@ -9,7 +9,7 @@ public class PowerUp {
 	boolean onScreen;
 	boolean touching;
 
-	private static enum Name {
+	public static enum Name {
 		REPAIR, SHEILD, SPEED, POWER;
 	}
 
