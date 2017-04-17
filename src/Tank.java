@@ -186,5 +186,8 @@ public class Tank {
 	public int getYcenter() {
 		return tankSprite.getYCenter();
 	}
+	public boolean isPointInElement(int posx, int posy) {
+		return tankSprite.isPointInElement(posx, posy);
+	}
 
 }

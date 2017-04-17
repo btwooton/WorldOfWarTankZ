@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class PowerUp {
 	Random rg = new Random();
-	private int x, y;
+	private int x, y, size;
 	long time;
 	private Name name;
 	GiffAnime sprite;
@@ -22,17 +22,19 @@ public class PowerUp {
 		switch (name) {
 		case REPAIR:
 			sprite = new GiffAnime("health_64_9.png", x, y, 64, 100, 9);
+			size = 64;
 			break;
 		case SHEILD:
 			sprite = new GiffAnime("generator_64_9.png", x, y, 64, 100, 9);
+			size = 64;
 			break;
 		case SPEED:
 			sprite = new GiffAnime("nos _96_7.png", x, y, 96, 100, 7);
-
+			size = 96;
 			break;
 		case POWER:
 			sprite = new GiffAnime("plasmaCrystal_86_18.png", x, y, 86, 100, 18);
-
+			size = 86;
 			break;
 		}
 
@@ -67,15 +69,15 @@ public class PowerUp {
 		sprite.getYCenter();
 	}
 
-	public boolean tankIsTouching(int posx, int posy, int upGradeCount) {
+	public boolean tankIsTouching(Tank player, int upGradeCount) {
 		for (int i = 0; i < upGradeCount; i++) {
-			if (sprite.isPointInElement(posx - 2, posy - 2))
+			if (player.isPointInElement(x - size / 2, y - size / 2))
 				return touching;
-			if (sprite.isPointInElement(posx + 2, posy - 2))
+			if (player.isPointInElement(x + size / 2, y - size / 2))
 				return touching;
-			if (sprite.isPointInElement(posx - 2, posy + 2))
+			if (player.isPointInElement(x - size / 2, y + size / 2))
 				return touching;
-			if (sprite.isPointInElement(posx + 2, posy + 2))
+			if (player.isPointInElement(x + size / 2, y + size / 2))
 				return touching;
 
 		}

@@ -58,8 +58,8 @@ public class Prototype3 {
 			power[0].remove();
 			power[0].spawn();
 			power[0].translateTo(400, 400);
-			if (power[0].tankIsTouching(Player1.getXcenter(), Player1.getYcenter(), power.length)
-					|| power[0].tankIsTouching(Player2.getXcenter(), Player2.getYcenter(), power.length)) {
+			if (power[0].tankIsTouching(Player1, power.length)
+					|| power[0].tankIsTouching(Player2, power.length)) {
 				power[0].translateTo(200, 200);
 			}
 
