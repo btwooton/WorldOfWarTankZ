@@ -20,14 +20,14 @@ public class Prototype3 {
 	public static void main(String[] args) throws java.io.IOException {
 
 		MapBuilder maps = new MapBuilder(map);
-		
+
 		ArrayList<Integer> xpos = maps.getXList();
-		
+
 		ArrayList<Integer> ypos = maps.getYList();
-		
+
 		System.out.println(xpos);
 		System.out.println(ypos);
-		
+
 		// draw my character
 		Tank Player1 = new Tank("Tank.png", screenWidth / 2, screenHeight / 2, 1, new char[] { 'w', 'a', 's', 'd' });
 		Tank Player2 = new Tank("Tank.png", screenWidth / 4, screenHeight / 4, 2, new char[] { 'i', 'j', 'k', 'l' });
@@ -55,8 +55,14 @@ public class Prototype3 {
 				Player2.fireProjectile(projectiles[nextProjectile]);
 				nextProjectile = (nextProjectile + 1) % projectiles.length;
 			}
+			power[0].remove();
 			power[0].spawn();
 			power[0].translateTo(400, 400);
+			if (power[0].tankIsTouching(Player1.getXcenter(), Player1.getYcenter(), power.length)
+					|| power[0].tankIsTouching(Player2.getXcenter(), Player2.getYcenter(), power.length)) {
+				power[0].translateTo(200, 200);
+			}
+
 			for (int i = 0; i < projectiles.length; i++) {
 
 				if (projectiles[i].isOnScreen()) {
@@ -66,7 +72,7 @@ public class Prototype3 {
 					projectiles[i].ricochet(screenHeight, screenWidth);
 
 					projectiles[i].setOffScreen(screenHeight, screenWidth, false);
-					
+
 					projectiles[i].ObstacleRicochet(xpos, ypos);
 
 					if (Player1.collideWithProjectiles(projectiles[i])) {
@@ -80,8 +86,7 @@ public class Prototype3 {
 						projectiles[i].translateTo(-100, -100);
 						Player2.takeDamage(projectiles[i].getFirePower());
 					}
-					
-					
+
 				}
 			}
 

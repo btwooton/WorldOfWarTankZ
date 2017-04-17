@@ -7,6 +7,7 @@ public class PowerUp {
 	private Name name;
 	GiffAnime sprite;
 	boolean onScreen;
+	boolean touching;
 
 	private static enum Name {
 		REPAIR, SHEILD, SPEED, POWER;
@@ -64,6 +65,27 @@ public class PowerUp {
 
 	void getYcenter() {
 		sprite.getYCenter();
+	}
+
+	public boolean tankIsTouching(int posx, int posy, int upGradeCount) {
+		for (int i = 0; i < upGradeCount; i++) {
+			if (sprite.isPointInElement(posx - 2, posy - 2))
+				return touching;
+			if (sprite.isPointInElement(posx + 2, posy - 2))
+				return touching;
+			if (sprite.isPointInElement(posx - 2, posy + 2))
+				return touching;
+			if (sprite.isPointInElement(posx + 2, posy + 2))
+				return touching;
+
+		}
+		return !touching;
+	}
+
+	void remove() {
+		if (touching) {
+			sprite.translateTo(-100, -100);
+		}
 	}
 
 	void translateTo(double x, double y) {

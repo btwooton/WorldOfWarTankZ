@@ -179,4 +179,12 @@ public class Tank {
 		return (int) y + (h / 2);
 	}
 
+	public int getXcenter() {
+		return tankSprite.getXCenter();
+	}
+
+	public int getYcenter() {
+		return tankSprite.getYCenter();
+	}
+
 }

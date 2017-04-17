@@ -48,6 +48,9 @@ public class GiffAnime {
 		sheet.translateTo(x, y);
 
 	}
+	public boolean isPointInElement(int posx, int posy) {
+		return sheet.isPointInElement(posx, posy);
+	}
 
 	int getXCenter() {
 		return sheet.getXCenter();
