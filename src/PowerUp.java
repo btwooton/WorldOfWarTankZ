@@ -18,6 +18,7 @@ public class PowerUp {
 		time = System.currentTimeMillis();
 		x = posx;
 		y = posy;
+		touching = false;
 		onScreen = false;
 		switch (name) {
 		case REPAIR:
@@ -49,6 +50,11 @@ public class PowerUp {
 		return rg.nextInt(1000);
 	}
 
+	public Name getName() {
+		return name;
+
+	}
+
 	int randomY() {
 		return rg.nextInt(700);
 	}
@@ -61,32 +67,17 @@ public class PowerUp {
 		sprite.show();
 	}
 
-	void getXcenter() {
-		sprite.getXCenter();
+	int getXcenter() {
+		return sprite.getXCenter();
 	}
 
-	void getYcenter() {
-		sprite.getYCenter();
-	}
-
-	public boolean tankIsTouching(Tank player, int upGradeCount) {
-		for (int i = 0; i < upGradeCount; i++) {
-			if (player.isPointInElement(x - size / 2, y - size / 2))
-				return touching;
-			if (player.isPointInElement(x + size / 2, y - size / 2))
-				return touching;
-			if (player.isPointInElement(x - size / 2, y + size / 2))
-				return touching;
-			if (player.isPointInElement(x + size / 2, y + size / 2))
-				return touching;
-
-		}
-		return !touching;
+	int getYcenter() {
+		return sprite.getYCenter();
 	}
 
 	void remove() {
 		if (touching) {
-			sprite.translateTo(-100, -100);
+			sprite.translateTo(200, 200);
 		}
 	}
 

@@ -24,11 +24,18 @@ public class GiffAnime {
 		sheet.setFocus(xLeft, yLeft, xRight, yRight);
 	}
 
-	void spawn() {
+	void spawn() {// Animates sprite sheet.
 		if (counter >= frames) {
 			xLeft = 0;
 			xRight = pixel;
 			counter = 0;
+			/*
+			 * <===============================================================>
+			 * If counter is >=frames Image position is set back to first frame
+			 * of sprite sheet.
+			 * <===============================================================>
+			 * >
+			 */
 		}
 		if (System.currentTimeMillis() - time >= fps) {
 			setImagePosition();
@@ -36,7 +43,15 @@ public class GiffAnime {
 			xRight += pixel;
 			time = System.currentTimeMillis();
 			counter++;
+			/*
+			 * <===============================================================>
+			 * If current time minus time >= fps(how many seconds you want each
+			 * frame to last.) Set Image position, then add the size of each
+			 * frame to top left x and bottom right x
+			 * <===============================================================>
+			 */
 		}
+
 	}
 
 	void moveForward(float spd) {
@@ -48,6 +63,7 @@ public class GiffAnime {
 		sheet.translateTo(x, y);
 
 	}
+
 	public boolean isPointInElement(int posx, int posy) {
 		return sheet.isPointInElement(posx, posy);
 	}
