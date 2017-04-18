@@ -2,19 +2,31 @@
 public class GiffAnime {
 
 	private long time;
-	private int x, y, xLeft, xRight, yLeft, yRight, counter, fps, pixel, frames;
+	private int x, y, xLeft, xRight, yLeft, yRight, counter, fps, pixelX, pixelY, frames, rows;
 	EZImage sheet;
 
-	public GiffAnime(String fileName, int posX, int posY, int pixelSize, int milliSecondsPerFrame, int numberOfFrames) {
+	/*
+	 * <======================================================================>
+	 * Constructor for GiffAnime class. Enter sprite sheet file name, position x
+	 * & Y, height and width of each frame in pixels, how long you want each frame to last in
+	 * milliseconds, how many frames in each row, and how many rows.
+	 * 
+	 * Starting xLeft,xRight etc.. coordinates off on the first frame of sprite
+	 * sheet.
+	 * <=======================================================================>
+	 */
+
+	public GiffAnime(String fileName, int posX, int posY, int widthOfFrame, int heightOfFrame, int milliSecondsPerFrame,
+			int numberOfFrames) {
 		time = System.currentTimeMillis();
 		x = posX;
 		y = posY;
 		xLeft = 0;
-		xRight = pixelSize;
+		xRight = widthOfFrame;
 		yLeft = 0;
-		yRight = pixelSize;
+		yRight = heightOfFrame;
 		counter = 0;
-		pixel = pixelSize;
+		pixelX = widthOfFrame;
 		frames = numberOfFrames;
 		fps = milliSecondsPerFrame;
 		sheet = EZ.addImage(fileName, posX, posY);
@@ -24,10 +36,10 @@ public class GiffAnime {
 		sheet.setFocus(xLeft, yLeft, xRight, yRight);
 	}
 
-	void spawn() {// Animates sprite sheet.
+	void animate() {// Animates sprite sheet.
 		if (counter >= frames) {
 			xLeft = 0;
-			xRight = pixel;
+			xRight = pixelX;
 			counter = 0;
 			/*
 			 * <===============================================================>
@@ -39,8 +51,8 @@ public class GiffAnime {
 		}
 		if (System.currentTimeMillis() - time >= fps) {
 			setImagePosition();
-			xLeft += pixel;
-			xRight += pixel;
+			xLeft += pixelX;
+			xRight += pixelX;
 			time = System.currentTimeMillis();
 			counter++;
 			/*

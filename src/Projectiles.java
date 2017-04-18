@@ -12,21 +12,21 @@ public class Projectiles {
 	private int firePower;
 	private int ricochetCount;
 	GiffAnime bullet;
+	private int threshold = 16;
 
 	public Projectiles(int posx, int posy) {
-		Random rg = new Random();
 		x = posx;
 		y = posy;
 		speed = 5.0f;
 		onScreen = false;
 		spawnedBy = 0;
 		ricochetCount = 1;
-		bullet = new GiffAnime("deathBall_64__3.png", posx, posy, 64, 60, 3);
+		bullet = new GiffAnime("deathBall_64__3.png", posx, posy, 64, 64, 60, 3);
 	}
 
 	void moveForward() {
 		bullet.moveForward(speed);
-		bullet.spawn();
+		bullet.animate();
 	}
 
 	void translateTo(double x, double y) {
@@ -145,7 +145,7 @@ public class Projectiles {
 		for (int i = 0; i < xS.size(); i++) {
 			int a = xS.get(i);
 			int d = yS.get(i);
-			if (this.getLeftEdge() <= a - 16 && this.getRightEdge() >= a - 16 && getY() >= d - 16 && getY() <= d + 16) {
+			if (this.getLeftEdge() <= a - threshold && this.getRightEdge() >= a - threshold && getY() >= d - threshold && getY() <= d + threshold) {
 				if (ricochetCount == 0) {
 					onScreen = false;
 					bullet.translateTo(-100, -100);
@@ -155,8 +155,8 @@ public class Projectiles {
 					speed = -speed;
 					ricochetCount--;
 				}
-			} else if (this.getLeftEdge() <= a + 16 && this.getRightEdge() >= a + 16 && getY() >= d - 16
-					&& getY() <= d + 16) {
+			} else if (this.getLeftEdge() <= a + threshold && this.getRightEdge() >= a + threshold && getY() >= d - threshold
+					&& getY() <= d + threshold) {
 				if (ricochetCount == 0) {
 					onScreen = false;
 					bullet.translateTo(-100, -100);
@@ -166,8 +166,8 @@ public class Projectiles {
 					speed = -speed;
 					ricochetCount--;
 				}
-			} else if (this.getBottomEdge() >= d - 16 && this.getTopEdge() <= d - 16 && getX() >= a - 16
-					&& getX() <= a + 16) {
+			} else if (this.getBottomEdge() >= d - threshold && this.getTopEdge() <= d - threshold && getX() >= a - threshold
+					&& getX() <= a + threshold) {
 				if (ricochetCount == 0) {
 					onScreen = false;
 					bullet.translateTo(-100, -100);
@@ -177,8 +177,8 @@ public class Projectiles {
 					speed = -speed;
 					ricochetCount--;
 				}
-			} else if (this.getTopEdge() <= d + 16 && this.getBottomEdge() >= d + 16 && getX() >= a - 16
-					&& getX() <= a + 16) {
+			} else if (this.getTopEdge() <= d + threshold && this.getBottomEdge() >= d + threshold && getX() >= a - threshold
+					&& getX() <= a + threshold) {
 				if (ricochetCount == 0) {
 					onScreen = false;
 					bullet.translateTo(-100, -100);

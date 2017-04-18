@@ -29,9 +29,9 @@ public class Prototype3 {
 		System.out.println(ypos);
 
 		// draw my character
-		Tank Player1 = new Tank("Tank.png", screenWidth *3 / 4, screenHeight / 2, 1, new char[] { 'w', 'a', 's', 'd' });
+		Tank Player1 = new Tank("Tank.png", screenWidth * 3 / 4, screenHeight / 2, 1,
+				new char[] { 'w', 'a', 's', 'd' });
 		Tank Player2 = new Tank("Tank.png", screenWidth / 4, screenHeight / 2, 2, new char[] { 'i', 'j', 'k', 'l' });
-
 		for (int i = 0; i < projectiles.length; i++) {
 			projectiles[i] = new Projectiles(-100, -100);
 		}
@@ -58,12 +58,8 @@ public class Prototype3 {
 				nextProjectile = (nextProjectile + 1) % projectiles.length;
 			}
 			power[0].remove();
-			power[0].spawn();
+			power[0].animate();
 			power[0].translateTo(400, 400);
-			if (power[0].tankIsTouching(Player1, power.length)
-					|| power[0].tankIsTouching(Player2, power.length)) {
-				power[0].translateTo(200, 200);
-			}
 
 			for (int i = 0; i < projectiles.length; i++) {
 
