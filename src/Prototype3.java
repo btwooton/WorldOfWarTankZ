@@ -26,13 +26,6 @@ public class Prototype3 {
 		ArrayList<Integer> xpos = maps.getXList();
 
 		ArrayList<Integer> ypos = maps.getYList();
-
-		System.out.println(xpos);
-		System.out.println(ypos);
-
-		// draw my character
-		Tank Player1 = new Tank("Tank.png", screenWidth *3 / 4, screenHeight / 2, 1, new char[] { 'w', 'a', 's', 'd' });
-		Tank Player2 = new Tank("Tank.png", screenWidth / 4, screenHeight / 2, 2, new char[] { 'i', 'j', 'k', 'l' });
 		
 		score = 100;
 		score2 = 100;
@@ -40,6 +33,10 @@ public class Prototype3 {
 		Points2 = "Player 2 HP: " + score2;
 		scoreDisplay = EZ.addText(300, 15, Points, Color.BLACK, 25);
 		scoreDisplay2 = EZ.addText(screenWidth-300, 15, Points2, Color.BLACK, 25);
+
+		// draw my character
+		Tank Player1 = new Tank("Tank.png", screenWidth *3 / 4, screenHeight / 2, 1, new char[] { 'w', 'a', 's', 'd' });
+		Tank Player2 = new Tank("Tank.png", screenWidth / 4, screenHeight / 2, 2, new char[] { 'i', 'j', 'k', 'l' });
 
 		for (int i = 0; i < projectiles.length; i++) {
 			projectiles[i] = new Projectiles(-100, -100);
