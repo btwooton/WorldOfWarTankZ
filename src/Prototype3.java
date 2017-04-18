@@ -48,8 +48,11 @@ public class Prototype3 {
 		}
 
 		power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
-		if ((power[powerUpIndex].tankUpgrade(Player1, 30, 30, power[powerUpIndex]))) {
-			powerUpIndex++;
+		
+		if ((power[powerUpIndex].tankUpgrade(Player1, 30, 30, power[powerUpIndex]))
+				|| ((power[powerUpIndex].tankUpgrade(Player2, 30, 30, power[powerUpIndex])))) {
+			
+			
 		}
 
 		while (!(Player1.isDead() || Player2.isDead())) {
@@ -60,11 +63,17 @@ public class Prototype3 {
 
 			Player1.collideWithTanks(Player2);
 			Player2.collideWithTanks(Player1);
+
 			power[powerUpIndex].animate();
-			if ((power[powerUpIndex].tankUpgrade(Player1, 30, 30, power[powerUpIndex]))) {
+			if ((power[powerUpIndex].tankUpgrade(Player1, 30, 30, power[powerUpIndex]))
+					|| ((power[powerUpIndex].tankUpgrade(Player2, 30, 30, power[powerUpIndex])))) {
+
 				power[powerUpIndex].remove();
+
 				powerUpIndex++;
+
 				power[powerUpIndex].remove();
+
 				power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
 			}
 
