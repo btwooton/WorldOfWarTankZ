@@ -16,8 +16,10 @@ public class Prototype3 {
 	static PowerUp[] power = new PowerUp[50];
 	static Random rg = new Random();
 	static int counter = 0;
+	static int powerUpIndex = 0;
 	static EZText scoreDisplay, scoreDisplay2;
 	static String Points, Points2;
+	static int size = 30;
 
 	public static void main(String[] args) throws java.io.IOException {
 
@@ -26,13 +28,13 @@ public class Prototype3 {
 		ArrayList<Integer> xpos = maps.getXList();
 
 		ArrayList<Integer> ypos = maps.getYList();
-		
+
 		score = 100;
 		score2 = 100;
 		Points = "Player 1 HP: " + score;
 		Points2 = "Player 2 HP: " + score2;
 		scoreDisplay = EZ.addText(300, 15, Points, Color.BLACK, 25);
-		scoreDisplay2 = EZ.addText(screenWidth-300, 15, Points2, Color.BLACK, 25);
+		scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.BLACK, 25);
 
 		// draw my character
 		Tank Player1 = new Tank("Tank.png", screenWidth * 3 / 4, screenHeight / 2, 1,
@@ -45,6 +47,11 @@ public class Prototype3 {
 			power[i] = new PowerUp(-100, -100);
 		}
 
+		power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
+		if ((power[powerUpIndex].tankUpgrade(Player1, 30, 30, power[powerUpIndex]))) {
+			powerUpIndex++;
+		}
+
 		while (!(Player1.isDead() || Player2.isDead())) {
 			Player1.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
 			Player2.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
@@ -53,6 +60,13 @@ public class Prototype3 {
 
 			Player1.collideWithTanks(Player2);
 			Player2.collideWithTanks(Player1);
+			power[powerUpIndex].animate();
+			if ((power[powerUpIndex].tankUpgrade(Player1, 30, 30, power[powerUpIndex]))) {
+				power[powerUpIndex].remove();
+				powerUpIndex++;
+				power[powerUpIndex].remove();
+				power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
+			}
 
 			if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
 				Player1.fireProjectile(projectiles[nextProjectile]);
@@ -63,9 +77,6 @@ public class Prototype3 {
 				Player2.fireProjectile(projectiles[nextProjectile]);
 				nextProjectile = (nextProjectile + 1) % projectiles.length;
 			}
-			power[0].remove();
-			power[0].animate();
-			power[0].translateTo(400, 400);
 
 			for (int i = 0; i < projectiles.length; i++) {
 
@@ -87,14 +98,14 @@ public class Prototype3 {
 						projectiles[i].setOffScreen(screenHeight, screenWidth, true);
 						projectiles[i].translateTo(-100, -100);
 						Player1.takeDamage(projectiles[i].getFirePower());
-						
+
 					}
 
 					if (Player2.collideWithProjectiles(projectiles[i])) {
 						EZ.removeEZElement(scoreDisplay2);
 						score2 -= 5;
 						Points2 = "Player 2 HP: " + score2;
-						scoreDisplay2 = EZ.addText(screenWidth-300, 15, Points2, Color.BLACK, 25);
+						scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.BLACK, 25);
 						projectiles[i].setOffScreen(screenHeight, screenWidth, true);
 						projectiles[i].translateTo(-100, -100);
 						Player2.takeDamage(projectiles[i].getFirePower());

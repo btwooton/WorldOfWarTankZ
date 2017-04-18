@@ -22,16 +22,20 @@ public class PowerUp {
 		onScreen = false;
 		switch (name) {
 		case REPAIR:
-			sprite = new GiffAnime("health_64_9.png", x, y, 64, 64, 100, 9 );
+			sprite = new GiffAnime("health_64_9.png", x, y, 64, 64, 100, 9);
+			size = 64;
 			break;
 		case SHEILD:
-			sprite = new GiffAnime("generator_64_9.png", x, y, 64, 64, 100, 9 );
+			sprite = new GiffAnime("generator_64_9.png", x, y, 64, 64, 100, 9);
+			size = 64;
 			break;
 		case SPEED:
 			sprite = new GiffAnime("nos _96_7.png", x, y, 96, 96, 100, 7);
+			size = 96;
 			break;
 		case POWER:
 			sprite = new GiffAnime("plasmaCrystal_86_18.png", x, y, 86, 86, 100, 18);
+			size = 86;
 			break;
 		}
 
@@ -70,9 +74,7 @@ public class PowerUp {
 	}
 
 	void remove() {
-		if (touching) {
-			sprite.translateTo(200, 200);
-		}
+		sprite.translateTo(-100, -100);
 	}
 
 	void translateTo(double x, double y) {
@@ -85,6 +87,21 @@ public class PowerUp {
 
 	int getWidth() {
 		return sprite.getWidth();
+	}
+
+	public boolean isPointInElement(int posx, int posy) {
+		return sprite.isPointInElement(posx, posy);
+	}
+
+	public boolean tankUpgrade(Tank player, int tankWidth, int tankHeight, PowerUp n) {
+		if ((n.isPointInElement(player.getXcenter() - tankWidth / 2, player.getYcenter() - tankHeight / 2))
+				|| (n.isPointInElement(player.getXcenter() - tankWidth / 2, player.getYcenter() + tankHeight / 2))
+				|| (n.isPointInElement(player.getXcenter() + tankWidth / 2, player.getYcenter() - tankHeight / 2))
+				|| (n.isPointInElement(player.getXcenter() + tankWidth / 2, player.getYcenter() + tankHeight / 2))) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	int getTopEdge() {

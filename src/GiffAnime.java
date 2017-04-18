@@ -41,6 +41,8 @@ public class GiffAnime {
 			xLeft = 0;
 			xRight = pixelX;
 			counter = 0;
+			x = getXCenter();
+			y = getYCenter();
 			/*
 			 * <===============================================================>
 			 * If counter is >=frames Image position is set back to first frame
@@ -55,6 +57,8 @@ public class GiffAnime {
 			xRight += pixelX;
 			time = System.currentTimeMillis();
 			counter++;
+			x = getXCenter();
+			y = getYCenter();
 			/*
 			 * <===============================================================>
 			 * If current time minus time >= fps(how many seconds you want each
