@@ -33,13 +33,13 @@ public class Prototype3 {
 		score2 = 100;
 		Points = "Player 1 HP: " + score;
 		Points2 = "Player 2 HP: " + score2;
-		scoreDisplay = EZ.addText(300, 15, Points, Color.BLACK, 25);
-		scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.BLACK, 25);
+		scoreDisplay = EZ.addText(300, 15, Points, Color.white, 25);
+		scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.white, 25);
 
 		// draw my character
-		Tank Player1 = new Tank("Tank.png", screenWidth * 3 / 4, screenHeight / 2, 1,
+		Tank Player1 = new Tank("Tank.png", screenWidth /4, screenHeight / 2, 1,
 				new char[] { 'w', 'a', 's', 'd' });
-		Tank Player2 = new Tank("Tank.png", screenWidth / 4, screenHeight / 2, 2, new char[] { 'i', 'j', 'k', 'l' });
+		Tank Player2 = new Tank("Tank.png", screenWidth * 3 / 4, screenHeight / 2, 2, new char[] { 'i', 'j', 'k', 'l' });
 		for (int i = 0; i < projectiles.length; i++) {
 			projectiles[i] = new Projectiles(-100, -100);
 		}
@@ -103,7 +103,7 @@ public class Prototype3 {
 						EZ.removeEZElement(scoreDisplay);
 						score -= 5;
 						Points = "Player 1 HP: " + score;
-						scoreDisplay = EZ.addText(300, 15, Points, Color.BLACK, 25);
+						scoreDisplay = EZ.addText(300, 15, Points, Color.white, 25);
 						projectiles[i].setOffScreen(screenHeight, screenWidth, true);
 						projectiles[i].translateTo(-100, -100);
 						Player1.takeDamage(projectiles[i].getFirePower());
@@ -114,7 +114,7 @@ public class Prototype3 {
 						EZ.removeEZElement(scoreDisplay2);
 						score2 -= 5;
 						Points2 = "Player 2 HP: " + score2;
-						scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.BLACK, 25);
+						scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.white, 25);
 						projectiles[i].setOffScreen(screenHeight, screenWidth, true);
 						projectiles[i].translateTo(-100, -100);
 						Player2.takeDamage(projectiles[i].getFirePower());
