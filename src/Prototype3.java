@@ -23,12 +23,15 @@ public class Prototype3 {
 
 	public static void main(String[] args) throws java.io.IOException {
 
+		//build map
 		MapBuilder maps = new MapBuilder(map);
 
+		//pull array list from map class
 		ArrayList<Integer> xpos = maps.getXList();
-
 		ArrayList<Integer> ypos = maps.getYList();
+		ArrayList<Integer> TankStats;
 
+		//set up health and health board
 		score = 100;
 		score2 = 100;
 		Points = "Player 1 HP: " + score;

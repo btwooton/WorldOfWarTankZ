@@ -37,6 +37,7 @@ public class Tank {
 		directionLeft = directions[1];
 		directionDown = directions[2];
 		directionRight = directions[3];
+		
 	}
 
 	public void takeDamage(int amount) {
