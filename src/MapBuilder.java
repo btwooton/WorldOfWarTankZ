@@ -10,7 +10,6 @@ public class MapBuilder {
 	static int screenWidth = 0;
 	static int screenHeight = 0;
 	private ArrayList<Integer> xs, ys;
-	static int bx, by;
 
 	public MapBuilder(String TextMap) throws java.io.IOException {
 		// set up scanner
