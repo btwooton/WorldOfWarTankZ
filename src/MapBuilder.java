@@ -47,6 +47,7 @@ public class MapBuilder {
 				// object placement case
 				switch (ch) {
 				case 'D':
+					// add image
 					EZ.addImage("dirt.png", i * 32 + 16, line * 32 + 16);
 					// add position to arrays
 					xs.add(i * 32 + 16);

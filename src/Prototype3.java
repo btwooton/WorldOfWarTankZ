@@ -23,15 +23,15 @@ public class Prototype3 {
 
 	public static void main(String[] args) throws java.io.IOException {
 
-		//build map
+		// build map
 		MapBuilder maps = new MapBuilder(map);
 
-		//pull array list from map class
+		// pull array list from map class
 		ArrayList<Integer> xpos = maps.getXList();
 		ArrayList<Integer> ypos = maps.getYList();
 		ArrayList<Integer> TankStats;
 
-		//set up health and health board
+		// set up health and health board
 		score = 100;
 		score2 = 100;
 		Points = "Player 1 HP: " + score;
@@ -40,22 +40,26 @@ public class Prototype3 {
 		scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.white, 25);
 
 		// draw my character
-		Tank Player1 = new Tank("Tank.png", screenWidth /4, screenHeight / 2, 1,
-				new char[] { 'w', 'a', 's', 'd' });
-		Tank Player2 = new Tank("Tank.png", screenWidth * 3 / 4, screenHeight / 2, 2, new char[] { 'i', 'j', 'k', 'l' });
+		Tank Player1 = new Tank("Tank.png", screenWidth / 4, screenHeight / 2, 1, new char[] { 'w', 'a', 's', 'd' });
+		Tank Player2 = new Tank("Tank.png", screenWidth * 3 / 4, screenHeight / 2, 2,
+				new char[] { 'i', 'j', 'k', 'l' });
+
+		// draw bullets
 		for (int i = 0; i < projectiles.length; i++) {
 			projectiles[i] = new Projectiles(-100, -100);
 		}
+
+		// draw powerups
 		for (int i = 0; i < power.length; i++) {
 			power[i] = new PowerUp(-100, -100);
 		}
 
+		// place powerup at random
 		power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
-		
+
 		if ((power[powerUpIndex].tankUpgrade(Player1, 30, 30, power[powerUpIndex]))
 				|| ((power[powerUpIndex].tankUpgrade(Player2, 30, 30, power[powerUpIndex])))) {
-			
-			
+
 		}
 
 		while (!(Player1.isDead() || Player2.isDead())) {
@@ -80,6 +84,7 @@ public class Prototype3 {
 				power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
 			}
 
+			// fire button
 			if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
 				Player1.fireProjectile(projectiles[nextProjectile]);
 				nextProjectile = (nextProjectile + 1) % projectiles.length;
@@ -90,18 +95,22 @@ public class Prototype3 {
 				nextProjectile = (nextProjectile + 1) % projectiles.length;
 			}
 
+			// projectile checks
 			for (int i = 0; i < projectiles.length; i++) {
 
 				if (projectiles[i].isOnScreen()) {
 
+					// path
 					projectiles[i].moveForward();
 
+					// ricochets
 					projectiles[i].ricochet(screenHeight, screenWidth);
-
+					projectiles[i].ObstacleRicochet(xpos, ypos);
+					
+					// used bullets
 					projectiles[i].setOffScreen(screenHeight, screenWidth, false);
 
-					projectiles[i].ObstacleRicochet(xpos, ypos);
-
+					// damage events
 					if (Player1.collideWithProjectiles(projectiles[i])) {
 						EZ.removeEZElement(scoreDisplay);
 						score -= 5;
