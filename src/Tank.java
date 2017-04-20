@@ -33,7 +33,7 @@ public class Tank {
 		shield = EZ.addCircle(_x, _y, 100, 100, Color.BLUE, false);
 		shield.hide();
 		hp = 100;
-		coolDownTime = 3000;
+		coolDownTime = 1500;
 		timeOfLastShot = 0;
 		speed = 2;
 		x = _x;
@@ -202,6 +202,11 @@ public class Tank {
 		}
 
 	}
+	
+	// Method for getting the hp of a Tank object
+	public int getHealth() {
+		return hp;
+	}
 
 	// Method for keeping track of whether a tank is dead or alive
 	public boolean isDead() {
@@ -218,15 +223,37 @@ public class Tank {
 		shielded = true;
 		shield.show();
 	}
+	
+	// Deactivate the shield once the shield power up has timed out
+	public void deactivateShield() {
+		shielded = false;
+		shield.hide();
+	}
 
 	// Upgrade the tank's weapon power when it collides with a weapon power up
 	public void upgradeWeapon() {
-		weaponPower *= 5;
+		weaponPower = weaponPower + 20;
 	}
 
 	// Downgrade the tank's weapon power once it's weapon power up times out
 	public void downgradeWeapon() {
-		weaponPower /= 5;
+		weaponPower -= 20;
+	}
+	// Upgrade the tank's speed when it collides with a speed boost
+	public void upgradeSpeed() {
+		speed = speed * 2;
+	}
+	
+	// Downgrade the tank's speed once it's speed power up times out
+	public void downgradeSpeed() {
+		
+		speed = speed / 2;
+		
+	}
+	
+	// Heal the tank's HP when it collides with a Med Kit
+	public void repairTank() {
+		hp = hp + 10;
 	}
 
 	// The following methods are for getting the edges of the tank sprite image
