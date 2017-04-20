@@ -35,7 +35,6 @@ public class Prototype3 {
 		Points2 = "Player 2 HP: " + score2;
 		scoreDisplay = EZ.addText(300, 15, Points, Color.BLACK, 25);
 		scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.BLACK, 25);
-
 		// draw my character
 		Tank Player1 = new Tank("Tank.png", screenWidth * 3 / 4, screenHeight / 2, 1,
 				new char[] { 'w', 'a', 's', 'd' });
@@ -48,12 +47,6 @@ public class Prototype3 {
 		}
 
 		power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
-		
-		if ((power[powerUpIndex].tankUpgrade(Player1, 30, 30, power[powerUpIndex]))
-				|| ((power[powerUpIndex].tankUpgrade(Player2, 30, 30, power[powerUpIndex])))) {
-			
-			
-		}
 
 		while (!(Player1.isDead() || Player2.isDead())) {
 			Player1.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
@@ -65,8 +58,8 @@ public class Prototype3 {
 			Player2.collideWithTanks(Player1);
 
 			power[powerUpIndex].animate();
-			if ((power[powerUpIndex].tankUpgrade(Player1, 30, 30, power[powerUpIndex]))
-					|| ((power[powerUpIndex].tankUpgrade(Player2, 30, 30, power[powerUpIndex])))) {
+			if ((power[powerUpIndex].tankUpgrade(Player1, 35, 35, power[powerUpIndex]))
+					|| ((power[powerUpIndex].tankUpgrade(Player2, 35, 35, power[powerUpIndex])))) {
 
 				power[powerUpIndex].remove();
 

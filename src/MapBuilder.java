@@ -24,10 +24,11 @@ public class MapBuilder {
 		EZ.initialize(Swidth * 32, Sheight * 32); // initialize the window
 		// set to white background
 		EZ.setBackgroundColor(new Color(255, 255, 255));
+		//EZ.addImage("rockTexture.png", screenWidth / 2, screenHeight / 2);
+		EZ.addImage("blueTexture.png", screenWidth / 2, screenHeight / 2);
 
 		xs = new ArrayList<Integer>();
 		ys = new ArrayList<Integer>();
-		
 
 		for (int line = 0; line < Sheight; line++) {
 
@@ -40,9 +41,13 @@ public class MapBuilder {
 
 				switch (ch) {
 				case 'D':
-					EZ.addImage("dirt.png", i * 32 + 16, line * 32 + 16);
+					EZImage brick = EZ.addImage("ground.png", i * 32 + 16, line * 32 + 16);
+					//EZ.addImage("tankTrap_32.png", i * 32 + 16, line * 32 + 16);
+
 					xs.add(i * 32 + 16);
 					ys.add(line * 32 + 16);
+					brick.getXCenter();
+					brick.getYCenter();
 					break;
 				default:
 					// Do nothing
@@ -52,10 +57,12 @@ public class MapBuilder {
 			}
 		}
 	}
+
 	public ArrayList<Integer> getXList() {
-	       return xs;
+		return xs;
 	}
+
 	public ArrayList<Integer> getYList() {
-	       return ys;
+		return ys;
 	}
 }
