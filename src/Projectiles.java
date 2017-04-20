@@ -145,7 +145,7 @@ public class Projectiles {
 		for (int i = 0; i < xS.size(); i++) {
 			int a = xS.get(i);
 			int d = yS.get(i);
-			if (this.getLeftEdge() <= a - threshold && this.getRightEdge() >= a - threshold && getY() >= d - threshold && getY() <= d + threshold) {
+			if (this.getLeftEdge()+20 <= a - threshold && this.getRightEdge()-20 >= a - threshold && getY() >= d - threshold && getY() <= d + threshold) {
 				if (ricochetCount == 0) {
 					onScreen = false;
 					bullet.translateTo(-100, -100);
@@ -155,7 +155,7 @@ public class Projectiles {
 					speed = -speed;
 					ricochetCount--;
 				}
-			} else if (this.getLeftEdge() <= a + threshold && this.getRightEdge() >= a + threshold && getY() >= d - threshold
+			} else if (this.getLeftEdge()+20 <= a + threshold && this.getRightEdge()-20 >= a + threshold && getY() >= d - threshold
 					&& getY() <= d + threshold) {
 				if (ricochetCount == 0) {
 					onScreen = false;
@@ -166,7 +166,7 @@ public class Projectiles {
 					speed = -speed;
 					ricochetCount--;
 				}
-			} else if (this.getBottomEdge() >= d - threshold && this.getTopEdge() <= d - threshold && getX() >= a - threshold
+			} else if (this.getBottomEdge()-20 >= d - threshold && this.getTopEdge()+20 <= d - threshold && getX() >= a - threshold
 					&& getX() <= a + threshold) {
 				if (ricochetCount == 0) {
 					onScreen = false;
@@ -177,7 +177,7 @@ public class Projectiles {
 					speed = -speed;
 					ricochetCount--;
 				}
-			} else if (this.getTopEdge() <= d + threshold && this.getBottomEdge() >= d + threshold && getX() >= a - threshold
+			} else if (this.getTopEdge()+20 <= d + threshold && this.getBottomEdge()-20 >= d + threshold && getX() >= a - threshold
 					&& getX() <= a + threshold) {
 				if (ricochetCount == 0) {
 					onScreen = false;

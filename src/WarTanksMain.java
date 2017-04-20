@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Prototype3 {
+public class WarTanksMain {
 
 	static int x, y, HealthP1, width, height, Swidth, Sheight, score, score2;
 	static int screenWidth = 1280;
@@ -23,22 +23,26 @@ public class Prototype3 {
 
 	public static void main(String[] args) throws java.io.IOException {
 
+		//build map
 		MapBuilder maps = new MapBuilder(map);
 
+		//pull array list from map class
 		ArrayList<Integer> xpos = maps.getXList();
-
 		ArrayList<Integer> ypos = maps.getYList();
-
-		score = 100;
-		score2 = 100;
-		Points = "Player 1 HP: " + score;
-		Points2 = "Player 2 HP: " + score2;
-		scoreDisplay = EZ.addText(300, 15, Points, Color.BLACK, 25);
-		scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.BLACK, 25);
+		ArrayList<Integer> TankStats;
+		
 		// draw my character
-		Tank Player1 = new Tank("Tank.png", screenWidth * 3 / 4, screenHeight / 2, 1,
+		Tank Player1 = new Tank("Tank.png", screenWidth /4, screenHeight / 2, 1,
 				new char[] { 'w', 'a', 's', 'd' });
-		Tank Player2 = new Tank("Tank.png", screenWidth / 4, screenHeight / 2, 2, new char[] { 'i', 'j', 'k', 'l' });
+		Tank Player2 = new Tank("Tank.png", screenWidth * 3 / 4, screenHeight / 2, 2, new char[] { 'i', 'j', 'k', 'l' });
+
+		//set up health and health board
+		Points = "Player 1 HP: " + Player1.getHealth();
+		Points2 = "Player 2 HP: " + Player2.getHealth();
+		scoreDisplay = EZ.addText(300, 15, Points, Color.white, 25);
+		scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.white, 25);
+
+		
 		for (int i = 0; i < projectiles.length; i++) {
 			projectiles[i] = new Projectiles(-100, -100);
 		}
@@ -47,6 +51,7 @@ public class Prototype3 {
 		}
 
 		power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
+		
 
 		while (!(Player1.isDead() || Player2.isDead())) {
 			Player1.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
@@ -58,8 +63,52 @@ public class Prototype3 {
 			Player2.collideWithTanks(Player1);
 
 			power[powerUpIndex].animate();
-			if ((power[powerUpIndex].tankUpgrade(Player1, 35, 35, power[powerUpIndex]))
-					|| ((power[powerUpIndex].tankUpgrade(Player2, 35, 35, power[powerUpIndex])))) {
+			if (power[powerUpIndex].tankUpgrade(Player1, 30, 30, power[powerUpIndex])) {
+				
+				if (power[powerUpIndex].getName() == PowerUp.Name.POWER) {
+					Player1.upgradeWeapon();
+				}
+				else if (power[powerUpIndex].getName() == PowerUp.Name.REPAIR) {
+					Player1.repairTank();
+					EZ.removeEZElement(scoreDisplay);
+					Points = "Player 1 HP: " + Player1.getHealth();
+					scoreDisplay = EZ.addText(300, 15, Points, Color.white, 25);
+				}
+				else if (power[powerUpIndex].getName() == PowerUp.Name.SHEILD) {
+					Player1.activateShield();
+				}
+				else if (power[powerUpIndex].getName() == PowerUp.Name.SPEED) {
+					Player1.upgradeSpeed();
+				}
+				
+				power[powerUpIndex].remove();
+
+				powerUpIndex++;
+
+				power[powerUpIndex].remove();
+
+				power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
+				
+				
+			}
+					
+			if (power[powerUpIndex].tankUpgrade(Player2, 30, 30, power[powerUpIndex])) {
+				
+				if (power[powerUpIndex].getName() == PowerUp.Name.POWER) {
+					Player2.upgradeWeapon();
+				}
+				else if (power[powerUpIndex].getName() == PowerUp.Name.REPAIR) {
+					Player2.repairTank();
+					EZ.removeEZElement(scoreDisplay2);
+					Points2 = "Player 2 HP: " + Player2.getHealth();
+					scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.white, 25);
+				}
+				else if (power[powerUpIndex].getName() == PowerUp.Name.SHEILD) {
+					Player2.activateShield();
+				}
+				else if (power[powerUpIndex].getName() == PowerUp.Name.SPEED) {
+					Player2.upgradeSpeed();
+				}
 
 				power[powerUpIndex].remove();
 
@@ -93,24 +142,21 @@ public class Prototype3 {
 					projectiles[i].ObstacleRicochet(xpos, ypos);
 
 					if (Player1.collideWithProjectiles(projectiles[i])) {
+						Player1.takeDamage(projectiles[i].getFirePower());
 						EZ.removeEZElement(scoreDisplay);
-						score -= 5;
-						Points = "Player 1 HP: " + score;
-						scoreDisplay = EZ.addText(300, 15, Points, Color.BLACK, 25);
+						Points = "Player 1 HP: " + Player1.getHealth();
+						scoreDisplay = EZ.addText(300, 15, Points, Color.white, 25);
 						projectiles[i].setOffScreen(screenHeight, screenWidth, true);
 						projectiles[i].translateTo(-100, -100);
-						Player1.takeDamage(projectiles[i].getFirePower());
-
 					}
 
 					if (Player2.collideWithProjectiles(projectiles[i])) {
+						Player2.takeDamage(projectiles[i].getFirePower());
 						EZ.removeEZElement(scoreDisplay2);
-						score2 -= 5;
-						Points2 = "Player 2 HP: " + score2;
-						scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.BLACK, 25);
+						Points2 = "Player 2 HP: " + Player2.getHealth();
+						scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.white, 25);
 						projectiles[i].setOffScreen(screenHeight, screenWidth, true);
 						projectiles[i].translateTo(-100, -100);
-						Player2.takeDamage(projectiles[i].getFirePower());
 					}
 
 				}
