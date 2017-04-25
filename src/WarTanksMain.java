@@ -182,7 +182,7 @@ public class WarTanksMain {
 			EZ.refreshScreen();
 		}
 		EZ.removeAllEZElements();
-		EZ.addText(screenWidth/2, screenHeight/2, "GAME OVER", Color.WHITE, 200);
+		EZ.addText(screenWidth/2, screenHeight/2, "GAME OVER", Color.BLACK, 200);
 		EZ.refreshScreen();
 		EZ.pause(3000);
 		EZ.closeWindowWithIndex(0);
