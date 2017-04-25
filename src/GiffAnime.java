@@ -74,6 +74,14 @@ public class GiffAnime {
 		sheet.moveForward(spd);
 
 	}
+	
+	void turnLeft(double degrees) {
+		sheet.turnLeft(degrees);
+	}
+	
+	void turnRight(double degrees) {
+		sheet.turnRight(degrees);
+	}
 
 	void translateTo(double x, double y) {
 		sheet.translateTo(x, y);
