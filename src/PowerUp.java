@@ -45,6 +45,7 @@ public class PowerUp {
 		case POWER:
 			sprite = new GiffAnime("plasmaCrystal_86_18.png", x, y, 86, 86, 100, 18);
 			break;
+			
 		}
 
 	}

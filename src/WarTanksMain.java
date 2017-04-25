@@ -58,7 +58,7 @@ public class WarTanksMain {
 			Player1.TankObstacle(xpos, ypos);
 			Player2.TankObstacle(xpos, ypos);
 			
-			//gameSound.tankFX();
+			gameSound.tankFX();
 
 			Player1.collideWithTanks(Player2);
 			Player2.collideWithTanks(Player1);

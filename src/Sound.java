@@ -35,7 +35,7 @@ public class Sound {
 		if (EZInteraction.isKeyDown('w') || EZInteraction.isKeyDown('s') || EZInteraction.isKeyDown('a')
 				|| EZInteraction.isKeyDown('d') || EZInteraction.isKeyDown('i') || EZInteraction.isKeyDown('j')
 				|| EZInteraction.isKeyDown('k') || EZInteraction.isKeyDown('l')) {
-			tank1.play();
+			tank1.loop();
 		}else{
 			tank1.pause();
 		}
