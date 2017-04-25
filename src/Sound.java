@@ -31,17 +31,17 @@ public class Sound {
 		missile.play();
 	}
 
-	public  void  tankFX() {
-		if (EZInteraction.isKeyDown('w') || EZInteraction.isKeyDown('s') || EZInteraction.isKeyDown('a')
-				|| EZInteraction.isKeyDown('d') || EZInteraction.isKeyDown('i') || EZInteraction.isKeyDown('j')
-				|| EZInteraction.isKeyDown('k') || EZInteraction.isKeyDown('l')) {
+	/*public  void  tankFX() {
+		if (EZInteraction.wasKeyPressed('w') || EZInteraction.wasKeyPressed('s') || EZInteraction.wasKeyPressed('a')
+				|| EZInteraction.wasKeyPressed('d') || EZInteraction.wasKeyPressed('i') || EZInteraction.wasKeyPressed('j')
+				|| EZInteraction.wasKeyPressed('k') || EZInteraction.wasKeyPressed('l')) {
 			tank1.loop();
-		}else{
+		if()
 			tank1.pause();
 		}
 			
 
-	}
+	}*/
 
 	/*public void tankSound() {
 		if (tankFX()) {
