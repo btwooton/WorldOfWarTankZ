@@ -53,10 +53,18 @@ public class WarTanksMain {
 
 		power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
 		while (!(Player1.isDead() || Player2.isDead())) {
+			
 			Player1.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
 			Player2.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
+			
 			Player1.TankObstacle(xpos, ypos);
 			Player2.TankObstacle(xpos, ypos);
+			
+			Player1.animateShield();
+			Player2.animateShield();
+			
+			Player1.checkPowerUps();
+			Player2.checkPowerUps();
 			
 			//gameSound.tankFX();
 
@@ -125,17 +133,17 @@ public class WarTanksMain {
 			}
 
 			if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
-				Player1.fireProjectile(projectiles[nextProjectile]);
-				nextProjectile = (nextProjectile + 1) % projectiles.length;
-				gameSound.fire();
-
+				if(Player1.fireProjectile(projectiles[nextProjectile])) {
+					nextProjectile = (nextProjectile + 1) % projectiles.length;
+					gameSound.fire();
+				}
 			}
 
 			if (EZInteraction.wasKeyReleased(KeyEvent.VK_ENTER)) {
-				Player2.fireProjectile(projectiles[nextProjectile]);
-				nextProjectile = (nextProjectile + 1) % projectiles.length;
-				gameSound.fire();
-
+				if(Player2.fireProjectile(projectiles[nextProjectile])) {
+					nextProjectile = (nextProjectile + 1) % projectiles.length;
+					gameSound.fire();
+				}
 			}
 
 			for (int i = 0; i < projectiles.length; i++) {
@@ -174,6 +182,9 @@ public class WarTanksMain {
 			EZ.refreshScreen();
 		}
 		EZ.removeAllEZElements();
+		EZ.addText(screenWidth/2, screenHeight/2, "GAME OVER", Color.WHITE, 200);
+		EZ.refreshScreen();
+		EZ.pause(3000);
 		EZ.closeWindowWithIndex(0);
 
 	}
