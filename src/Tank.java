@@ -20,6 +20,7 @@ public class Tank {
 	private boolean shielded;
 	private int playerID;
 	private boolean dead;
+	public int isMoving;
 
 	// Constructor for tank objects that takes in a string corresponding to the
 	// file
@@ -71,6 +72,7 @@ public class Tank {
 			shield.moveForward(speed);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
+			
 		}
 		if (EZInteraction.isKeyDown(directionLeft)) {
 			tankSprite.turnLeft(1);
@@ -78,12 +80,14 @@ public class Tank {
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
 		}
+
 		if (EZInteraction.isKeyDown(directionDown)) {
 			tankSprite.moveForward(-speed);
 			shield.moveForward(-speed);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
 		}
+
 		if (EZInteraction.isKeyDown(directionRight)) {
 			tankSprite.turnRight(1);
 			shield.turnRight(1);

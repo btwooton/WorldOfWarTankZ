@@ -23,26 +23,27 @@ public class WarTanksMain {
 
 	public static void main(String[] args) throws java.io.IOException {
 
-		//build map
+		// build map
 		MapBuilder maps = new MapBuilder(map);
 
-		//pull array list from map class
+		// pull array list from map class
 		ArrayList<Integer> xpos = maps.getXList();
 		ArrayList<Integer> ypos = maps.getYList();
 		ArrayList<Integer> TankStats;
-		
-		// draw my character
-		Tank Player1 = new Tank("Tank.png", screenWidth /4, screenHeight / 2, 1,
-				new char[] { 'w', 'a', 's', 'd' });
-		Tank Player2 = new Tank("Tank.png", screenWidth * 3 / 4, screenHeight / 2, 2, new char[] { 'i', 'j', 'k', 'l' });
 
-		//set up health and health board
+		// draw my character
+		Tank Player1 = new Tank("Tank.png", screenWidth / 4, screenHeight / 2, 1, new char[] { 'w', 'a', 's', 'd' });
+		Tank Player2 = new Tank("Tank.png", screenWidth * 3 / 4, screenHeight / 2, 2,
+				new char[] { 'i', 'j', 'k', 'l' });
+
+		// set up health and health board
 		Points = "Player 1 HP: " + Player1.getHealth();
 		Points2 = "Player 2 HP: " + Player2.getHealth();
 		scoreDisplay = EZ.addText(300, 15, Points, Color.white, 25);
 		scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.white, 25);
+		// sound for game
+		Sound gameSound = new Sound();
 
-		
 		for (int i = 0; i < projectiles.length; i++) {
 			projectiles[i] = new Projectiles(-100, -100);
 		}
@@ -51,36 +52,37 @@ public class WarTanksMain {
 		}
 
 		power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
-		
-
 		while (!(Player1.isDead() || Player2.isDead())) {
 			Player1.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
 			Player2.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
 			Player1.TankObstacle(xpos, ypos);
 			Player2.TankObstacle(xpos, ypos);
+			
+			//gameSound.tankFX();
 
 			Player1.collideWithTanks(Player2);
 			Player2.collideWithTanks(Player1);
 
 			power[powerUpIndex].animate();
 			if (power[powerUpIndex].tankUpgrade(Player1, 30, 30, power[powerUpIndex])) {
-				
+
 				if (power[powerUpIndex].getName() == PowerUp.Name.POWER) {
 					Player1.upgradeWeapon();
-				}
-				else if (power[powerUpIndex].getName() == PowerUp.Name.REPAIR) {
+					gameSound.weaponUpgrade();
+				} else if (power[powerUpIndex].getName() == PowerUp.Name.REPAIR) {
 					Player1.repairTank();
 					EZ.removeEZElement(scoreDisplay);
 					Points = "Player 1 HP: " + Player1.getHealth();
 					scoreDisplay = EZ.addText(300, 15, Points, Color.white, 25);
-				}
-				else if (power[powerUpIndex].getName() == PowerUp.Name.SHEILD) {
+					gameSound.heal();
+				} else if (power[powerUpIndex].getName() == PowerUp.Name.SHEILD) {
 					Player1.activateShield();
-				}
-				else if (power[powerUpIndex].getName() == PowerUp.Name.SPEED) {
+					gameSound.shieldUpgrade();
+				} else if (power[powerUpIndex].getName() == PowerUp.Name.SPEED) {
 					Player1.upgradeSpeed();
+					gameSound.speedUpgrade();
 				}
-				
+
 				power[powerUpIndex].remove();
 
 				powerUpIndex++;
@@ -88,26 +90,29 @@ public class WarTanksMain {
 				power[powerUpIndex].remove();
 
 				power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
-				
-				
+
 			}
-					
+
 			if (power[powerUpIndex].tankUpgrade(Player2, 30, 30, power[powerUpIndex])) {
-				
+
 				if (power[powerUpIndex].getName() == PowerUp.Name.POWER) {
 					Player2.upgradeWeapon();
-				}
-				else if (power[powerUpIndex].getName() == PowerUp.Name.REPAIR) {
+					gameSound.weaponUpgrade();
+
+				} else if (power[powerUpIndex].getName() == PowerUp.Name.REPAIR) {
 					Player2.repairTank();
 					EZ.removeEZElement(scoreDisplay2);
 					Points2 = "Player 2 HP: " + Player2.getHealth();
 					scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.white, 25);
-				}
-				else if (power[powerUpIndex].getName() == PowerUp.Name.SHEILD) {
+					gameSound.heal();
+
+				} else if (power[powerUpIndex].getName() == PowerUp.Name.SHEILD) {
 					Player2.activateShield();
-				}
-				else if (power[powerUpIndex].getName() == PowerUp.Name.SPEED) {
+					gameSound.shieldUpgrade();
+				} else if (power[powerUpIndex].getName() == PowerUp.Name.SPEED) {
 					Player2.upgradeSpeed();
+					gameSound.speedUpgrade();
+
 				}
 
 				power[powerUpIndex].remove();
@@ -122,11 +127,15 @@ public class WarTanksMain {
 			if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
 				Player1.fireProjectile(projectiles[nextProjectile]);
 				nextProjectile = (nextProjectile + 1) % projectiles.length;
+				gameSound.fire();
+
 			}
 
 			if (EZInteraction.wasKeyReleased(KeyEvent.VK_ENTER)) {
 				Player2.fireProjectile(projectiles[nextProjectile]);
 				nextProjectile = (nextProjectile + 1) % projectiles.length;
+				gameSound.fire();
+
 			}
 
 			for (int i = 0; i < projectiles.length; i++) {

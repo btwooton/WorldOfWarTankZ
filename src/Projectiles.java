@@ -126,6 +126,7 @@ public class Projectiles {
 			bullet.rotateTo(180 - bullet.getRotation());
 			speed = -speed;
 			ricochetCount--;
+			
 		} else if (this.getLeftEdge() <= 0 && ricochetCount > 0) {
 			bullet.rotateTo(360 - bullet.getRotation());
 			speed = -speed;
