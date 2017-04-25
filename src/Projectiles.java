@@ -12,7 +12,9 @@ public class Projectiles {
 	private int firePower;
 	private int ricochetCount;
 	GiffAnime bullet;
+	GiffAnime upgradedBullet;
 	private int threshold = 16;
+	private boolean upgraded;
 
 	public Projectiles(int posx, int posy) {
 		x = posx;
@@ -22,47 +24,82 @@ public class Projectiles {
 		spawnedBy = 0;
 		ricochetCount = 1;
 		bullet = new GiffAnime("deathBall_64__3.png", posx, posy, 64, 64, 60, 3);
+		upgradedBullet = new GiffAnime("bullet_96_8.png", posx, posy, 96, 96, 60, 8);
+		upgradedBullet.hide();
+		upgraded = false;
 	}
 
-	void moveForward() {
+	public void moveForward() {
 		bullet.moveForward(speed);
+		upgradedBullet.moveForward(speed);
+		upgradedBullet.animate();
 		bullet.animate();
 	}
 
-	void translateTo(double x, double y) {
+	public void translateTo(double x, double y) {
 		bullet.translateTo(x, y);
+		upgradedBullet.translateTo(x, y);
 	}
 
-	int getX() {
+	public int getX() {
 		return bullet.getXCenter();
 	}
 
-	int getY() {
+	public int getY() {
 		return bullet.getYCenter();
 	}
 
-	void setAngle(double rotationValue) {
+	public void setAngle(double rotationValue) {
 		bullet.rotateTo(rotationValue);
+		upgradedBullet.rotateTo(rotationValue);
 	}
 
-	double getAngle() {
+	public double getAngle() {
 		return bullet.getRotation();
 	}
 
-	int getTopEdge() {
+	public int getTopEdge() {
+		if (upgraded) {
+			return upgradedBullet.getYCenter() - upgradedBullet.getHeight() / 2;
+		}
 		return bullet.getYCenter() - bullet.getHeight() / 2;
 	}
 
-	int getBottomEdge() {
+	public int getBottomEdge() {
+		if (upgraded) {
+			return upgradedBullet.getYCenter() + upgradedBullet.getHeight() / 2;
+		}
 		return bullet.getYCenter() + bullet.getHeight() / 2;
 	}
 
-	int getRightEdge() {
+	public int getRightEdge() {
+		if (upgraded) {
+			return upgradedBullet.getXCenter() + upgradedBullet.getWidth() / 2;
+		}
 		return bullet.getXCenter() + bullet.getWidth() / 2;
 	}
 
-	int getLeftEdge() {
+	public int getLeftEdge() {
+		if (upgraded) {
+			return upgradedBullet.getXCenter() - upgradedBullet.getWidth() / 2;
+		}
 		return bullet.getXCenter() - bullet.getWidth() / 2;
+	}
+	
+	public void powerUp() {
+		if (!upgraded) {
+			upgraded = true;
+			bullet.hide();
+			upgradedBullet.show();
+		}
+	}
+	
+	public void powerDown() {
+		if (upgraded) {
+			upgraded = false;
+			bullet.show();
+			upgradedBullet.hide();
+		}
 	}
 
 	void setOffScreen(int worldHeight, int worldWidth, boolean hasCollided) {
@@ -124,19 +161,23 @@ public class Projectiles {
 
 		if (this.getBottomEdge() >= worldHeight && ricochetCount > 0) {
 			bullet.rotateTo(180 - bullet.getRotation());
+			upgradedBullet.rotateTo(180 - upgradedBullet.getRotation());
 			speed = -speed;
 			ricochetCount--;
 			
 		} else if (this.getLeftEdge() <= 0 && ricochetCount > 0) {
 			bullet.rotateTo(360 - bullet.getRotation());
+			upgradedBullet.rotateTo(360 - upgradedBullet.getRotation());
 			speed = -speed;
 			ricochetCount--;
 		} else if (this.getRightEdge() >= worldWidth && ricochetCount > 0) {
 			bullet.rotateTo(360 - bullet.getRotation());
+			upgradedBullet.rotateTo(360 - upgradedBullet.getRotation());
 			speed = -speed;
 			ricochetCount--;
 		} else if (this.getTopEdge() <= 0 && ricochetCount > 0) {
 			bullet.rotateTo(540 - bullet.getRotation());
+			upgradedBullet.rotateTo(540 - upgradedBullet.getRotation());
 			speed = -speed;
 			ricochetCount--;
 		}
@@ -150,9 +191,11 @@ public class Projectiles {
 				if (ricochetCount == 0) {
 					onScreen = false;
 					bullet.translateTo(-100, -100);
+					upgradedBullet.translateTo(-100, -100);
 				}
 				if (ricochetCount > 0) {
 					bullet.rotateTo(360 - bullet.getRotation());
+					upgradedBullet.rotateTo(360 - upgradedBullet.getRotation());
 					speed = -speed;
 					ricochetCount--;
 				}
@@ -161,9 +204,11 @@ public class Projectiles {
 				if (ricochetCount == 0) {
 					onScreen = false;
 					bullet.translateTo(-100, -100);
+					upgradedBullet.translateTo(-100, -100);
 				}
 				if (ricochetCount > 0) {
 					bullet.rotateTo(360 - bullet.getRotation());
+					upgradedBullet.rotateTo(360 - upgradedBullet.getRotation());
 					speed = -speed;
 					ricochetCount--;
 				}
@@ -172,9 +217,11 @@ public class Projectiles {
 				if (ricochetCount == 0) {
 					onScreen = false;
 					bullet.translateTo(-100, -100);
+					upgradedBullet.translateTo(-100, -100);
 				}
 				if (ricochetCount > 0) {
 					bullet.rotateTo(180 - bullet.getRotation());
+					upgradedBullet.rotateTo(180 - upgradedBullet.getRotation());
 					speed = -speed;
 					ricochetCount--;
 				}
@@ -183,9 +230,11 @@ public class Projectiles {
 				if (ricochetCount == 0) {
 					onScreen = false;
 					bullet.translateTo(-100, -100);
+					upgradedBullet.translateTo(-100, -100);
 				}
 				if (ricochetCount > 0) {
 					bullet.rotateTo(540 - bullet.getRotation());
+					upgradedBullet.rotateTo(540 - upgradedBullet.getRotation());
 					speed = -speed;
 					ricochetCount--;
 				}
