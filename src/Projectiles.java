@@ -60,28 +60,28 @@ public class Projectiles {
 
 	public int getTopEdge() {
 		if (upgraded) {
-			return upgradedBullet.getYCenter() - upgradedBullet.getHeight() / 2;
+			return upgradedBullet.getYCenter() - upgradedBullet.getHeight() / 4;
 		}
 		return bullet.getYCenter() - bullet.getHeight() / 2;
 	}
 
 	public int getBottomEdge() {
 		if (upgraded) {
-			return upgradedBullet.getYCenter() + upgradedBullet.getHeight() / 2;
+			return upgradedBullet.getYCenter() + upgradedBullet.getHeight() / 4;
 		}
 		return bullet.getYCenter() + bullet.getHeight() / 2;
 	}
 
 	public int getRightEdge() {
 		if (upgraded) {
-			return upgradedBullet.getXCenter() + upgradedBullet.getWidth() / 2;
+			return upgradedBullet.getXCenter() + upgradedBullet.getWidth() / 4;
 		}
 		return bullet.getXCenter() + bullet.getWidth() / 2;
 	}
 
 	public int getLeftEdge() {
 		if (upgraded) {
-			return upgradedBullet.getXCenter() - upgradedBullet.getWidth() / 2;
+			return upgradedBullet.getXCenter() - upgradedBullet.getWidth() / 4;
 		}
 		return bullet.getXCenter() - bullet.getWidth() / 2;
 	}
@@ -244,6 +244,10 @@ public class Projectiles {
 
 	void resetSpeed() {
 		speed = Math.abs(speed);
+	}
+	
+	public boolean isUpgraded() {
+		return upgraded;
 	}
 
 }

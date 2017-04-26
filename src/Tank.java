@@ -188,8 +188,21 @@ public class Tank {
 
 	// Method that facilitates collision detection between tanks and projectiles
 	public boolean collideWithProjectiles(Projectiles projectile) {
-		return tankSprite.isPointInElement(projectile.getX(), projectile.getY())
-				&& playerID != projectile.getSpawnedBy();
+		if (projectile.isUpgraded()) {
+			if (((tankSprite.isPointInElement(projectile.getLeftEdge(), projectile.getTopEdge()))
+					|| (tankSprite.isPointInElement(projectile.getLeftEdge(), projectile.getBottomEdge()))
+					|| (tankSprite.isPointInElement(projectile.getRightEdge(), projectile.getTopEdge()))
+					|| (tankSprite.isPointInElement(projectile.getRightEdge(),
+							projectile.getBottomEdge()))) && playerID != projectile.getSpawnedBy()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		else {
+			return tankSprite.isPointInElement(projectile.getX(), projectile.getY()) &&
+					playerID != projectile.getSpawnedBy();
+		}
 	}
 
 	// Method that facilitates collision between the two tanks so that they
@@ -382,6 +395,7 @@ public class Tank {
 	public boolean isPointInElement(int posx, int posy) {
 		return tankSprite.isPointInElement(posx, posy);
 	}
+	
 	
 	public boolean isTankMoving() {
 		return isMoving;
