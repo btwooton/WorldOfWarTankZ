@@ -17,10 +17,9 @@ public class Tank {
 	private int w, h;
 	private int weaponPower;
 	private char directionUp, directionLeft, directionDown, directionRight;
-	private boolean hasShield, hasSpeed, hasPower, isDamaged;
+	private boolean hasShield, hasSpeed, hasPower, isDamaged, isMoving;
 	private int playerID;
 	private boolean dead;
-	public int isMoving;
 
 	// Constructor for tank objects that takes in a string corresponding to the
 	// file
@@ -53,6 +52,7 @@ public class Tank {
 		hasSpeed = false;
 		hasPower = false;
 		isDamaged = false;
+		isMoving = false;
 		
 		playerID = _playerID;
 		dead = false;
@@ -91,6 +91,7 @@ public class Tank {
 			shield.moveForward((float)speed);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
+			isMoving = true;
 			
 		}
 		if (EZInteraction.isKeyDown(directionLeft)) {
@@ -98,6 +99,7 @@ public class Tank {
 			shield.turnLeft(1);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
+			isMoving = true;
 		}
 
 		if (EZInteraction.isKeyDown(directionDown)) {
@@ -105,6 +107,7 @@ public class Tank {
 			shield.moveForward((float)-speed);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
+			isMoving = true;
 		}
 
 		if (EZInteraction.isKeyDown(directionRight)) {
@@ -112,8 +115,24 @@ public class Tank {
 			shield.turnRight(1);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
+			isMoving = true;
+		}
+		
+		if (EZInteraction.wasKeyReleased(directionUp)) {
+			isMoving = false;	
+		}
+		
+		if (EZInteraction.wasKeyReleased(directionLeft)) {
+			isMoving = false;
 		}
 
+		if (EZInteraction.wasKeyReleased(directionDown)) {
+			isMoving = false;
+		}
+
+		if (EZInteraction.wasKeyReleased(directionRight)) {
+			isMoving = false;
+		}
 		// These if statements are to make sure that the tanks can't
 		// move off the edge of the screen
 		if (bottomEdge > bottomArenaEdge) {
@@ -362,6 +381,10 @@ public class Tank {
 	// collisions
 	public boolean isPointInElement(int posx, int posy) {
 		return tankSprite.isPointInElement(posx, posy);
+	}
+	
+	public boolean isTankMoving() {
+		return isMoving;
 	}
 
 }
