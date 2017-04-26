@@ -65,6 +65,9 @@ public class WarTanksMain {
 			Player1.animateShield();
 			Player2.animateShield();
 			
+			Player1.animateTank();
+			Player2.animateTank();
+			
 			Player1.checkPowerUps();
 			Player2.checkPowerUps();
 			

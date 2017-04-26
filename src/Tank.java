@@ -9,6 +9,7 @@ public class Tank {
 
 	private EZImage tankSprite;
 	private GiffAnime shield;
+	private GiffAnime tankAnime;
 	private int hp;
 	private final int COOL_DOWN_TIME, SHIELD_TIME_OUT, POWER_TIME_OUT, SPEED_TIME_OUT;
 	private long timeGotShield, timeGotPower, timeGotSpeed, timeOfLastShot;
@@ -31,7 +32,9 @@ public class Tank {
 	public Tank(String imageName, int _x, int _y, int _playerID, char[] directions) {
 		tankSprite = EZ.addImage(imageName, _x, _y);
 		shield = new GiffAnime("Sheild_224_3.png", _x, _y, 224, 224, 100, 3);
+		tankAnime = new GiffAnime("tankAnime.png", _x, _y, 75, 75, 100, 10);
 		shield.hide();
+		tankAnime.hide();
 		hp = 100;
 		COOL_DOWN_TIME = 1500;
 		SPEED_TIME_OUT = 15000;
@@ -89,48 +92,68 @@ public class Tank {
 		if (EZInteraction.isKeyDown(directionUp)) {
 			tankSprite.moveForward(speed);
 			shield.moveForward((float)speed);
+			tankAnime.moveForward((float)speed);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
+			tankSprite.hide();
+			tankAnime.show();
 			isMoving = true;
 			
 		}
 		if (EZInteraction.isKeyDown(directionLeft)) {
 			tankSprite.turnLeft(1);
 			shield.turnLeft(1);
+			tankAnime.turnLeft(1);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
+			tankSprite.hide();
+			tankAnime.show();
 			isMoving = true;
 		}
 
 		if (EZInteraction.isKeyDown(directionDown)) {
 			tankSprite.moveForward(-speed);
 			shield.moveForward((float)-speed);
+			tankAnime.moveForward((float)-speed);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
+			tankSprite.hide();
+			tankAnime.show();
 			isMoving = true;
 		}
 
 		if (EZInteraction.isKeyDown(directionRight)) {
 			tankSprite.turnRight(1);
 			shield.turnRight(1);
+			tankAnime.turnRight(1);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
+			tankSprite.hide();
+			tankAnime.show();
 			isMoving = true;
 		}
 		
 		if (EZInteraction.wasKeyReleased(directionUp)) {
+			tankSprite.show();
+			tankAnime.hide();
 			isMoving = false;	
 		}
 		
 		if (EZInteraction.wasKeyReleased(directionLeft)) {
+			tankSprite.show();
+			tankAnime.hide();
 			isMoving = false;
 		}
 
 		if (EZInteraction.wasKeyReleased(directionDown)) {
+			tankSprite.show();
+			tankAnime.hide();
 			isMoving = false;
 		}
 
 		if (EZInteraction.wasKeyReleased(directionRight)) {
+			tankSprite.show();
+			tankAnime.hide();
 			isMoving = false;
 		}
 		// These if statements are to make sure that the tanks can't
@@ -138,18 +161,22 @@ public class Tank {
 		if (bottomEdge > bottomArenaEdge) {
 			tankSprite.translateTo(x, bottomArenaEdge - (h / 2));
 			shield.translateTo(x, bottomArenaEdge - (h / 2));
+			tankAnime.translateTo(x, bottomArenaEdge - (h / 2));
 		}
 		if (topEdge < topArenaEdge) {
 			tankSprite.translateTo(x, topArenaEdge + h / 2);
 			shield.translateTo(x, topArenaEdge + h / 2);
+			tankAnime.translateTo(x, topArenaEdge + h / 2);
 		}
 		if (leftEdge < leftArenaEdge) {
 			tankSprite.translateTo(leftArenaEdge + w / 2, y);
 			shield.translateTo(leftArenaEdge + w / 2, y);
+			tankAnime.translateTo(leftArenaEdge + w / 2, y);
 		}
 		if (rightEdge > rightArenaEdge) {
 			tankSprite.translateTo(rightArenaEdge - (w / 2), y);
 			shield.translateTo(rightArenaEdge - (w / 2), y);
+			tankAnime.translateTo(rightArenaEdge - (w / 2), y);
 		}
 	}
 
@@ -167,21 +194,25 @@ public class Tank {
 					&& tankSprite.getXCenter() <= a + 16) {
 				tankSprite.translateTo(x, d - 16 - (h / 2));
 				shield.translateTo(x, d - 16 - (h / 2));
+				tankAnime.translateTo(x, d - 16 - (h / 2));
 			}
 			if (topEdge <= d + 16 && bottomEdge >= d + 16 && tankSprite.getXCenter() >= a - 16
 					&& tankSprite.getXCenter() <= a + 16) {
 				tankSprite.translateTo(x, d + 16 + h / 2);
 				shield.translateTo(x, d + 16 + h / 2);
+				tankAnime.translateTo(x, d + 16 + h / 2);
 			}
 			if (leftEdge <= a + 16 && rightEdge >= a + 16 && tankSprite.getYCenter() >= d - 16
 					&& tankSprite.getYCenter() <= d + 16) {
 				tankSprite.translateTo(a + 16 + w / 2, y);
 				shield.translateTo(a + 16 + w / 2, y);
+				tankAnime.translateTo(a + 16 + w / 2, y);
 			}
 			if (rightEdge >= a - 16 && leftEdge <= a - 16 && tankSprite.getYCenter() >= d - 16
 					&& tankSprite.getYCenter() <= d + 16) {
 				tankSprite.translateTo(a - 16 - (w / 2), y);
 				shield.translateTo(a - 16 - (w / 2), y);
+				tankAnime.translateTo(a - 16 - (w / 2), y);
 			}
 		}
 	}
@@ -302,6 +333,13 @@ public class Tank {
 	public void animateShield() {
 		if (hasShield) {
 			shield.animate();
+		}
+	}
+	
+	// Animate the tank sprite while it is moving
+	public void animateTank() {
+		if (isMoving) {
+			tankAnime.animate();
 		}
 	}
 
