@@ -32,33 +32,25 @@ public class Sound {
 		missile.play();
 	}
 
-	/*public  void  tankFX() {
-		if (EZInteraction.wasKeyPressed('w') || EZInteraction.wasKeyPressed('s') || EZInteraction.wasKeyPressed('a')
-				|| EZInteraction.wasKeyPressed('d') || EZInteraction.wasKeyPressed('i') || EZInteraction.wasKeyPressed('j')
-				|| EZInteraction.wasKeyPressed('k') || EZInteraction.wasKeyPressed('l')) {
-			tank1.loop();
-		if()
-			tank1.pause();
-		}
-			
+	public void tankFXplay() {
+		tank1.loop();
 
-	}*/
+	}
 
-	/*public void tankSound() {
-		if (tankFX()) {
-			tank1.play();
-		} else {
-			tank1.pause();
-		}
-	}*/
+	public void tankFXpause() {
+		tank1.pause();
+
+	}
 
 	public void weaponUpgrade() {
 		weapon.play();
 	}
-	public void playMenuTheme(){
+
+	public void playMenuTheme() {
 		titleScreen.loop();
 	}
-	public void stopMenuTheme(){
+
+	public void stopMenuTheme() {
 		titleScreen.stop();
 	}
 

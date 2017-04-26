@@ -40,7 +40,11 @@ public class gilbertsTestMain {
 		scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.white, 25);
 		// sound for game
 		Sound gameSound = new Sound();
-
+		/*if (Player1.isTankMoving() || Player2.isTankMoving()) {
+			gameSound.tankFXplay();
+		} else {
+			gameSound.tankFXpause();
+		}*/
 		for (int i = 0; i < projectiles.length; i++) {
 			projectiles[i] = new Projectiles(-100, -100);
 		}
@@ -50,22 +54,22 @@ public class gilbertsTestMain {
 
 		power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
 		while (!(Player1.isDead() || Player2.isDead())) {
-			
+
 			Player1.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
 			Player2.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
-			
+
 			Player1.TankObstacle(xpos, ypos);
 			Player2.TankObstacle(xpos, ypos);
-			
-			//gameSound.tankFX();
+
+			// gameSound.tankFX();
 
 			Player1.animateShield();
 			Player2.animateShield();
-			
+
 			Player1.checkPowerUps();
 			Player2.checkPowerUps();
-			
-			//gameSound.tankFX();
+
+			// gameSound.tankFX();
 
 			Player1.collideWithTanks(Player2);
 			Player2.collideWithTanks(Player1);
@@ -132,14 +136,14 @@ public class gilbertsTestMain {
 			}
 
 			if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
-				if(Player1.fireProjectile(projectiles[nextProjectile])) {
+				if (Player1.fireProjectile(projectiles[nextProjectile])) {
 					nextProjectile = (nextProjectile + 1) % projectiles.length;
 					gameSound.fire();
 				}
 			}
 
 			if (EZInteraction.wasKeyReleased(KeyEvent.VK_ENTER)) {
-				if(Player2.fireProjectile(projectiles[nextProjectile])) {
+				if (Player2.fireProjectile(projectiles[nextProjectile])) {
 					nextProjectile = (nextProjectile + 1) % projectiles.length;
 					gameSound.fire();
 				}
@@ -181,7 +185,7 @@ public class gilbertsTestMain {
 			EZ.refreshScreen();
 		}
 		EZ.removeAllEZElements();
-		EZ.addText(screenWidth/2, screenHeight/2, "GAME OVER", Color.BLACK, 200);
+		EZ.addText(screenWidth / 2, screenHeight / 2, "GAME OVER", Color.BLACK, 200);
 		EZ.refreshScreen();
 		EZ.pause(3000);
 		EZ.closeWindowWithIndex(0);
@@ -189,5 +193,3 @@ public class gilbertsTestMain {
 	}
 
 }
-
-
