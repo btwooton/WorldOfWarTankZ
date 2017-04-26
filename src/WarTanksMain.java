@@ -60,6 +60,8 @@ public class WarTanksMain {
 			Player1.TankObstacle(xpos, ypos);
 			Player2.TankObstacle(xpos, ypos);
 			
+			//gameSound.tankFX();
+
 			Player1.animateShield();
 			Player2.animateShield();
 			
