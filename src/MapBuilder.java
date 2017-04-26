@@ -29,7 +29,8 @@ public class MapBuilder {
 		EZ.setBackgroundColor(new Color(255, 255, 255));
 		//EZ.addImage("rockTexture.png", screenWidth / 2, screenHeight / 2);
 		while(true) {
-			EZText message = EZ.addText(screenWidth / 2, screenHeight / 2, "Press Space to Start", Color.black, 50);
+			
+			EZText message = EZ.addText(screenWidth / 2, screenHeight *3 / 4, "Press Space to Start", Color.black, 50);
 			if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
 				EZ.removeEZElement(message);
 				break;
