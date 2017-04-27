@@ -71,6 +71,9 @@ public class WarTanksMain {
 			Player1.checkPowerUps();
 			Player2.checkPowerUps();
 			
+			Player1.canonSmoke();
+			Player2.canonSmoke();
+			
 			//gameSound.tankFX();
 
 			Player1.collideWithTanks(Player2);
