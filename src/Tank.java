@@ -32,7 +32,7 @@ public class Tank {
 	public Tank(String imageName, int _x, int _y, int _playerID, char[] directions) {
 		tankSprite = EZ.addImage(imageName, _x, _y);
 		shield = new GiffAnime("Sheild_224_3.png", _x, _y, 224, 224, 100, 3);
-		tankAnime = new GiffAnime("tankAnime.png", _x, _y, 75, 75, 100, 10);
+		tankAnime = new GiffAnime("tankAnime.png", _x, _y, 75, 56, 100, 10);
 		shield.hide();
 		tankAnime.hide();
 		hp = 100;

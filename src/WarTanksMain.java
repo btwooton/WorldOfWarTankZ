@@ -32,8 +32,8 @@ public class WarTanksMain {
 		ArrayList<Integer> TankStats;
 
 		// draw my character
-		Tank Player1 = new Tank("Tank.png", screenWidth / 4, screenHeight / 2, 1, new char[] { 'w', 'a', 's', 'd' });
-		Tank Player2 = new Tank("Tank.png", screenWidth * 3 / 4, screenHeight / 2, 2,
+		Tank Player1 = new Tank("newTank.png", screenWidth / 4, screenHeight / 2, 1, new char[] { 'w', 'a', 's', 'd' });
+		Tank Player2 = new Tank("newTank.png", screenWidth * 3 / 4, screenHeight / 2, 2,
 				new char[] { 'i', 'j', 'k', 'l' });
 
 		// set up health and health board
