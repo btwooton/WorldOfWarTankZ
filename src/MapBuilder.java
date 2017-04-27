@@ -43,10 +43,11 @@ public class MapBuilder {
 		}
 		
 		if (level==0) {
-			EZ.addImage("blueTexture.png", screenWidth / 2, screenHeight / 2);
+			EZ.addImage("MetalIron.jpg", screenWidth / 2, screenHeight / 2);
 			}
 		if (level==1) {
-			EZ.addImage("rockTexture.png", screenWidth / 2, screenHeight / 2);
+			EZImage rocky = EZ.addImage("rockTexture.png", screenWidth / 2, screenHeight / 2);
+			rocky.scaleTo(1.1);
 			}
 
 		// set x and y array lists
@@ -69,7 +70,7 @@ public class MapBuilder {
 				switch (ch) {
 				case 'D':
 					if (level==0) {
-						EZ.addImage("ground.png", i * 32 + 16, line * 32 + 16);
+						EZ.addImage("MCSilverBlock32.jpg", i * 32 + 16, line * 32 + 16);
 					}
 					//EZ.addImage("tankTrap_32.png", i * 32 + 16, line * 32 + 16);
 

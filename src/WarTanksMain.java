@@ -54,8 +54,8 @@ public class WarTanksMain {
 		power[powerUpIndex].translateTo(power[powerUpIndex].randomX(), power[powerUpIndex].randomY());
 		while (!(Player1.isDead() || Player2.isDead())) {
 			
-			Player1.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
-			Player2.moveAround(32, 32, screenWidth - 32, screenHeight - 32);
+			Player1.moveAround(0, 0, screenWidth, screenHeight);
+			Player2.moveAround(0, 0, screenWidth, screenHeight);
 			
 			Player1.TankObstacle(xpos, ypos);
 			Player2.TankObstacle(xpos, ypos);
