@@ -39,8 +39,8 @@ public class WarTanksMain {
 		// set up health and health board
 		Points = "Player 1 HP: " + Player1.getHealth();
 		Points2 = "Player 2 HP: " + Player2.getHealth();
-		scoreDisplay = EZ.addText(300, 15, Points, Color.white, 25);
-		scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.white, 25);
+		scoreDisplay = EZ.addText(300, 15, Points, Color.black, 25);
+		scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.black, 25);
 		// sound for game
 		Sound gameSound = new Sound();
 
@@ -170,7 +170,7 @@ public class WarTanksMain {
 						Player1.takeDamage(projectiles[i].getFirePower());
 						EZ.removeEZElement(scoreDisplay);
 						Points = "Player 1 HP: " + Player1.getHealth();
-						scoreDisplay = EZ.addText(300, 15, Points, Color.white, 25);
+						scoreDisplay = EZ.addText(300, 15, Points, Color.black, 25);
 						projectiles[i].setOffScreen(screenHeight, screenWidth, true);
 						projectiles[i].translateTo(-100, -100);
 					}
@@ -179,7 +179,7 @@ public class WarTanksMain {
 						Player2.takeDamage(projectiles[i].getFirePower());
 						EZ.removeEZElement(scoreDisplay2);
 						Points2 = "Player 2 HP: " + Player2.getHealth();
-						scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.white, 25);
+						scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.black, 25);
 						projectiles[i].setOffScreen(screenHeight, screenWidth, true);
 						projectiles[i].translateTo(-100, -100);
 					}
@@ -190,7 +190,13 @@ public class WarTanksMain {
 			EZ.refreshScreen();
 		}
 		EZ.removeAllEZElements();
-		EZ.addText(screenWidth/2, screenHeight/2, "GAME OVER", Color.BLACK, 200);
+		if (Player1.getHealth()<=0) {
+			EZ.addText(screenWidth/2, screenHeight/3, "Player 2 Wins", Color.BLACK, 200);
+		}
+		if (Player2.getHealth()<=0) {
+			EZ.addText(screenWidth/2, screenHeight/3, "Player 1 Wins", Color.BLACK, 200);
+		}
+		EZ.addText(screenWidth/2, screenHeight*2/3, "GAME OVER", Color.BLACK, 200);
 		EZ.refreshScreen();
 		EZ.pause(3000);
 		EZ.closeWindowWithIndex(0);
