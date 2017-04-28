@@ -34,7 +34,7 @@ public class Tank {
 		tankSprite = EZ.addImage(imageName, _x, _y);
 		shield = new GiffAnime("Sheild_224_3.png", _x, _y, 224, 224, 100, 3);
 		tankAnime = new GiffAnime("tankAnime.png", _x, _y, 75, 56, 100, 10);
-		canonSmoke = new GiffAnime("smoke_32_7.png", _x+25, _y - 5, 32, 32, 100, 7);
+		canonSmoke = new GiffAnime("smoke_32_7.png", _x, _y, 32, 32, 100, 7);
 		shield.hide();
 		tankAnime.hide();
 		canonSmoke.hide();
