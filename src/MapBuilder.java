@@ -28,11 +28,13 @@ public class MapBuilder {
 		// set to white background
 		EZ.setBackgroundColor(new Color(255, 255, 255));
 		
+		// Set start screen
 		while(true) {
 			EZImage start = EZ.addImage("Title.jpg", screenWidth / 2, screenHeight / 2);
 			EZImage title = EZ.addImage("WWTZLogo.png", screenWidth / 2, screenHeight / 4);
 			EZText message = EZ.addText("8-BIT WONDER.TTF",
 					screenWidth / 2, screenHeight *3 / 4, "Press Space to Start", new Color(17,51,104), 50);
+			// press space to start
 			if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
 				EZ.removeEZElement(message);
 				EZ.removeEZElement(start);
@@ -41,6 +43,7 @@ public class MapBuilder {
 			}
 		}
 		
+		// set background
 		EZ.addImage("MetalIron.jpg", screenWidth / 2, screenHeight / 2);
 
 
