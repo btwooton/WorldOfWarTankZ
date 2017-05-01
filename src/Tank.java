@@ -34,6 +34,9 @@ public class Tank {
 	// the
 	// key character values that will be used for controlling the tank movement
 	public Tank(String imageName, int _x, int _y, int _playerID, char[] directions) {
+		// Image and GiffAnime variables that hold the various sprites and
+		// animations that
+		// a tank object can have
 		tankSprite = EZ.addImage(imageName, _x, _y);
 		shield = new GiffAnime("Sheild_224_3.png", _x, _y, 224, 224, 100, 3);
 		tankAnime = new GiffAnime("tankAnime.png", _x, _y, 75, 56, 100, 10);
@@ -43,7 +46,8 @@ public class Tank {
 		tankAnime.hide();
 		canonSmoke.hide();
 		explosion.hide();
-		hp = 100;
+		// Constants and variables for keeping track of time
+		// sensitive conditions like weapon and power up cooldowns
 		COOL_DOWN_TIME = 1500;
 		SPEED_TIME_OUT = 15000;
 		SHIELD_TIME_OUT = 15000;
@@ -54,6 +58,10 @@ public class Tank {
 		timeGotPower = 0;
 		timeOfLastShot = 0;
 		timeGotHit = 0;
+
+		// Variables that hold properties of the tank object like
+		// health, movement speed, position, dimensions, and weapon damage
+		hp = 100;
 		speed = 2;
 		turnSpeed = 1;
 		x = _x;
@@ -61,28 +69,31 @@ public class Tank {
 		w = tankSprite.getWidth();
 		h = tankSprite.getHeight();
 		weaponPower = 8;
-		
+		playerID = _playerID;
+
+		// Boolean variables that keep track of the state of a tank object
+		// Important for knowing whether a tank has any upgrades in effect
 		hasShield = false;
 		hasSpeed = false;
 		hasPower = false;
 		isDamaged = false;
 		isMoving = false;
-		
-		playerID = _playerID;
 		dead = false;
+
+		// The movement directions of a tank to keep track of which
+		// key corresponds to which direction of movement
 		directionUp = directions[0];
 		directionLeft = directions[1];
 		directionDown = directions[2];
 		directionRight = directions[3];
-		
+
 	}
 
 	// Method that allows tanks to be damaged when hit by a projectile
 	public void takeDamage(int amount) {
 		if (hasShield) {
-			hp -= amount/4;
-		}
-		else {
+			hp -= amount / 4;
+		} else {
 			hp -= amount;
 		}
 		if (hp <= 0) {
@@ -104,16 +115,16 @@ public class Tank {
 
 		if (EZInteraction.isKeyDown(directionUp)) {
 			tankSprite.moveForward(speed);
-			shield.moveForward((float)speed);
-			tankAnime.moveForward((float)speed);
-			canonSmoke.moveForward((float)speed);
-			explosion.moveForward((float)speed);
+			shield.moveForward((float) speed);
+			tankAnime.moveForward((float) speed);
+			canonSmoke.moveForward((float) speed);
+			explosion.moveForward((float) speed);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
 			tankSprite.hide();
 			tankAnime.show();
 			isMoving = true;
-			
+
 		}
 		if (EZInteraction.isKeyDown(directionLeft)) {
 			tankSprite.turnLeft(turnSpeed);
@@ -130,10 +141,10 @@ public class Tank {
 
 		if (EZInteraction.isKeyDown(directionDown)) {
 			tankSprite.moveForward(-speed);
-			shield.moveForward((float)-speed);
-			tankAnime.moveForward((float)-speed);
-			canonSmoke.moveForward((float)-speed);
-			explosion.moveForward((float)-speed);
+			shield.moveForward((float) -speed);
+			tankAnime.moveForward((float) -speed);
+			canonSmoke.moveForward((float) -speed);
+			explosion.moveForward((float) -speed);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
 			tankSprite.hide();
@@ -153,13 +164,13 @@ public class Tank {
 			tankAnime.show();
 			isMoving = true;
 		}
-		
+
 		if (EZInteraction.wasKeyReleased(directionUp)) {
 			tankSprite.show();
 			tankAnime.hide();
-			isMoving = false;	
+			isMoving = false;
 		}
-		
+
 		if (EZInteraction.wasKeyReleased(directionLeft)) {
 			tankSprite.show();
 			tankAnime.hide();
@@ -190,8 +201,8 @@ public class Tank {
 			tankSprite.translateTo(x, topArenaEdge + h / 2);
 			shield.translateTo(x, topArenaEdge + h / 2);
 			tankAnime.translateTo(x, topArenaEdge + h / 2);
-			canonSmoke.translateTo(x,  topArenaEdge + h / 2);
-			explosion.translateTo(x,  topArenaEdge + h / 2);
+			canonSmoke.translateTo(x, topArenaEdge + h / 2);
+			explosion.translateTo(x, topArenaEdge + h / 2);
 		}
 		if (leftEdge < leftArenaEdge) {
 			tankSprite.translateTo(leftArenaEdge + w / 2, y);
@@ -260,16 +271,15 @@ public class Tank {
 			if (((tankSprite.isPointInElement(projectile.getLeftEdge(), projectile.getTopEdge()))
 					|| (tankSprite.isPointInElement(projectile.getLeftEdge(), projectile.getBottomEdge()))
 					|| (tankSprite.isPointInElement(projectile.getRightEdge(), projectile.getTopEdge()))
-					|| (tankSprite.isPointInElement(projectile.getRightEdge(),
-							projectile.getBottomEdge()))) && playerID != projectile.getSpawnedBy()) {
+					|| (tankSprite.isPointInElement(projectile.getRightEdge(), projectile.getBottomEdge())))
+					&& playerID != projectile.getSpawnedBy()) {
 				return true;
 			} else {
 				return false;
 			}
-		}
-		else {
-			return tankSprite.isPointInElement(projectile.getX(), projectile.getY()) &&
-					playerID != projectile.getSpawnedBy();
+		} else {
+			return tankSprite.isPointInElement(projectile.getX(), projectile.getY())
+					&& playerID != projectile.getSpawnedBy();
 		}
 	}
 
@@ -350,7 +360,7 @@ public class Tank {
 		return false;
 
 	}
-	
+
 	// Method for getting the hp of a Tank object
 	public int getHealth() {
 		return hp;
@@ -374,7 +384,7 @@ public class Tank {
 			timeGotShield = System.currentTimeMillis();
 		}
 	}
-	
+
 	// Deactivate the shield once the shield power up has timed out
 	public void deactivateShield() {
 		if (hasShield) {
@@ -382,14 +392,14 @@ public class Tank {
 			shield.hide();
 		}
 	}
-	
+
 	// Animate the shield while it is activated
 	public void animateShield() {
 		if (hasShield) {
 			shield.animate();
 		}
 	}
-	
+
 	// Animate the tank sprite while it is moving
 	public void animateTank() {
 		if (isMoving) {
@@ -413,6 +423,7 @@ public class Tank {
 			weaponPower -= 20;
 		}
 	}
+
 	// Upgrade the tank's speed when it collides with a speed boost
 	public void upgradeSpeed() {
 		if (!hasSpeed) {
@@ -422,7 +433,7 @@ public class Tank {
 			timeGotSpeed = System.currentTimeMillis();
 		}
 	}
-	
+
 	// Downgrade the tank's speed once it's speed power up times out
 	public void downgradeSpeed() {
 		if (hasSpeed) {
@@ -430,9 +441,9 @@ public class Tank {
 			turnSpeed = turnSpeed / 2;
 			hasSpeed = false;
 		}
-		
+
 	}
-	
+
 	// Heal the tank's HP when it collides with a Med Kit
 	public void repairTank() {
 		if (isDamaged) {
@@ -442,8 +453,9 @@ public class Tank {
 			}
 		}
 	}
-	
-	// Method that allows for the Tanks to determine if any of their active power
+
+	// Method that allows for the Tanks to determine if any of their active
+	// power
 	// ups have timed-out (ran out of duration)
 	public void checkPowerUps() {
 		if (System.currentTimeMillis() > timeGotSpeed + SPEED_TIME_OUT && hasSpeed) {
@@ -456,14 +468,17 @@ public class Tank {
 			downgradeWeapon();
 		}
 	}
-	
+
+	// Method that will display/hide canon smoke animation depending on cool
+	// down state
 	public void canonSmoke() {
 		if (System.currentTimeMillis() - timeOfLastShot >= COOL_DOWN_TIME) {
 			canonSmoke.hide();
 		}
 		canonSmoke.animate();
 	}
-	
+
+	// Method for displaying the explosion animation when a tank gets hit
 	public void explosion() {
 		if (System.currentTimeMillis() - timeGotHit >= EXPLOSION_TIME) {
 			explosion.hide();
@@ -503,8 +518,9 @@ public class Tank {
 	public boolean isPointInElement(int posx, int posy) {
 		return tankSprite.isPointInElement(posx, posy);
 	}
-	
-	
+
+	// Method that tells whether a tank is currently moving
+	// For modulating the display of the animated tank sprite during movement
 	public boolean isTankMoving() {
 		return isMoving;
 	}
