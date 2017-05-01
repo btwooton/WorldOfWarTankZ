@@ -199,6 +199,8 @@ public class WarTanksMain {
 			EZ.refreshScreen();
 		}
 		EZ.removeAllEZElements();
+		EZImage gameOverBG = EZ.addImage("gameOverScreen.png", screenWidth/2, screenHeight/2);
+		gameOverBG.pushToBack();
 		if (Player1.getHealth()<=0) {
 			EZ.addText("8-BIT WONDER.TTF", 
 					screenWidth/2, screenHeight/3, "Player 2 Wins", Color.BLACK, 50);

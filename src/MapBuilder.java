@@ -27,8 +27,6 @@ public class MapBuilder {
 		EZ.initialize(Swidth * 32, Sheight * 32); // initialize the window
 		// set to white background
 		EZ.setBackgroundColor(new Color(255, 255, 255));
-
-		int level = rg.nextInt(2);
 		
 		while(true) {
 			EZImage start = EZ.addImage("Title.jpg", screenWidth / 2, screenHeight / 2);
@@ -43,13 +41,8 @@ public class MapBuilder {
 			}
 		}
 		
-		if (level==0) {
-			EZ.addImage("MetalIron.jpg", screenWidth / 2, screenHeight / 2);
-			}
-		if (level==1) {
-			EZImage rocky = EZ.addImage("rockTexture.png", screenWidth / 2, screenHeight / 2);
-			rocky.scaleTo(1.1);
-			}
+		EZ.addImage("MetalIron.jpg", screenWidth / 2, screenHeight / 2);
+
 
 		// set x and y array lists
 		xs = new ArrayList<Integer>();
@@ -70,15 +63,9 @@ public class MapBuilder {
 				// object placement case
 				switch (ch) {
 				case 'D':
-					if (level==0) {
-						EZ.addImage("MCSilverBlock32.jpg", i * 32 + 16, line * 32 + 16);
-					}
-					//EZ.addImage("tankTrap_32.png", i * 32 + 16, line * 32 + 16);
-
 					// add image
-					if (level==1) {
-						EZ.addImage("dirt.png", i * 32 + 16, line * 32 + 16);
-					}
+					EZ.addImage("MCSilverBlock32.jpg", i * 32 + 16, line * 32 + 16);
+
 					// add position to arrays
 					xs.add(i * 32 + 16);
 					ys.add(line * 32 + 16);

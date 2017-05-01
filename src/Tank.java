@@ -38,7 +38,7 @@ public class Tank {
 		shield = new GiffAnime("Sheild_224_3.png", _x, _y, 224, 224, 100, 3);
 		tankAnime = new GiffAnime("tankAnime.png", _x, _y, 75, 56, 100, 10);
 		canonSmoke = new GiffAnime("smoke_32_7.png", _x, _y, 32, 32, 100, 7);
-		explosion = new GiffAnime("expo_32_7.png", _x, _y, 32, 32, 100, 7);
+		explosion = new GiffAnime("blueExplosion_60_7.png", _x, _y, 60, 60, 100, 7);
 		shield.hide();
 		tankAnime.hide();
 		canonSmoke.hide();
