@@ -1,6 +1,6 @@
 
 public class Sound {
-	EZSound weapon, speed, shield, theme, health, missile, tank1, tank2, spawn, bounce, titleScreen;
+	EZSound weapon, speed, shield, theme, health, missile, tank1, tank2, spawn, bounce;
 
 	public Sound() {
 		weapon = EZ.addSound("upgrade1.wav");
@@ -13,7 +13,6 @@ public class Sound {
 		tank2 = EZ.addSound("tankAudio.wav");
 		bounce = EZ.addSound("upgrade4.wav");
 		spawn = EZ.addSound("upgrade3.wav");
-		titleScreen = EZ.addSound("theme.wav");
 
 	}
 
@@ -38,14 +37,6 @@ public class Sound {
 
 	public void weaponUpgrade() {
 		weapon.play();
-	}
-
-	public void playMenuTheme() {
-		titleScreen.loop();
-	}
-
-	public void stopMenuTheme() {
-		titleScreen.stop();
 	}
 
 	public void speedUpgrade() {
