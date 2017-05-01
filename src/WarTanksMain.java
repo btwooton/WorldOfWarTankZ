@@ -75,6 +75,9 @@ public class WarTanksMain {
 			Player1.canonSmoke();
 			Player2.canonSmoke();
 			
+			Player1.explosion();
+			Player2.explosion();
+			
 			//gameSound.tankFX();
 
 			Player1.collideWithTanks(Player2);
@@ -90,7 +93,7 @@ public class WarTanksMain {
 					Player1.repairTank();
 					EZ.removeEZElement(scoreDisplay);
 					Points = "Player 1 HP: " + Player1.getHealth();
-					scoreDisplay = EZ.addText(300, 15, Points, Color.white, 25);
+					scoreDisplay = EZ.addText(300, 15, Points, Color.black, 25);
 					gameSound.heal();
 				} else if (power[powerUpIndex].getName() == PowerUp.Name.SHEILD) {
 					Player1.activateShield();
@@ -120,7 +123,7 @@ public class WarTanksMain {
 					Player2.repairTank();
 					EZ.removeEZElement(scoreDisplay2);
 					Points2 = "Player 2 HP: " + Player2.getHealth();
-					scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.white, 25);
+					scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.black, 25);
 					gameSound.heal();
 
 				} else if (power[powerUpIndex].getName() == PowerUp.Name.SHEILD) {
