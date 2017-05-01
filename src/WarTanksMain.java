@@ -22,6 +22,8 @@ public class WarTanksMain {
 	static int size = 30;
 
 	public static void main(String[] args) throws java.io.IOException {
+		Sound gameSound = new Sound();
+		gameSound.themeLoop();
 
 		// build map
 		MapBuilder maps = new MapBuilder(map);
@@ -42,7 +44,6 @@ public class WarTanksMain {
 		scoreDisplay = EZ.addText(300, 15, Points, Color.black, 25);
 		scoreDisplay2 = EZ.addText(screenWidth - 300, 15, Points2, Color.black, 25);
 		// sound for game
-		Sound gameSound = new Sound();
 
 		for (int i = 0; i < projectiles.length; i++) {
 			projectiles[i] = new Projectiles(-100, -100);

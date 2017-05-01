@@ -14,19 +14,10 @@ public class Sound {
 		bounce = EZ.addSound("upgrade4.wav");
 		spawn = EZ.addSound("upgrade3.wav");
 		titleScreen = EZ.addSound("theme.wav");
-		theme.loop();
-
-		pause();
 
 	}
 
-	void pause() {
-		weapon.stop();
-		speed.stop();
-		shield.stop();
-		health.stop();
-		missile.stop();
-	}
+	
 
 	public void fire() {
 		missile.play();
@@ -40,6 +31,9 @@ public class Sound {
 	public void tankFXpause() {
 		tank1.pause();
 
+	}
+	public void themeLoop(){
+		theme.loop();
 	}
 
 	public void weaponUpgrade() {

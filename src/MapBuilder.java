@@ -27,17 +27,20 @@ public class MapBuilder {
 		EZ.initialize(Swidth * 32, Sheight * 32); // initialize the window
 		// set to white background
 		EZ.setBackgroundColor(new Color(255, 255, 255));
-		
+		Sound gameSound = new Sound();
+
 		int level = rg.nextInt(2);
 		
 		while(true) {
 			EZImage start = EZ.addImage("Title.jpg", screenWidth / 2, screenHeight / 2);
 			EZImage title = EZ.addImage("WWTZLogo.png", screenWidth / 2, screenHeight / 4);
 			EZText message = EZ.addText(screenWidth / 2, screenHeight *3 / 4, "Press Space to Start", Color.white, 50);
+			gameSound.playMenuTheme();
 			if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
 				EZ.removeEZElement(message);
 				EZ.removeEZElement(start);
 				EZ.removeEZElement(message);
+				gameSound.stopMenuTheme();
 				break;
 			}
 		}
