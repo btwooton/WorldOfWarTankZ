@@ -33,7 +33,8 @@ public class MapBuilder {
 		while(true) {
 			EZImage start = EZ.addImage("Title.jpg", screenWidth / 2, screenHeight / 2);
 			EZImage title = EZ.addImage("WWTZLogo.png", screenWidth / 2, screenHeight / 4);
-			EZText message = EZ.addText(screenWidth / 2, screenHeight *3 / 4, "Press Space to Start", Color.white, 50);
+			EZText message = EZ.addText("8-BIT WONDER.TTF",
+					screenWidth / 2, screenHeight *3 / 4, "Press Space to Start", new Color(17,51,104), 50);
 			if (EZInteraction.wasKeyReleased(KeyEvent.VK_SPACE)) {
 				EZ.removeEZElement(message);
 				EZ.removeEZElement(start);
