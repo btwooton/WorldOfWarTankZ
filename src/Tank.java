@@ -417,6 +417,7 @@ public class Tank {
 	public void upgradeSpeed() {
 		if (!hasSpeed) {
 			speed = speed * 2;
+			turnSpeed = turnSpeed * 2;
 			hasSpeed = true;
 			timeGotSpeed = System.currentTimeMillis();
 		}
@@ -426,6 +427,7 @@ public class Tank {
 	public void downgradeSpeed() {
 		if (hasSpeed) {
 			speed = speed / 2;
+			turnSpeed = turnSpeed / 2;
 			hasSpeed = false;
 		}
 		
