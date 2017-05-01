@@ -49,11 +49,11 @@ public class PowerUp {
 		}
 
 	}
-
+//Runs giffAnime animate method
 	void animate() {
 		sprite.animate();
 	}
-
+//places powersUps randomly on screen for x and Y
 	int randomX() {
 	return rg.nextInt(900) + 100;
 	

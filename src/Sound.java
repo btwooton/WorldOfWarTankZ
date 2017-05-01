@@ -1,6 +1,14 @@
 
 public class Sound {
-	EZSound weapon, speed, shield, theme, health, missile, tank1, tank2, spawn, bounce;
+
+	/*
+	 * =========================================================================
+	 * Sound class, not the most nessisary of classes seeing how EZSound pretty
+	 * much is that already but it seemed help full to organize the project and
+	 * keep the main as clutter free as possible
+	 * =========================================================================
+	 */
+	EZSound weapon, speed, shield, theme, health, missile, spawn, bounce;
 
 	public Sound() {
 		weapon = EZ.addSound("upgrade1.wav");
@@ -9,29 +17,16 @@ public class Sound {
 		theme = EZ.addSound("theme2.wav");
 		health = EZ.addSound("healthUpgrade.wav");
 		missile = EZ.addSound("bazooka.wav");
-		tank1 = EZ.addSound("tankAudio.wav");
-		tank2 = EZ.addSound("tankAudio.wav");
 		bounce = EZ.addSound("upgrade4.wav");
 		spawn = EZ.addSound("upgrade3.wav");
 
 	}
 
-	
-
 	public void fire() {
 		missile.play();
 	}
 
-	public void tankFXplay() {
-		tank1.loop();
-
-	}
-
-	public void tankFXpause() {
-		tank1.pause();
-
-	}
-	public void themeLoop(){
+	public void themeLoop() {
 		theme.loop();
 	}
 
