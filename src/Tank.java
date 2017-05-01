@@ -11,10 +11,13 @@ public class Tank {
 	private GiffAnime shield;
 	private GiffAnime tankAnime;
 	private GiffAnime canonSmoke;
+	private GiffAnime explosion;
 	private int hp;
 	private final int COOL_DOWN_TIME, SHIELD_TIME_OUT, POWER_TIME_OUT, SPEED_TIME_OUT;
+	private final int EXPLOSION_TIME;
 	private long timeGotShield, timeGotPower, timeGotSpeed, timeOfLastShot;
-	private double speed;
+	private long timeGotHit;
+	private double speed, turnSpeed;
 	private double x, y;
 	private int w, h;
 	private int weaponPower;
@@ -35,19 +38,24 @@ public class Tank {
 		shield = new GiffAnime("Sheild_224_3.png", _x, _y, 224, 224, 100, 3);
 		tankAnime = new GiffAnime("tankAnime.png", _x, _y, 75, 56, 100, 10);
 		canonSmoke = new GiffAnime("smoke_32_7.png", _x, _y, 32, 32, 100, 7);
+		explosion = new GiffAnime("expo_32_7.png", _x, _y, 32, 32, 100, 7);
 		shield.hide();
 		tankAnime.hide();
 		canonSmoke.hide();
+		explosion.hide();
 		hp = 100;
 		COOL_DOWN_TIME = 1500;
 		SPEED_TIME_OUT = 15000;
 		SHIELD_TIME_OUT = 15000;
 		POWER_TIME_OUT = 15000;
+		EXPLOSION_TIME = 700;
 		timeGotShield = 0;
 		timeGotSpeed = 0;
 		timeGotPower = 0;
 		timeOfLastShot = 0;
+		timeGotHit = 0;
 		speed = 2;
+		turnSpeed = 1;
 		x = _x;
 		y = _y;
 		w = tankSprite.getWidth();
@@ -83,6 +91,8 @@ public class Tank {
 		if (hp < 100) {
 			isDamaged = true;
 		}
+		timeGotHit = System.currentTimeMillis();
+		explosion.show();
 	}
 
 	// Method for enabling tank movement via key presses
@@ -97,6 +107,7 @@ public class Tank {
 			shield.moveForward((float)speed);
 			tankAnime.moveForward((float)speed);
 			canonSmoke.moveForward((float)speed);
+			explosion.moveForward((float)speed);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
 			tankSprite.hide();
@@ -105,10 +116,11 @@ public class Tank {
 			
 		}
 		if (EZInteraction.isKeyDown(directionLeft)) {
-			tankSprite.turnLeft(1);
-			shield.turnLeft(1);
-			tankAnime.turnLeft(1);
-			canonSmoke.turnLeft(1);
+			tankSprite.turnLeft(turnSpeed);
+			shield.turnLeft(turnSpeed);
+			tankAnime.turnLeft(turnSpeed);
+			canonSmoke.turnLeft(turnSpeed);
+			explosion.turnLeft(turnSpeed);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
 			tankSprite.hide();
@@ -121,6 +133,7 @@ public class Tank {
 			shield.moveForward((float)-speed);
 			tankAnime.moveForward((float)-speed);
 			canonSmoke.moveForward((float)-speed);
+			explosion.moveForward((float)-speed);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
 			tankSprite.hide();
@@ -129,10 +142,11 @@ public class Tank {
 		}
 
 		if (EZInteraction.isKeyDown(directionRight)) {
-			tankSprite.turnRight(1);
-			shield.turnRight(1);
-			tankAnime.turnRight(1);
-			canonSmoke.turnRight(1);
+			tankSprite.turnRight(turnSpeed);
+			shield.turnRight(turnSpeed);
+			tankAnime.turnRight(turnSpeed);
+			canonSmoke.turnRight(turnSpeed);
+			explosion.turnRight(turnSpeed);
 			x = tankSprite.getXCenter();
 			y = tankSprite.getYCenter();
 			tankSprite.hide();
@@ -170,24 +184,28 @@ public class Tank {
 			shield.translateTo(x, bottomArenaEdge - (h / 2));
 			tankAnime.translateTo(x, bottomArenaEdge - (h / 2));
 			canonSmoke.translateTo(x, bottomArenaEdge - (h / 2));
+			explosion.translateTo(x, bottomArenaEdge - (h / 2));
 		}
 		if (topEdge < topArenaEdge) {
 			tankSprite.translateTo(x, topArenaEdge + h / 2);
 			shield.translateTo(x, topArenaEdge + h / 2);
 			tankAnime.translateTo(x, topArenaEdge + h / 2);
 			canonSmoke.translateTo(x,  topArenaEdge + h / 2);
+			explosion.translateTo(x,  topArenaEdge + h / 2);
 		}
 		if (leftEdge < leftArenaEdge) {
 			tankSprite.translateTo(leftArenaEdge + w / 2, y);
 			shield.translateTo(leftArenaEdge + w / 2, y);
 			tankAnime.translateTo(leftArenaEdge + w / 2, y);
 			canonSmoke.translateTo(leftArenaEdge + w / 2, y);
+			explosion.translateTo(leftArenaEdge + w / 2, y);
 		}
 		if (rightEdge > rightArenaEdge) {
 			tankSprite.translateTo(rightArenaEdge - (w / 2), y);
 			shield.translateTo(rightArenaEdge - (w / 2), y);
 			tankAnime.translateTo(rightArenaEdge - (w / 2), y);
 			canonSmoke.translateTo(rightArenaEdge - (w / 2), y);
+			explosion.translateTo(rightArenaEdge - (w / 2), y);
 		}
 	}
 
@@ -207,6 +225,7 @@ public class Tank {
 				shield.translateTo(x, d - 16 - (h / 2));
 				tankAnime.translateTo(x, d - 16 - (h / 2));
 				canonSmoke.translateTo(x, d - 16 - (h / 2));
+				explosion.translateTo(x, d - 16 - (h / 2));
 			}
 			if (topEdge <= d + 16 && bottomEdge >= d + 16 && tankSprite.getXCenter() >= a - 16
 					&& tankSprite.getXCenter() <= a + 16) {
@@ -214,6 +233,7 @@ public class Tank {
 				shield.translateTo(x, d + 16 + h / 2);
 				tankAnime.translateTo(x, d + 16 + h / 2);
 				canonSmoke.translateTo(x, d + 16 + h / 2);
+				explosion.translateTo(x, d + 16 + h / 2);
 			}
 			if (leftEdge <= a + 16 && rightEdge >= a + 16 && tankSprite.getYCenter() >= d - 16
 					&& tankSprite.getYCenter() <= d + 16) {
@@ -221,6 +241,7 @@ public class Tank {
 				shield.translateTo(a + 16 + w / 2, y);
 				tankAnime.translateTo(a + 16 + w / 2, y);
 				canonSmoke.translateTo(a + 16 + w / 2, y);
+				explosion.translateTo(a + 16 + w / 2, y);
 			}
 			if (rightEdge >= a - 16 && leftEdge <= a - 16 && tankSprite.getYCenter() >= d - 16
 					&& tankSprite.getYCenter() <= d + 16) {
@@ -228,6 +249,7 @@ public class Tank {
 				shield.translateTo(a - 16 - (w / 2), y);
 				tankAnime.translateTo(a - 16 - (w / 2), y);
 				canonSmoke.translateTo(a - 16 - (w / 2), y);
+				explosion.translateTo(a - 16 - (w / 2), y);
 			}
 		}
 	}
@@ -271,24 +293,28 @@ public class Tank {
 			tankAnime.translateTo(x - 2, y + 2);
 			shield.translateTo(x - 2, y + 2);
 			canonSmoke.translateTo(x - 2, y + 2);
+			explosion.translateTo(x - 2, y + 2);
 		}
 		if (isOverlapXFromLeft && isOverlapYFromTop) {
 			tankSprite.translateTo(x - 2, y - 2);
 			tankAnime.translateTo(x - 2, y - 2);
 			shield.translateTo(x - 2, y - 2);
 			canonSmoke.translateTo(x - 2, y - 2);
+			explosion.translateTo(x - 2, y - 2);
 		}
 		if (isOverlapXFromRight && isOverlapYFromBottom) {
 			tankSprite.translateTo(x + 2, y + 2);
 			tankAnime.translateTo(x + 2, y + 2);
 			shield.translateTo(x + 2, y + 2);
 			canonSmoke.translateTo(x + 2, y + 2);
+			explosion.translateTo(x + 2, y + 2);
 		}
 		if (isOverlapXFromRight && isOverlapYFromTop) {
 			tankSprite.translateTo(x + 2, y - 2);
 			tankAnime.translateTo(x + 2, y - 2);
 			shield.translateTo(x + 2, y - 2);
 			canonSmoke.translateTo(x + 2, y - 2);
+			explosion.translateTo(x + 2, y - 2);
 		}
 
 	}
@@ -434,6 +460,13 @@ public class Tank {
 			canonSmoke.hide();
 		}
 		canonSmoke.animate();
+	}
+	
+	public void explosion() {
+		if (System.currentTimeMillis() - timeGotHit >= EXPLOSION_TIME) {
+			explosion.hide();
+		}
+		explosion.animate();
 	}
 
 	// The following methods are for getting the edges of the tank sprite image
